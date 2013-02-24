@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+    <link href="../content/MapCommon.css" rel="stylesheet" type="text/css"/>
+
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+
+    <script type="text/javascript">
+        var shapeData;
+        var quakeDS;
+
+        //  Create and configure IG script loader
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/"
+        });
+
+        //  Load earthquake data from DBF file
+        $.ig.loader("igMap", function () {
+            shapeData = new $.ig.ShapeDataSource({
+                shapefileSource: '../scripts/db/world_earthquakes_usgs.shp',
+                databaseSource: '../scripts/db/world_earthquakes_usgs.dbf',
+                callback: initializeSample
+            });
+            shapeData.dataBind();
+        });
+
+        //  Create and configure quake filter editors
+        $.ig.loader("igEditors", function () {
+            $(".magnitudeEditor").igNumericEditor({
+                dataMode: "float",
+                maxValue: 10,
+                minValue: 0,
+                button: "spin",
+                width: 80,
+                valueChanged: updateChartData
+            });
+
+            $(".depthEditor").igNumericEditor({
+                dataMode: "float",
+                maxValue: 1000,
+                minValue: 0,
+                button: "spin",
+                width: 80,
+                valueChanged: updateChartData
+            });
+        });
+
+        //  Create and configure quake filter dialog
+        $.ig.loader("igDialog", function () {
+            var dialogPos = $("#map").offset();
+            dialogPos.left -= 0;
+            dialogPos.top += 0;
+
+            $("#dataFilters").igDialog({
+                width: "210px",
+                height: "230px",
+                container: "dataFilters",
+                headerText: 'Filters',
+                showCloseButton: false,
+                showMinimizeButton: true,
+                resizable: false,
+                position: [dialogPos.left, dialogPos.top]
+            });
+        });
+
+        //  Store the earthquake data into an array. Create data source from the array and
+        //  create and configure the map control.
+        function initializeSample() {
+            var data = convertShapeData();
+            //  Create data source and map
+            quakeDS = initDataSource(data);
+            createMap(quakeDS.dataView());
+
+            //  Update the quake count label
+            $("#quakeCount").html(data.length);
+        };
+
+        function convertShapeData() {
+            var shapeEnumerator = shapeData.converter().getEnumerator();
+            var data = [];
+            //  Enumerate all shapes and extract the data attributes
+            while (shapeEnumerator.moveNext()) {
+                var currentItem = shapeEnumerator.current();
+                data[data.length] = {
+                    ID: currentItem.fields.item("eqid"),
+                    Longitude: currentItem.fields.item("lon"),
+                    Latitude: currentItem.fields.item("lat"),
+                    Magnitude: currentItem.fields.item("magnitude"),
+                    Depth: currentItem.fields.item("depth"),
+                    Region: currentItem.fields.item("region")
+                };
+            };
+
+            return data;
+        }
+
+        function createMap(quakeData) {
+            $("#map").igMap({
+                width: "700px",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                series: [{
+                    type: "geographicSymbol",
+                    name: "quakes",
+                    dataSource: quakeData,
+                    latitudeMemberPath: "Latitude",
+                    longitudeMemberPath: "Longitude",
+                    markerType: "automatic",
+                    markerCollisionAvoidance: "fade",
+                    markerBrush: "#1B559D",
+                    markerOutline: "black",
+                    showTooltip: true,
+                    tooltipTemplate: "quakeTemplate"
+                }],
+                windowResponse: "deferred",
+                windowRect: {
+                    left: 0.27,
+                    top: 0.20,
+                    height: 0.45,
+                    width: 0.45
+                }
+            });
+        };
+        
+        function initDataSource(quakesData) {
+            var ds = new $.ig.DataSource({
+                dataSource: quakesData,
+                schema: {
+                    fields: [
+                            { name: "ID" },
+                            { name: "Magnitude", type: "number" },
+                            { name: "Depth", type: "number" },
+                            { name: "Region" },
+                            { name: "Latitude", type: "number" },
+                            { name: "Longitude", type: "number" }
+                        ]
+                },
+                filtering: { type: "local" }
+            });
+            ds.dataBind();
+            return ds;
+        }
+
+        function updateChartData(evt, ui) {
+            var minMagnitude = $("#magnitudeMin").igNumericEditor("option", "value");
+            var maxMagnitude = $("#magnitudeMax").igNumericEditor("option", "value");
+            var minDepth = $("#depthMin").igNumericEditor("option", "value");
+            var maxDepth = $("#depthMax").igNumericEditor("option", "value");
+
+            quakeDS.filter(
+                [
+                    {
+                        fieldName: "Magnitude",
+                        cond: "greaterThan",
+                        expr: minMagnitude
+                    }, {
+                        fieldName: "Magnitude",
+                        cond: "lessThan",
+                        expr: maxMagnitude
+                    }, {
+                        fieldName: "Depth",
+                        cond: "greaterThan",
+                        expr: minDepth
+                    }, {
+                        fieldName: "Depth",
+                        cond: "lessThan",
+                        expr: maxDepth
+                    }
+                ],
+                "AND",
+                false
+            );
+
+            var filteredData = quakeDS.dataView();
+            $("#map").igMap("option", "series", 
+                [{
+                    name: "quakes",
+                    dataSource: filteredData
+                }]
+            );
+            $("#quakeCount").html(filteredData.length);
+        }
+    </script>
+
+    <script id="quakeTemplate" type="text/x-jquery-tmpl">
+        <table>
+            <tr><td class="tooltipHeading" colspan="2">${item.Region}</td></tr
+            <tr>
+                <td>Magnitude:</td><td>${item.Magnitude}</td>
+            </tr>
+            <tr>
+                <td>Depth</td><td>${item.Depth}</td>
+            </tr>
+            <tr>
+                <td>Latitude:</td><td>${item.Latitude}</td>
+            </tr>
+            <tr>
+                <td>Longitude:</td><td>${item.Longitude}</td>
+            </tr>
+        </table>
+    </script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Filtering Data</h2>
+						<p>This sample demonstrates how to filter geospatial data bound to the igMap control based on values of member of data items using a collection view source. For this sample, the Data source contains locations of earthquakes from around the world and filtering is performed on magnitude and depth data for these earthquakes.</p>
+                        <p><span style="font-weight:bold">Note: </span>This sample must be hosted on a web server along with the javascript, theming and database resources in order for the map control to be able to load necessary files like database, shape or triangulated files.</p>
+                        <p><span style="font-weight:bold">Hint: </span>You can define a virtual folder in your web server which points to the base HTML folder where the samples source code resides.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+                        <div id="map"></div>
+                        <h2 style="text-align: center; width: 700px; ">World Earthquakes</h2>
+
+                        <div id="dataFilters">
+                            <label class="grouplabel">Magnitude</label>
+
+                            <div class="optionRow">
+                                <label for="magnitudeMin">Min:</label>
+                                <span class="optionEditor">
+                                    <input type="text" value="0.0" id="magnitudeMin" class="magnitudeEditor"/>
+                                </span>
+                            </div>
+
+                            <div class="optionRow">
+                                <label for="magnitudeMax">Max:</label>
+                                <span class="optionEditor">
+                                    <input type="text" value="10.0" id="magnitudeMax" class="magnitudeEditor"/>
+                                </span>
+                            </div>
+
+                            <label class="grouplabel">Depth</label>
+                            <div class="optionRow">
+                                <label for="depthMin">Min:</label>
+                                <span class="optionEditor">
+                                    <input type="text" value="0.0" id="depthMin" class="depthEditor"/>
+                                </span>
+                            </div>
+
+                            <div class="optionRow">
+                                <label for="depthMax">Max:</label>
+                                <span class="optionEditor">
+                                    <input type="text" value="1000.0" id="depthMax" class="depthEditor"/>
+                                </span>
+                            </div>
+
+                            <label class="grouplabel">Earthquake Count:</label>
+                            <span id="quakeCount" class="optionEditor"></span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

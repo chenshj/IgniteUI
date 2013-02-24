@@ -1,0 +1,181 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/db/adventureWorks.js" type="text/javascript"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+	
+    <script type="text/javascript">
+	$.ig.loader({
+		scriptPath: "../../js/",
+		cssPath: "../../css/",
+		resources: "igGrid.GroupBy"
+	});
+	
+	$.ig.loader(function () {
+		$("#grid1").igGrid({
+			autoGenerateColumns: false,
+			columns: [
+			{ headerText: "Product ID", key: "ProductID", dataType: "number" },
+			{ headerText: "Product Name", key: "Name", dataType: "string" },
+			{ headerText: "Color", key: "Color", dataType: "string" },
+			{ headerText: "List Price", key: "ListPrice", dataType: "number" },
+			{ headerText: "Modified Date", key: "ModifiedDate", dataType: "date" },
+			{ headerText: "Standard Cost", key: "StandardCost", dataType: "number" },
+			],
+			dataSource: adventureWorks,
+			dataRendering: function (event, args) {
+				// make sure we change the modified date, such that we have diverse data from different 
+				// days, months, years, etc.
+				var todayStart = 0, todayEnd = 10, yesterdayStart = 11, yesterdayEnd = 20,
+					twoDaysAgoStart = 21, twoDaysAgoEnd = 30, weekAgoStart = 31, weekAgoEnd = 40,
+					aMonthAgoStart = 41, aMonthAgoEnd = 50, lastYearStart = 51, lastYearEnd = args.owner.dataSource.dataView().length - 1;
+
+				var today = new Date();
+
+				for (i = todayStart; i <= todayEnd; i++) {
+					var rec = args.owner.dataSource.dataView()[i];
+					rec.ModifiedDate = new Date();
+				}
+
+				for (i = yesterdayStart; i <= yesterdayEnd; i++) {
+					var rec = args.owner.dataSource.dataView()[i];
+					rec.ModifiedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1);
+				}
+
+				for (i = twoDaysAgoStart; i <= twoDaysAgoEnd; i++) {
+					var rec = args.owner.dataSource.dataView()[i];
+					rec.ModifiedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2);
+				}
+
+				for (i = weekAgoStart; i <= weekAgoEnd; i++) {
+					var rec = args.owner.dataSource.dataView()[i];
+					rec.ModifiedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+				}
+
+				for (i = aMonthAgoStart; i <= aMonthAgoEnd; i++) {
+					var rec = args.owner.dataSource.dataView()[i];
+					rec.ModifiedDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+				}
+
+
+				for (i = lastYearStart; i <= lastYearEnd; i++) {
+					var rec = args.owner.dataSource.dataView()[i];
+					rec.ModifiedDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+				}
+			},
+			height: "400px",
+			features: [
+			{
+				name: "GroupBy",
+				type: "local",
+				groupByAreaVisibility: "hidden",
+				columnSettings: [
+					{
+						columnKey: "ModifiedDate",
+						isGroupBy: true,
+						groupComparerFunction: function (columnSetting, val1, val2) {
+							var d = new Date();
+							var samemonth = val1.getMonth() === d.getMonth() && val2.getMonth() === d.getMonth();
+							var sameyear = val1.getFullYear() === d.getFullYear() && val2.getFullYear() === d.getFullYear();
+
+							if (val1 !== null && val2 !== null) {
+								if (val1.getDate() === d.getDate() && val2.getDate() === d.getDate() && samemonth && sameyear) {
+								    columnSetting.customGroupName = "Today";
+									return true;
+								} else if (val1.getDate() === d.getDate() - 1 && val2.getDate() === d.getDate() - 1
+									 && samemonth && sameyear) {
+								    columnSetting.customGroupName = "Yesterday";
+									return true;
+								} else if (val1.getDate() === d.getDate() - 2 && val2.getDate() === d.getDate() - 2 && samemonth && sameyear) {
+								    columnSetting.customGroupName = "Two Days Ago";
+									return true;
+								} else if (val1.getDate() === d.getDate() - 7 && val2.getDate() === d.getDate() - 7 && sameyear) {
+								    columnSetting.customGroupName = "One Week Ago";
+									return true;
+								} else if (val1.getMonth() === d.getMonth() - 1 && val2.getMonth() === d.getMonth() - 1 && sameyear) {
+								    columnSetting.customGroupName = "One Month Ago";
+									return true;
+								} else if (val1.getFullYear() === d.getFullYear() - 1 && val2.getFullYear() === d.getFullYear() - 1) {
+								    columnSetting.customGroupName = "One Year Ago";
+									return true;
+								} else {
+									if (val1.getDate() === d.getDate() && val1.getMonth() === d.getMonth() && val1.getYear() === d.getYear()) {
+									    columnSetting.customGroupName = "Today";
+									} else if (val1.getDate() === d.getDate() - 1 && val1.getYear() === d.getYear()) {
+									    columnSetting.customGroupName = "Yesterday";
+									} else if (val1.getDate() === d.getDate() - 2 && val1.getYear() === d.getYear()) {
+									    columnSetting.customGroupName = "Two Days Ago";
+									} else if (val1.getDate() === d.getDate() - 7 && val1.getYear() === d.getYear()) {
+									    columnSetting.customGroupName = "One Week Ago";
+									} else if (val1.getMonth() === d.getMonth() - 1 && val1.getYear() === d.getYear()) {
+									    columnSetting.customGroupName = "One Month Ago";
+									} else if (val1.getFullYear() === d.getFullYear() - 1) {
+									    columnSetting.customGroupName = "One Year Ago";
+									}
+									return false;
+								}
+							} else {
+								// columnSetting.customGroupName = "";
+								return false;
+							}
+						}
+					}
+				]
+			}
+			]
+		});
+	});
+	</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Custom Group By Date</h2>
+						<p>This sample demonstrates custom Date grouping. The custom grouping function compares date values in the column against the current date's values and divides the values into different semantic categories such as “this week”, “this month”, yesterday, etc.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+						<table id="grid1"></table>
+					</div>
+		
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

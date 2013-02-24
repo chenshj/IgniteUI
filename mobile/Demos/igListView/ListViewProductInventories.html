@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>ListView Product Inventories</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+      
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = true;
+        });
+    </script>    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igmList",
+            theme: "ios"
+        });
+    </script>
+    <!--Sample JSON Data-->
+    <script type="text/javascript" src="../scripts/db/adventureWorksProductsInventories.js"></script>
+    <style type="text/css">
+        .noHand
+        {
+            cursor : default;
+        }
+    </style>
+</head>	
+<body>
+    <div data-role="page" >
+		<div data-role="header">
+			<h1>Products</h1>
+			<a href="#" data-icon="home" data-iconpos="notext">Home</a>
+		</div>
+		<div data-role="content">
+            <div id="listView1" data-role="iglistview" data-data-source="productsInventories" data-bindings-primary-key="ProductID" data-response-data-key="Records" data-data-source-type="json"
+                data-bindings-text-key="Name" data-show-count="true" data-local-schema-transform="true"
+                data-create-sub-pages-on-init="true" data-item-details-template="Position">
+				<ul>
+				<li>
+					<ul data-role="childLayout" data-key="ProductInventories" data-data-source-type="json" data-response-data-key="Records" data-data-bind-text-key="Shelf" data-item-template="<div class='noHand'>Shelf: ${Shelf}, Bin: ${Bin}</div>">
+					</ul>					
+					</li>
+				<ul>
+			</div>
+		</div>
+    </div> 
+</body>
+</html>

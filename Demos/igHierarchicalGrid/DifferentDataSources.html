@@ -1,0 +1,176 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	<script type="text/javascript" src="../scripts/db/categoriesWithProducts.js"></script>
+	
+	<script type="text/javascript">
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igHierarchicalGrid"
+		});
+		$.ig.loader(function () {
+			var urlOData = "http://services.odata.org/OData/OData.svc/Categories?$format=json&$callback=?",
+				jsonpLoadOnDemand = new $.ig.JSONPDataSource({ dataSource: urlOData, responseDataKey: "d" }),
+				urlRemoteJSON = "http://services.odata.org/OData/OData.svc/Categories?$expand=Products&$format=json&$callback=?",
+				jsonpRemote = new $.ig.JSONPDataSource({ dataSource: urlRemoteJSON, responseDataKey: "d" }),
+				jsonLocal = new $.ig.JSONDataSource({ dataSource: categoriesWithProducts, responseDataKey: "d" });
+		
+			$("#gridOData").igHierarchicalGrid({
+				odata: true,
+				initialDataBindDepth: 0,
+				dataSource: jsonpLoadOnDemand,
+				responseDataKey: "d",
+			
+				autoGenerateColumns: false,
+				primaryKey: "ID",
+				columns: [
+					{ headerText: "ID", key: "ID", width: "50px", dataType: "number"},
+					{ headerText: "Name", key: "Name", width: "130px", dataType: "string" }
+				],
+				autoGenerateLayouts: false,
+				columnLayouts: [
+					{
+                        key: "Products",
+						responseDataKey: "d",
+						childrenDataProperty: "Products",
+						autoGenerateColumns: false,
+						primaryKey: "ID",
+						columns: [
+							{ key: "ID", headerText: "ID", width: "25px" },
+							{ key: "Name", headerText: "Product Name", width: "90px" },
+							{ key: "Price", headerText: "Price", dataType: "number", width: "55px" }
+						]
+					}
+				]
+			});
+		
+			$("#gridRemoteJSON").igHierarchicalGrid({
+				odata: false,
+				initialDataBindDepth: 1,
+				dataSource: jsonpRemote,
+				responseDataKey: "d",
+			
+				autoGenerateColumns: false,
+				primaryKey: "ID",
+				columns: [
+					{ headerText: "ID", key: "ID", width: "50px", dataType: "number"},
+					{ headerText: "Name", key: "Name", width: "130px", dataType: "string" }
+				],
+				autoGenerateLayouts: false,
+				defaultChildrenDataProperty: "Products",
+				columnLayouts: [
+					{
+						key: "Products",
+						responseDataKey: "d",
+						childrenDataProperty: "Products",
+						autoGenerateColumns: false,
+						primaryKey: "ID",
+						columns: [
+							{ key: "ID", headerText: "ID", width: "25px" },
+							{ key: "Name", headerText: "Product Name", width: "90px" },
+							{ key: "Price", headerText: "Price", dataType: "number", width: "55px" }
+						]
+					}
+				]
+			});
+		
+			$("#gridLocalJSON").igHierarchicalGrid({
+				initialDataBindDepth: 1,
+				dataSource: jsonLocal,
+				responseDataKey: "d",
+			
+				autoGenerateColumns: false,
+				primaryKey: "ID",
+				columns: [
+					{ headerText: "ID", key: "ID", width: "50px", dataType: "number"},
+					{ headerText: "Name", key: "Name", width: "130px", dataType: "string" }
+				],
+				autoGenerateLayouts: false,
+				defaultChildrenDataProperty: "Products",
+				columnLayouts: [
+					{
+						key: "Products",
+						responseDataKey: "d",
+						childrenDataProperty: "Products",
+						autoGenerateColumns: false,
+						primaryKey: "ID",
+						columns: [
+							{ key: "ID", headerText: "ID", width: "25px" },
+							{ key: "Name", headerText: "Product Name", width: "90px" },
+							{ key: "Price", headerText: "Price", dataType: "number", width: "55px" }
+						]
+					}
+				]
+			});
+		});
+	</script>
+	<style type="text/css">
+		.grid-containers { float: left; margin: 10px 20px 10px 0; }
+		.clear { clear: both; }
+		.grid-containers label { display: block; margin-bottom: 10px; width: 200px; height: 30px; font-weight: bold; }
+	</style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Different Data Sources</h2>
+						<p>This sample demonstrates how the Hierarchical Grid works with different types of local and remote data sources.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+						<div class="sampleContainer">
+							<div class="grid-containers">
+								<label>Hierarchical Grid with oData</label>
+								<table id="gridOData"></table>
+							</div>
+							<div class="grid-containers">
+								<label>Hierarchical Grid with remote JSON</label>
+								<table id="gridRemoteJSON"></table>
+							</div>
+							<div class="grid-containers">
+								<label>Hierarchical Grid with local JSON</label>
+								<table id="gridLocalJSON"></table>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

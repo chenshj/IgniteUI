@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+    
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/db/northwindCustomers.js" type="text/javascript"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script src="../../js/modules/infragistics.ui.grid.featurechooser.js"></script>
+    
+    <script type="text/javascript">
+        var columnDefinitions = [
+            { headerText: "Customer ID", key: "CustomerID", dataType: "string", width: "100px" },
+            { headerText: "Company Information", key: "companyInformation",
+                group: [
+                    { headerText: "Company Name", key: "CompanyName", dataType: "string", width: "150px" },
+                    { headerText: "Contact Name", key: "ContactName", dataType: "string", width: "150px" },
+                    { headerText: "Contact Title", key: "ContactTitle", dataType: "string", width: "150px" }
+                ]
+            },
+            { headerText: "Address Information", key: "addressInformation",
+            group: [
+                { headerText: "Local Address", key: "localAddress",
+                    group: [
+                        { headerText: "Address", key: "Address", dataType: "string", width: "150px" },
+                        { headerText: "City", key: "City", dataType: "string", width: "100px" },
+                        { headerText: "Postal Code", key: "PostalCode", dataType: "string", width: "100px" }
+                    ]
+                }
+            ]}
+        ];
+        
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igGrid.ColumnMoving.MultiColumnHeaders"
+        });
+        
+        $.ig.loader(function () {
+            $("#moveColumnInDom").igButton({ labelText: $("#moveColumnInDom").val() });
+            $("#moveColumnRerender").igButton({ labelText: $("#moveColumnRerender").val() });
+
+            $("#moveColumnInDom").click(function () {
+                var columnToMove = $("#columnToMove").val();
+                var destinationColumn = $("#destinationColumn").val();
+                $("#grid1").igGridColumnMoving("moveColumn", columnToMove, destinationColumn, false, true);
+            });
+            
+            $("#moveColumnRerender").click(function () {
+                var columnToMove = $("#columnToMove").val();
+                var destinationColumn = $("#destinationColumn").val();
+                $("#grid1").igGridColumnMoving("moveColumn", columnToMove, destinationColumn, false, false);
+            });
+            
+            $("#columnToMove").change(function() {
+                fillDestinationColumnDropDown(columnDefinitions, $(this).val());  
+            });
+            
+            $("#index").val(1);
+            
+            createGrid();
+            fillColumnToMoveDropDown(columnDefinitions);
+            fillDestinationColumnDropDown(columnDefinitions, $("#columnToMove").val());
+        });
+        
+        function createGrid() {
+           
+            $("#grid1").igGrid("destroy");
+            
+            $("#grid1").igGrid({
+                height: "500px",
+                width: "100%",
+                autoGenerateColumns: false,
+                dataSource: northwindCustomers,
+                responseDataKey: "results",
+                dataSourceType: "json",
+                columns: columnDefinitions,
+                features: [
+                    {
+                        name: "ColumnMoving"
+                    },
+                    {
+                        name: "MultiColumnHeaders"
+                    }
+                ]
+            });
+        }
+        
+        function fillColumnToMoveDropDown(columns) {
+            var $columnToMoveDropDown = $("#columnToMove");
+            var column;
+            for(var i=0; i < columns.length; i++) {
+                column = columns[i];
+                $columnToMoveDropDown.append($("<option />").val(column.key).text(column.headerText));
+                if (column.group)
+                    fillColumnToMoveDropDown(column.group);
+            }
+        }
+        
+        function fillDestinationColumnDropDown(columns, columnToMove) {
+            var $destinationColumnDropDown = $("#destinationColumn");
+            var column, tempColumnOptions = "", found = false;
+            for(var i=0; i < columns.length; i++) {
+                column = columns[i];
+                tempColumnOptions += "<option value='" + column.key + "'>" + column.headerText + "</option>";
+                if (column.key === columnToMove) {
+                    found = true;
+                }
+               
+                if (!found && column.group)
+                    fillDestinationColumnDropDown(column.group, columnToMove);
+            }
+            if (found) {
+                $destinationColumnDropDown.empty();
+                $destinationColumnDropDown.append(tempColumnOptions);
+            }
+        }
+    </script>
+    <style>
+        .options
+        {
+            margin-bottom: 10px;
+        }
+        .options .option
+        {
+            margin-bottom: 5px;
+        }
+        .options .option label
+        {
+            display: block;
+        }
+        .options .option select
+        {
+            width: 200px;
+        }
+        .options input[type="button"]
+        {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <header>
+            <h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>        
+        </header>
+
+        <div id="main" role="main">
+            <section class="product">
+                <img src="../Content/images/jquery-netadvantage.png" />
+                <p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+            </section>
+        
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+                    <hgroup>
+                        <h1>IgniteUI </h1>
+                        <h2>Column Moving API</h2>
+                        <p>This sample demonstrates the column moving moveColumn method and shows the integration between column moving and multi-column headers feature. To see the API at work, choose a column from “Column to move” and “Destination column” combos. Press one of the “Move column” buttons to insert the column to move before destination column. “Move column (DOM)” moves the column by detaching the column and then re-attaching it back in the DOM tree. “Move column (Render)” moves the column by destroying the grid and then re-creating it. You can also move columns via a drag-and-drop interaction with the mouse or by using the drop-down dialog. When column moving is used with multi-column headers feature column can be moved only on the same level in the hierarchy of columns. Example: “Company Name” column can be moved only in the “Company Information” group. Selecting a column from the “Column to move” drop-down filters the “Destination column” drop-down so columns can be moved next to columns with the same level in the hierarchy of columns. Otherwise an exception is thrown.</p>
+                    </hgroup>
+
+                        <div class="sampleContainer">
+                            <div class="options">
+                                <div class="option">
+                                    <label for="columnToMove">Column to move</label>
+                                    <select id="columnToMove">
+                                    </select>
+                                </div>
+                                <div class="option">
+                                    <label for="destinationColumn">Destination column</label>
+                                    <select id="destinationColumn">
+                                    </select>
+                                </div>
+                            <input type="button" id="moveColumnRerender" value="Move column (Render)" />
+                            <input type="button" id="moveColumnInDom" value="Move column (DOM)" />
+                            </div>
+                            <table id="grid1"></table>
+                        </div>
+                </section>
+            </div>
+        </div>
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>

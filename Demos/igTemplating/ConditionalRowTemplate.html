@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	<script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	<script src="../scripts/db/northwindProducts.js"></script>
+	<style type="text/css">
+	.rowCriticalAttention
+	{
+		background-color: #FF7283;
+	}
+	.rowAttention
+	{
+		background-color: #FFE96D;
+	}
+	</style>
+<script type="text/javascript">
+	$.ig.loader({
+		scriptPath: "../../js/",
+		cssPath: "../../css/",
+		resources: "igGrid.*"
+	});
+	$.ig.loader(function () {
+		$("#resultGrid").igGrid({
+			dataSource: northwindProducts,
+			responseDataKey: "results",
+			enableHoverStyles: false, 
+			dataSourceType: "json",
+			autoGenerateColumns: false,
+			rowTemplate: "<tr><td> {{if parseInt(${UnitsInStock}) == 0}}" +
+                                "<span class='criticalAttention'>${ProductName}</span>" +
+                                "{{elseif parseInt(${UnitsInStock}) > 0 && parseInt(${UnitsInStock}) < 20}}" +
+                                "<span class='attention'>${ProductName}</span>" +
+                                "{{else}} ${ProductName}{{/if}}" + "</td>" +
+                                "<td>{{if parseInt(${UnitsInStock}) == 0}}" +
+                                "<span class='criticalAttention'>${UnitPrice}</span>" +
+                                "{{elseif parseInt(${UnitsInStock}) > 0 && parseInt(${UnitsInStock}) < 20}}" +
+                                "<span class='attention'>${UnitPrice}</span>" +
+                                "{{else}} ${UnitPrice}{{/if}}" + "</td>" +
+                                "<td>{{if parseInt(${UnitsInStock}) == 0}}" +
+                                "<span class='criticalAttention'>${UnitsInStock}</span>" +
+                                "{{elseif parseInt(${UnitsInStock}) > 0 && parseInt(${UnitsInStock}) < 20}}" +
+                                "<span class='attention'>${UnitsInStock}</span>" +
+                                "{{else}} ${UnitsInStock}{{/if}}" + "</td>" +
+                                "<td>{{if parseInt(${UnitsInStock}) == 0}}" +
+                                "<span class='criticalAttention'>${UnitsOnOrder}</span>" +
+                                "{{elseif parseInt(${UnitsInStock}) > 0 && parseInt(${UnitsInStock}) < 20}}" +
+                                "<span class='attention'>${UnitsOnOrder}</span>" +
+                                "{{else}} ${UnitsOnOrder}{{/if}}" + "</td></tr>",
+			columns: [
+				{ headerText: "Product Name", key: "ProductName" },
+				{ headerText: "Unit Price", key: "UnitPrice" },
+				{ headerText: "Units In Stock", key: "UnitsInStock" },
+				{ headerText: "Units On Order", key: "UnitsOnOrder" }
+			],
+			features: [
+				{
+					name: "Paging",
+					type: "local", 
+					pageSize: 10
+				}
+			]		
+		});	
+	});
+	 $("#resultGrid").live("iggriddatarendered", function (evt, ui) {
+		var attentionItems = $(".attention");
+		var criticalItems = $(".criticalAttention");
+		$.each(attentionItems, function (key, value) {
+			$(value).parent().addClass("rowAttention");
+		});
+		$.each(criticalItems, function (key, value) {
+			$(value).parent().addClass("rowCriticalAttention");
+		});
+	});	
+</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Conditional Row Template</h2>
+						<p>This sample demonstrates how conditional row templates are created using the Infragistics Templating Engine. In the following scenario rows with units equal to 0 are marked in red, while rows with units in stock greater than 0 and lower than 20 are marked in yellow.</p>
+					</hgroup>
+						<div class="sampleContainer">		
+							<table id="resultGrid"></table>
+						</div>	
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>

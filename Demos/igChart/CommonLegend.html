@@ -1,0 +1,148 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+    <script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+		
+	<script id="tooltipTemplate1" type="text/x-jquery-tmpl">
+		<span id="tooltipValue">Open: ${item.Open}</span><br/>
+		<span id="tooltipValue">High: ${item.High}</span><br/>
+		<span id="tooltipValue">Low: ${item.Low}</span><br/>
+		<span id="tooltipValue">Close: ${item.Close}</span><br/>
+	</script>
+		
+	<script id="tooltipTemplate2" type="text/x-jquery-tmpl">
+		<span id="tooltipValue">Value: ${item.Volume}</span>
+	</script>
+		
+	<script type="text/javascript">
+	    $.ig.loader({
+	        scriptPath: "../../js/",
+	        cssPath: "../../css/",
+	        resources: 'igDataChart.Category,igDataChart.Financial'
+	    });
+
+	    $.ig.loader(function () {
+	        var data = [{ "DateString": "1/2/2010", "Open": 1000, "High": 1029.25, "Low": 968.75, "Close": 983, "Volume": 2007.5 }, { "DateString": "1/3/2010", "Open": 983, "High": 1004.75, "Low": 949.75, "Close": 977, "Volume": 1995.75 }, { "DateString": "1/4/2010", "Open": 977, "High": 993.75, "Low": 960.25, "Close": 962, "Volume": 1973.75 }, { "DateString": "1/5/2010", "Open": 962, "High": 988.5, "Low": 940, "Close": 964, "Volume": 1976.75 }, { "DateString": "1/6/2010", "Open": 964, "High": 991.25, "Low": 944, "Close": 986, "Volume": 1982.5 }, { "DateString": "1/7/2010", "Open": 986, "High": 1008.5, "Low": 961.5, "Close": 996, "Volume": 2011.75 }, { "DateString": "1/8/2010", "Open": 996, "High": 1022.75, "Low": 966.25, "Close": 1014, "Volume": 2021.25 }, { "DateString": "1/9/2010", "Open": 1014, "High": 1033.5, "Low": 978.25, "Close": 1016, "Volume": 1991.5 }, { "DateString": "1/10/2010", "Open": 1016, "High": 1049, "Low": 983.5, "Close": 998, "Volume": 2011 }, { "DateString": "1/11/2010", "Open": 998, "High": 1025.5, "Low": 970.25, "Close": 988, "Volume": 1992.75 }, { "DateString": "1/12/2010", "Open": 988, "High": 1017.5, "Low": 957, "Close": 1008, "Volume": 1984.5 }, { "DateString": "1/13/2010", "Open": 1008, "High": 1037, "Low": 975.5, "Close": 988, "Volume": 1968.25 }, { "DateString": "1/14/2010", "Open": 988, "High": 1011.5, "Low": 961.25, "Close": 983, "Volume": 1977.25 }, { "DateString": "1/15/2010", "Open": 983, "High": 1003.75, "Low": 960.75, "Close": 967, "Volume": 1986.5 }, { "DateString": "1/16/2010", "Open": 967, "High": 1002.75, "Low": 936.75, "Close": 994, "Volume": 1984.25 }, { "DateString": "1/17/2010", "Open": 994, "High": 1009.75, "Low": 975, "Close": 1006, "Volume": 1983.25 }, { "DateString": "1/18/2010", "Open": 1006, "High": 1037, "Low": 980.25, "Close": 1018, "Volume": 1980.25 }, { "DateString": "1/19/2010", "Open": 1018, "High": 1045, "Low": 991, "Close": 1016, "Volume": 1957.75 }, { "DateString": "1/20/2010", "Open": 1016, "High": 1049.25, "Low": 981.25, "Close": 1029, "Volume": 1952 }, { "DateString": "1/21/2010", "Open": 1029, "High": 1039, "Low": 984.75, "Close": 999, "Volume": 1958.75 }, { "DateString": "1/22/2010", "Open": 999, "High": 1028.25, "Low": 968.75, "Close": 996, "Volume": 1965.75 }, { "DateString": "1/23/2010", "Open": 996, "High": 1020.75, "Low": 970, "Close": 980, "Volume": 1985 }, { "DateString": "1/24/2010", "Open": 980, "High": 1011, "Low": 949.75, "Close": 1010, "Volume": 1984.75 }, { "DateString": "1/25/2010", "Open": 1010, "High": 1025.5, "Low": 991.25, "Close": 1012, "Volume": 1978.5 }, { "DateString": "1/26/2010", "Open": 1012, "High": 1025, "Low": 972.5, "Close": 1001, "Volume": 1978.75 }, { "DateString": "1/27/2010", "Open": 1001, "High": 1014.25, "Low": 966.75, "Close": 971, "Volume": 1968.75 }, { "DateString": "1/28/2010", "Open": 971, "High": 984.5, "Low": 946, "Close": 984, "Volume": 1956.25 }, { "DateString": "1/29/2010", "Open": 984, "High": 1016.25, "Low": 964.25, "Close": 967, "Volume": 1957 }, { "DateString": "1/30/2010", "Open": 967, "High": 977.5, "Low": 948.25, "Close": 965, "Volume": 1920.75 }, { "DateString": "1/31/2010", "Open": 965, "High": 992.75, "Low": 927.25, "Close": 930, "Volume": 1904.25 }, { "DateString": "2/1/2010", "Open": 930, "High": 956, "Low": 903, "Close": 951, "Volume": 1916.75 }, { "DateString": "2/2/2010", "Open": 951, "High": 972.25, "Low": 934.5, "Close": 971, "Volume": 1912.75 }, { "DateString": "2/3/2010", "Open": 971, "High": 992.5, "Low": 950.75, "Close": 967, "Volume": 1920.5 }, { "DateString": "2/4/2010", "Open": 967, "High": 1000.25, "Low": 949.25, "Close": 950, "Volume": 1935.5 }, { "DateString": "2/5/2010", "Open": 950, "High": 968.25, "Low": 923.25, "Close": 933, "Volume": 1923.5 }, { "DateString": "2/6/2010", "Open": 933, "High": 965.75, "Low": 907, "Close": 910, "Volume": 1926.5 }, { "DateString": "2/7/2010", "Open": 910, "High": 931.75, "Low": 891, "Close": 924, "Volume": 1937.25 }, { "DateString": "2/8/2010", "Open": 924, "High": 951.25, "Low": 903.5, "Close": 915, "Volume": 1946.75 }, { "DateString": "2/9/2010", "Open": 915, "High": 944.25, "Low": 877.75, "Close": 940, "Volume": 1966 }, { "DateString": "2/10/2010", "Open": 940, "High": 959.5, "Low": 914.25, "Close": 933, "Volume": 1976.25 }, { "DateString": "2/11/2010", "Open": 933, "High": 966.5, "Low": 908.75, "Close": 909, "Volume": 1991.5 }, { "DateString": "2/12/2010", "Open": 909, "High": 930.75, "Low": 897.25, "Close": 919, "Volume": 1972.5 }, { "DateString": "2/13/2010", "Open": 919, "High": 947, "Low": 900.25, "Close": 929, "Volume": 1963.5 }, { "DateString": "2/14/2010", "Open": 929, "High": 955.25, "Low": 911.5, "Close": 933, "Volume": 1961 }, { "DateString": "2/15/2010", "Open": 933, "High": 958.5, "Low": 899.5, "Close": 939, "Volume": 1957.5 }, { "DateString": "2/16/2010", "Open": 939, "High": 970.25, "Low": 907.75, "Close": 963, "Volume": 1935.5 }, { "DateString": "2/17/2010", "Open": 963, "High": 987.25, "Low": 937.5, "Close": 959, "Volume": 1944.75 }, { "DateString": "2/18/2010", "Open": 959, "High": 975, "Low": 934.75, "Close": 970, "Volume": 1965 }, { "DateString": "2/19/2010", "Open": 970, "High": 991, "Low": 946.25, "Close": 967, "Volume": 1953.5 }, { "DateString": "2/20/2010", "Open": 967, "High": 994.5, "Low": 946, "Close": 986, "Volume": 1953.25}];
+
+	        $("#chart").igDataChart({
+	            width: "500px",
+	            height: "250px",
+	            dataSource: data,
+	            axes: [{
+	                name: "xAxis",
+	                type: "categoryX",
+	                label: "Label",
+	                labelVisibility: "collapsed"
+	            }, {
+	                name: "yAxis",
+	                type: "numericY",
+	                minimumValue: 850,
+	                maximumValue: 1100,
+	                labelVisibility: "collapsed"
+	            }, {
+	                name: "yAxisVolume",
+	                type: "numericY",
+	                minimumValue: 1850,
+	                maximumValue: 2100,
+	                labelVisibility: "collapsed"
+	            }],
+	            series: [{
+	                name: "series1",
+	                title: "Price Series",
+	                type: "financial",
+	                xAxis: "xAxis",
+	                yAxis: "yAxis",
+	                openMemberPath: "Open",
+	                highMemberPath: "High",
+	                lowMemberPath: "Low",
+	                closeMemberPath: "Close",
+	                showTooltip: true,
+	                tooltipTemplate: "tooltipTemplate1",
+	                legend: { element: "legend" }
+	            }, {
+	                name: "series2",
+	                title: "Volume Series",
+	                type: "line",
+	                xAxis: "xAxis",
+	                yAxis: "yAxisVolume",
+	                valueMemberPath: "Volume",
+	                showTooltip: true,
+	                tooltipTemplate: "tooltipTemplate2",
+	                legend: { element: "legend" }
+	            }],
+	            horizontalZoomable: true,
+	            verticalZoomable: true,
+	            windowResponse: "immediate"
+	        });
+	    });
+	</script>
+		
+	<style type="text/css">
+		#chart
+		{
+			position: relative;
+			float: left;
+			margin-right: 10px;
+			margin-bottom: 20px;
+		}
+		#legend
+		{
+			position: relative;
+			float: left;
+		}
+			
+	</style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Common Legend</h2>
+						<p>This sample demonstrates how a single Legend can be shared between multiple Series in the chart.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+						<div id="chart"></div>
+						<div id="legend"></div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>

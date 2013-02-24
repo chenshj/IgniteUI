@@ -1,0 +1,179 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+    <script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+    <script type="text/javascript">
+        var transperantBrush = "rgba(0,0,0,0)", priceBrush = "rgba(0,255,255,1)",
+            negativeBrush = "rgba(0,0,0,0.7)", trendlineBrush = "rgba(0,100,0,1)",
+            volumeBrush = "rgba(255,0,0,1)", brush, negBrush;
+
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igDataChart.Category,igDataChart.Financial"
+        });
+
+        $.ig.loader(function () {
+            data = [{ "DateString": "2.1.2010", "Open": 1000, "High": 1028.75, "Low": 985.25, "Close": 1020, "Volume": 1995 }, { "DateString": "3.1.2010", "Open": 1020, "High": 1032.5, "Low": 999.5, "Close": 1021, "Volume": 1964.5 }, { "DateString": "4.1.2010", "Open": 1021, "High": 1033.5, "Low": 996, "Close": 1033, "Volume": 1974.75 }, { "DateString": "5.1.2010", "Open": 1033, "High": 1062, "Low": 1018.75, "Close": 1042, "Volume": 1978.5 }, { "DateString": "6.1.2010", "Open": 1042, "High": 1058.5, "Low": 1019.75, "Close": 1029, "Volume": 1979 }, { "DateString": "7.1.2010", "Open": 1029, "High": 1050.75, "Low": 1006, "Close": 1042, "Volume": 1990 }, { "DateString": "8.1.2010", "Open": 1042, "High": 1072, "Low": 1002, "Close": 1053, "Volume": 2007.25 }, { "DateString": "9.1.2010", "Open": 1053, "High": 1076.75, "Low": 1024.75, "Close": 1069, "Volume": 2004.75 }, { "DateString": "10.1.2010", "Open": 1069, "High": 1084, "Low": 1045.5, "Close": 1049, "Volume": 1980.5 }, { "DateString": "11.1.2010", "Open": 1049, "High": 1070.75, "Low": 1028, "Close": 1043, "Volume": 1992.25 }, { "DateString": "12.1.2010", "Open": 1043, "High": 1078, "Low": 1007.75, "Close": 1015, "Volume": 1974 }, { "DateString": "13.1.2010", "Open": 1015, "High": 1038.25, "Low": 1003, "Close": 1026, "Volume": 1955.25 }, { "DateString": "14.1.2010", "Open": 1026, "High": 1048.5, "Low": 1000, "Close": 1025, "Volume": 1950 }, { "DateString": "15.1.2010", "Open": 1025, "High": 1049, "Low": 1007, "Close": 1042, "Volume": 1952 }, { "DateString": "16.1.2010", "Open": 1042, "High": 1062, "Low": 1019.5, "Close": 1057, "Volume": 1945.75 }, { "DateString": "17.1.2010", "Open": 1057, "High": 1077.75, "Low": 1039.75, "Close": 1057, "Volume": 1933.25 }, { "DateString": "18.1.2010", "Open": 1057, "High": 1082.5, "Low": 1025, "Close": 1038, "Volume": 1934.5 }, { "DateString": "19.1.2010", "Open": 1038, "High": 1059.5, "Low": 1017.75, "Close": 1019, "Volume": 1939 }, { "DateString": "20.1.2010", "Open": 1019, "High": 1055, "Low": 984.75, "Close": 1037, "Volume": 1936 }, { "DateString": "21.1.2010", "Open": 1037, "High": 1061.5, "Low": 1019.5, "Close": 1022, "Volume": 1898.75 }, { "DateString": "22.1.2010", "Open": 1022, "High": 1053.75, "Low": 1010.5, "Close": 1041, "Volume": 1883.25 }, { "DateString": "23.1.2010", "Open": 1041, "High": 1069, "Low": 1018.5, "Close": 1042, "Volume": 1860.25 }, { "DateString": "24.1.2010", "Open": 1042, "High": 1066, "Low": 1028.5, "Close": 1063, "Volume": 1853.5 }, { "DateString": "25.1.2010", "Open": 1063, "High": 1085.25, "Low": 1043.75, "Close": 1057, "Volume": 1848.75 }, { "DateString": "26.1.2010", "Open": 1057, "High": 1065.75, "Low": 1038.75, "Close": 1043, "Volume": 1829.75 }, { "DateString": "27.1.2010", "Open": 1043, "High": 1057.75, "Low": 1003.75, "Close": 1015, "Volume": 1826.75 }, { "DateString": "28.1.2010", "Open": 1015, "High": 1027.5, "Low": 982.75, "Close": 999, "Volume": 1840.75 }, { "DateString": "29.1.2010", "Open": 999, "High": 1025, "Low": 963.25, "Close": 1007, "Volume": 1829.25 }, { "DateString": "30.1.2010", "Open": 1007, "High": 1031.25, "Low": 972.75, "Close": 1016, "Volume": 1809.25 }, { "DateString": "31.1.2010", "Open": 1016, "High": 1029.5, "Low": 990.75, "Close": 994, "Volume": 1803.25 }, { "DateString": "1.2.2010", "Open": 994, "High": 1020.75, "Low": 976.5, "Close": 993, "Volume": 1793.5 }, { "DateString": "2.2.2010", "Open": 993, "High": 1017, "Low": 969.5, "Close": 1000, "Volume": 1795.5 }, { "DateString": "3.2.2010", "Open": 1000, "High": 1034.5, "Low": 981, "Close": 994, "Volume": 1811.5 }, { "DateString": "4.2.2010", "Open": 994, "High": 1025, "Low": 966.75, "Close": 1016, "Volume": 1824.5 }, { "DateString": "5.2.2010", "Open": 1016, "High": 1041, "Low": 987.25, "Close": 1035, "Volume": 1843.75 }, { "DateString": "6.2.2010", "Open": 1035, "High": 1064, "Low": 1024.75, "Close": 1037, "Volume": 1829.5 }, { "DateString": "7.2.2010", "Open": 1037, "High": 1052.5, "Low": 1006, "Close": 1018, "Volume": 1822 }, { "DateString": "8.2.2010", "Open": 1018, "High": 1044.25, "Low": 1002.75, "Close": 1022, "Volume": 1820 }, { "DateString": "9.2.2010", "Open": 1022, "High": 1044.75, "Low": 986.75, "Close": 995, "Volume": 1836.75 }, { "DateString": "10.2.2010", "Open": 995, "High": 1015.25, "Low": 969.5, "Close": 977, "Volume": 1843.25 }, { "DateString": "11.2.2010", "Open": 977, "High": 1001.75, "Low": 948.5, "Close": 961, "Volume": 1836.25 }, { "DateString": "12.2.2010", "Open": 961, "High": 984, "Low": 935.75, "Close": 969, "Volume": 1839.75 }, { "DateString": "13.2.2010", "Open": 969, "High": 987.25, "Low": 935.25, "Close": 983, "Volume": 1860.5 }, { "DateString": "14.2.2010", "Open": 983, "High": 1000.75, "Low": 960.75, "Close": 1000, "Volume": 1856.75 }, { "DateString": "15.2.2010", "Open": 1000, "High": 1034.75, "Low": 969.25, "Close": 1016, "Volume": 1854.25 }, { "DateString": "16.2.2010", "Open": 1016, "High": 1037.25, "Low": 988.5, "Close": 1002, "Volume": 1858 }, { "DateString": "17.2.2010", "Open": 1002, "High": 1014.75, "Low": 976.25, "Close": 987, "Volume": 1839.5 }, { "DateString": "18.2.2010", "Open": 987, "High": 1011.5, "Low": 967.5, "Close": 968, "Volume": 1814.25 }, { "DateString": "19.2.2010", "Open": 968, "High": 984.5, "Low": 942.75, "Close": 959, "Volume": 1814.75 }, { "DateString": "20.2.2010", "Open": 959, "High": 982, "Low": 926.25, "Close": 935, "Volume": 1799.25}],
+
+            $("#chart").igDataChart({
+                width: '550px',
+                height: '400px',
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                dataSource: data,
+                axes: [{
+                    type: 'categoryX',
+                    name: 'xAxis',
+                    label: 'DateString',
+                    labelVisibility: 'collapsed'
+                }, {
+                    type: 'numericY',
+                    name: 'yAxis',
+                    labelVisibility: 'collapsed'
+                }, {
+                    type: 'numericY',
+                    name: 'yAxis2',
+                    labelVisibility: 'collapsed',
+                    stroke: 'rgba(0,0,0,0)',
+                    majorStroke: 'rgba(0,0,0,0)'
+                }],
+                series: [{
+                    type: 'financial',
+                    name: 'series1',
+                    brush: 'rgba(0,255,255,1)',
+                    negativeBrush: 'rgba(0,0,0,0.7)',
+                    title: 'Price Series',
+                    xAxis: 'xAxis',
+                    yAxis: 'yAxis',
+                    openMemberPath: 'Open',
+                    lowMemberPath: 'Low',
+                    highMemberPath: 'High',
+                    closeMemberPath: 'Close',
+                    trendLineThickness: 5, 
+                    trendLineBrush: 'rgba(0,255,255,1)', 
+                    trendLineType: 'modifiedAverage'
+                }, {
+                    type: 'line',
+                    name: 'series2',
+                    brush: 'rgba(255,0,0,1)',
+                    title: 'Volume Series',
+                    xAxis: 'xAxis',
+                    yAxis: 'yAxis2',
+                    valueMemberPath: 'Volume',
+                    trendLineBrush: 'rgba(255,0,0,1)', 
+                    trendLineThickness: 5,
+                    trendLineType: 'modifiedAverage',
+                }]
+            });
+        });
+
+
+        $("#priceSeries").live("change", function () {
+            brush = ($(this).is(":checked")) ? priceBrush : transperantBrush;
+            negBrush = ($(this).is(":checked")) ? negativeBrush : transperantBrush;
+            $("#chart").igDataChart("option", "series", [{ name: "series1", brush: brush, negativeBrush: negBrush, outline: negBrush}]);
+            $("#chart").igDataChart("styleUpdated");
+        });
+        $("#priceTrendline").live("change", function () {
+            brush = ($(this).is(":checked")) ? volumeBrush : transperantBrush;
+            $("#chart").igDataChart("option", "series", [{ name: "series1", trendLineBrush: brush}]);
+            $("#chart").igDataChart("styleUpdated");
+        });
+        $("#volumeSeries").live("change", function () {
+            brush = ($(this).is(":checked")) ? volumeBrush : transperantBrush;
+            $("#chart").igDataChart("option", "series", [{ name: "series2", brush: brush}]);
+            $("#chart").igDataChart("styleUpdated");
+        });
+        $("#volumeTrendline").live("change", function () {
+            brush = ($(this).is(":checked")) ? volumeBrush : transperantBrush;
+            $("#chart").igDataChart("option", "series", [{ name: "series2", trendLineBrush: brush}]);
+            $("#chart").igDataChart("styleUpdated");
+        });
+
+    </script>
+    <style>
+        #chart
+        {
+            position: relative;
+            float: left;
+            margin-right: 10px;
+            margin-bottom: 20px;
+        }
+        #legend1
+        {
+            left: 50px;
+            position: absolute;
+            font-size: 0.857em;
+            top: 15px;
+        }
+        .options
+        {
+            float: left;
+            font-size: 0.857em;
+            line-height: 1.429em;
+        }
+    </style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Multiple Series</h2>
+						<p>This sample demonstrates how to add multiple series in the same jQuery Chart control. </p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+						<div id="chart"></div>
+						
+						<div class="options">
+							<div><input id="priceSeries" type="checkbox" checked />Price Series</div>
+							<div><input id="priceTrendline" type="checkbox" checked />Price Trendline</div>
+							<div><input id="volumeSeries" type="checkbox" checked />Volume Series</div>
+							<div><input id="volumeTrendline" type="checkbox" checked />Volume Trend Line</div>
+						</div>
+					</div>
+
+				</section>
+			</div>
+
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>

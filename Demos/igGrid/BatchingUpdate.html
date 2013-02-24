@@ -1,0 +1,261 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+	
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+	<style type="text/css">
+        #eventList
+        {
+            border: 1px soild;
+            height: 200px;
+            overflow-y: auto;
+            background-color: #EBEBEB;
+			margin:20px 0;
+        }
+    </style>
+
+	<script type="text/javascript">		
+	    var i = -1, a = "A".charCodeAt(0), gridData = [], colors = ["Red", "Orange", "Pink", "Yellow", "Green"], names = ["Jet", "Train", "Car", "Boat"], transCounter = 0, transactions;
+		while (i++ < 7) {
+			gridData[i] = {
+				"ProductID": i,
+				"Name": names[i % 4],
+				"Code": String.fromCharCode(a + i % 4) + String.fromCharCode(a + 8 - i % 5) + String.fromCharCode(a + 10 - i % 10) + (1 + i % 7),
+				"Color": colors[i % 5],
+				"OrderDate": new Date(2009 + i % 4 % 2, (i + 3) % 12, 5 + i * 4 % 24),
+				"ListPrice": Math.pow((6 - i % 4), 7) * 1.25 + i
+			};
+		}
+		
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igGrid.Sorting,igGrid.Updating"
+		});
+		
+		$.ig.loader(function () {
+			$("#grid1").igGrid({
+				virtualization: false,
+				autoGenerateColumns: false,
+				primaryKey: "ProductID",
+				columns: [ {
+						// note: if primaryKey is set and data in primary column contains numbers,
+						// then the dataType: "number" is required, otherwise, dataSource may misbehave
+				        headerText: "Product ID", key: "ProductID", width: "100px", dataType: "number"
+					}, {
+					    headerText: "Product Name", key: "Name", width: "130px"
+					}, {
+					    headerText: "Code", key: "Code", width: "100px"
+					}, {
+					    headerText: "Color", key: "Color", width: "80px"
+					}, {
+					    headerText: "Order Date", key: "OrderDate", width: "120px", dataType: "date"
+					}, {
+					    headerText: "List Price", key: "ListPrice", width: "150px", dataType: "number", format: "currency"
+					}
+				],
+				dataSource: gridData,
+				height: "300px",
+				tabIndex: 1,
+				features: [{
+				    name: "Sorting",
+                    type: "local"
+                },
+                {
+					name: "Updating",
+					enableAddRow: true,
+					editMode: "row",
+					enableDeleteRow: true,
+					editCellStarted: function (evt, ui) {
+						if (ui.column === 0 && ui.row === -1) {
+							ui.editor.igEditor("value", numberOfRows());
+						}
+					},					
+					rowAdded: function (evt, ui){
+						$("#undo").igButton("option", "disabled", false);
+						$("#saveChanges").igButton("option", "disabled", false);
+					},
+					rowDeleted: function (evt, ui){
+					    $("#undo").igButton("option", "disabled", false);
+						$("#saveChanges").igButton("option", "disabled", false);
+					},
+					editRowEnded: function (evt, ui) {
+						if(ui.update)
+						{
+							$("#undo").igButton("option", "disabled", false);
+							$("#saveChanges").igButton("option", "disabled", false);
+						}
+					},
+					columnSettings: [ {
+						columnKey: "ProductID",
+						editorOptions: { type: "numeric", disabled: true }
+					}, {
+						columnKey: "Name",
+						defaultValue: names[1],
+						editorOptions: {
+							button: "dropdown",
+							listItems: names,
+							readOnly: true,
+							dropDownOnReadOnly: true
+						}
+					}, {
+						columnKey: "Code",
+						editorOptions: {
+							type: "mask",
+							inputMask: ">LLL0",
+							dataMode: "rawtext",
+							validatorOptions: { errorMessage: "Please fill all positions in format: LLL#"}
+						}
+					}, {
+						columnKey: "Color",
+						defaultValue: colors[1],
+						editorOptions: {
+							button: "dropdown",
+							listItems: colors
+						}
+					}, {
+						columnKey: "OrderDate",
+						editorType: "datepicker",
+						validation: true,
+						editorOptions: { minValue: new Date(1955, 1, 19), maxValue: new Date(), required: true }
+					}, {
+						columnKey: "ListPrice",
+						editorType: "currency",
+						editorOptions: { button: "spin", minValue: 0, maxValue: 100000, validatorOptions: {} }
+					} ]
+				} ]
+			});
+			
+			$("#saveChanges").igButton({ labelText: $("#saveChanges").val(), disabled: true });
+            $("#undo").igButton({ labelText: $("#undo").val(), disabled: true });
+            $("#redo").igButton({ labelText: $("#redo").val(), disabled: true });
+			
+			
+			 $("#undo").live({
+				click: function (e) {
+					var grid = $("#grid1");
+					transactions = grid.data("igGrid").dataSource.allTransactions();
+					grid.igGrid("rollback", true);
+	
+					$("#redo").igButton("option", "disabled", false);
+					$("#undo").igButton("disable");
+					//$("#saveChanges").igButton("disable");
+	
+					return false;
+				}
+			});
+		
+			$("#redo").live({
+				click: function (e) {
+					var grid = $("#grid1");
+					$.each(transactions, function (index, transaction) {
+						switch (transaction.type) {
+							case "row":
+								grid.igGridUpdating("updateRow", transaction.rowId, transaction.row, null, false);
+								break;
+							case "newrow":
+								grid.igGridUpdating("addRow", transaction.row, false);
+								break;
+							case "deleterow":
+								grid.igGridUpdating("deleteRow", transaction.rowId, false);
+								break;
+						}
+		
+					});
+					$(this).igButton("disable");
+					$("#undo").igButton("option", "disabled", false);
+					//$("#saveChanges").igButton("option", "disabled", false);
+				}
+			});
+		
+		
+			$("#saveChanges").bind({
+				click: function (e) {
+					transactions = $("#grid1").data("igGrid").dataSource.allTransactions();
+					
+					$.each(transactions, function (index, transaction) {
+						logTransaction("TransactionID: " + transaction.tid + "; Type: " + transaction.type + "; RowID: " + transaction.rowId);
+		
+					});
+						$("#grid1").igGrid("commit");
+						//$(this).igButton("disable");
+						//$("#undo").igButton("disable");
+					return false;
+				}    
+			});
+
+            $("#grid1").live("iggridupdatingdatadirty", function (event, ui) {
+                $("#grid1").igGrid("commit");
+                //saving local changes to the datasource when sorting
+                return false;
+            });
+		});
+		
+		function numberOfRows () {
+			return $("#grid1").data("igGrid").dataSource.dataView().length;
+		}
+		
+		function logTransaction(message) {
+			var evntWrap = $("#eventList");
+			$(evntWrap).append("<div>" + (++transCounter) + ". "  +  message + "<div>"); 
+			$(evntWrap).prop("scrollTop", $(evntWrap).prop("scrollHeight"));
+		}
+
+		
+	</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Batching Updates</h2>
+						<p>This sample demonstrates how to configure the igGrid control to commit changes only when “Save Changes” is pressed. When values are updated, added, or deleted in the grid, the user has the option to save changes or undo changes. When using batched updates, it’s important to know that there are certain operations including sorting, paging, filtering, grouping, and summaries when the grid needs to have updated data to process the operation. When data has not been committed and these operations occur, the dataDirty event is fired. This sample shows how to explicitly save changes in the dataDirty event so that sorting can complete with the updated data.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+						<div id="eventList" class="controlPanelEvent"></div> 
+						<table id="grid1"></table>
+						
+					    <div style="margin-top:5px;" >
+						    <button id="saveChanges" value="Save Changes"></button>
+						    <button id="undo" disabled="disabled" value="Undo"></button>
+						    <button id="redo" disabled="disabled" value="Redo"></buton>
+					    </div>	
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

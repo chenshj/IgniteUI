@@ -1,0 +1,364 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+ 
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script>
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+            resources: 'igEditors,igValidator,igShared'
+        });
+
+        $.ig.loader(function () {
+	        $.ui.igValidator.defaults.showAllErrorsOnSubmit = getShowAllErrorsOnSubmit();
+	        $('#textEditor').igEditor({
+	            validatorOptions: getValidationOptions(),
+	            required: getRequired(),
+	            width: 195
+	        });
+	        $('#datePicker').igDatePicker({
+	            width: 195,
+	            dateInputFormat: 'dateTime',
+	            regional: 'en-US',
+	            nullText: 'Enter date',
+	            required: getRequired(),
+	            validatorOptions: getValidationOptions()
+	        });
+	        $('#maskEditor1').igMaskEditor({
+	            validatorOptions: getValidationOptions(),
+	            required: getRequired(),
+	            width: 195,
+	            inputMask: '(000) 000-0000'
+	        });
+	        $('#maskEditor2').igMaskEditor({
+	            validatorOptions: getValidationOptions(),
+	            required: getRequired(),
+	            width: 195
+	        });
+	        $('#numericEditor').igNumericEditor({
+	            validatorOptions: getValidationOptions(),
+	            required: getRequired(),
+	            dataMode: 'sbyte',
+	            button: 'spin',
+	            width: 195
+	        });
+	        $('#currencyEditor').igCurrencyEditor({
+	            validatorOptions: getValidationOptions(),
+	            required: getRequired(),
+	            button: 'spin',
+	            minValue: 5,
+	            maxValue: 500,
+	            width: 195
+	        });
+	        $('#dateEditor').igDateEditor({
+	            validatorOptions: getValidationOptions(),
+	            required: getRequired(),
+	            button: 'spin',
+	            minValue: new Date(1900, 0, 1),
+	            maxValue: new Date(2200, 11, 31),
+	            width: 195,
+	            nullText: 'Enter date'
+	        });
+	        $('#hideAnimationDuration').igNumericEditor({
+	            width: 50,
+	            dataMode: 'ushort',
+	            nullable: false,
+	            valueChanged: function (evt, ui) {
+						var opt = { 'animationHide': ui.value };
+						$('#textEditor').igEditor('option', 'validatorOptions', opt);
+						$('#maskEditor1').igMaskEditor('option', 'validatorOptions', opt);
+						$('#maskEditor2').igMaskEditor('option', 'validatorOptions', opt);
+						$('#numericEditor').igNumericEditor('option', 'validatorOptions', opt);
+						$('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', opt);
+						$('#dateEditor').igDateEditor('option', 'validatorOptions', opt);
+						$('#datePicker').igDatePicker('option', 'validatorOptions', opt);
+				  }
+	        });
+	        $('#showAnimationDuration').igNumericEditor({
+	            width: 50,
+	            dataMode: 'ushort',
+	            nullable: false,
+	            valueChanged: function (evt, ui) {
+						var opt = { 'animationShow': ui.value };
+						$('#textEditor').igEditor('option', 'validatorOptions', opt);
+						$('#maskEditor1').igMaskEditor('option', 'validatorOptions', opt);
+						$('#maskEditor2').igMaskEditor('option', 'validatorOptions', opt);
+						$('#numericEditor').igNumericEditor('option', 'validatorOptions', opt);
+						$('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', opt);
+						$('#dateEditor').igDateEditor('option', 'validatorOptions', opt);
+						$('#datePicker').igDatePicker('option', 'validatorOptions', opt);
+				  }
+	        });
+	        $('#requredCheckBox').change(function () {
+	            var required = getRequired();
+
+	            if (required == false) {
+	                $('.validateOptions').attr('disabled', 'disabled');
+	            }
+	            else {
+	                $('.validateOptions').removeAttr('disabled');
+	            }
+
+	            $('#datePicker').igDatePicker('option', 'required', required);
+	            $('#textEditor').igEditor('option', 'required', required);
+	            $('#maskEditor1').igMaskEditor('option', 'required', required);
+	            $('#maskEditor2').igMaskEditor('option', 'required', required);
+	            $('#numericEditor').igNumericEditor('option', 'required', required);
+	            $('#currencyEditor').igCurrencyEditor('option', 'required', required);
+	            $('#dateEditor').igDateEditor('option', 'required', required);
+	        });
+	        $('.validateOptions').change(function () {
+	            var validatorOptions = getValidationOptions();
+	            $('#datePicker').igDatePicker('option', 'validatorOptions', validatorOptions);
+	            $('#textEditor').igEditor('option', 'validatorOptions', validatorOptions);
+	            $('#maskEditor1').igMaskEditor('option', 'validatorOptions', validatorOptions);
+	            $('#maskEditor2').igMaskEditor('option', 'validatorOptions', validatorOptions);
+	            $('#numericEditor').igNumericEditor('option', 'validatorOptions', validatorOptions);
+	            $('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', validatorOptions);
+	            $('#dateEditor').igDateEditor('option', 'validatorOptions', validatorOptions);
+	        });
+	        $('#formSubmit').click(function () {
+	            var message = "Form Submitting...";
+	            $("#submitMessage").stop(true, true);
+	            $("#formSubmitMessage").html(message).stop(true, true).fadeIn(500).fadeOut(2000);
+	            var form = $("#validationForm")[0];
+	            form.submit();
+	        });
+	        $('#customErrorMessegeText').blur(function () {
+	            var message = { 'errorMessage': getErrorMessage() };
+	            $('#datePicker').igDatePicker('option', 'validatorOptions', message);
+	            $('#textEditor').igEditor('option', 'validatorOptions', message);
+	            $('#maskEditor1').igMaskEditor('option', 'validatorOptions', message);
+	            $('#maskEditor2').igMaskEditor('option', 'validatorOptions', message);
+	            $('#numericEditor').igNumericEditor('option', 'validatorOptions', message);
+	            $('#currencyEditor').igCurrencyEditor('option', 'validatorOptions', message);
+	            $('#dateEditor').igDateEditor('option', 'validatorOptions', message);
+	        });
+	        $('#validationForm').submit(function () {
+	            var message = "Submit event fired";
+	            $("#formSubmitMessage").stop(true, true);
+	            $("#submitMessage").html(message).stop(true, true).fadeIn(500).fadeOut(2000);
+	        });
+	        $("#formSubmit").igButton({ labelText: $("#formSubmit").val() });
+	        $("#submitEvent").igButton({ labelText: $("#submitEvent").val() });
+
+	        $('.validateOptions').attr('disabled', 'disabled');
+	    });
+	function getShowAllErrorsOnSubmit()	{
+		return $('#showErrorCheckBox').is(":checked") ? true : false;
+	}
+	function getRequired()	{
+		return $('#requredCheckBox').is(":checked") ? true : false;
+	}
+	function getValidationOptions()	{
+		var validatorOptions = {};
+		validatorOptions.onblur = $('#onBlurCheckBox').is(":checked");
+		validatorOptions.onchange = $('#onChangeCheckBox').is(":checked");
+		validatorOptions.onsubmit = $('#onSubmitCheckBox').is(":checked");
+		validatorOptions.formSubmit = $('#formSubmitCheckBox').is(":checked");
+		validatorOptions.keepFocus = $('#keepFocusList').val();
+		validatorOptions.showIcon = $('#showIconCheckBox').is(":checked") ? true : false;
+		$.ui.igValidator.defaults.showAllErrorsOnSubmit = getShowAllErrorsOnSubmit();
+		return validatorOptions;
+	}
+	function getErrorMessage() {
+		var message = $('#customErrorMessegeText').val();
+		return (message.length < 1) ? null : message;
+	}
+	</script>
+	
+	
+	<style type="text/css">
+	.standard-grid {margin-bottom:20px;}
+	#submitEvent, #formSubmit {float:left; margin-right:20px;}
+	#formSubmit {float:left;}
+	</style>
+	
+</head>
+<body>
+ <form id="validationForm">
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Editor Validation</h2>
+						<p>This sample demonstrates the usage of validation for igEditors. There are a variety of options you can set from Validation Options section.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+						
+						
+						<table class="standard-grid">
+								<tr>
+									<td>
+										<b>Text Editor</b>
+										<br />
+										<input type="text" id="textEditor" />
+									</td>
+									<td>
+										<b>DatePicker</b>
+										<br />
+										<input id="datePicker" type="text" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Mask: (000) 000-0000</b>
+										<br />
+										<input type="text" id="maskEditor1" />
+									</td>
+									<td>
+										<b>Mask: CCCCCCCCCC</b>
+										<br />
+										<input id="maskEditor2" type="text" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Numeric (signed byte)</b>
+										<br />
+										<input type="text" id="numericEditor" />
+									</td>
+									<td>
+										<b>Currency, range: 5..500</b>
+										<br />
+										<input id="currencyEditor" type="text" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>Date: 1/1/1900..12/31/2200</b>
+										<br />
+										<input type="text" id="dateEditor" />
+									</td>
+									<td>&nbsp;</td>
+								</tr>
+							</table>
+							
+							
+							<div class="clearfix" style="width:100%">
+								<div style="width: 250px; float: left">
+									<input type="submit" class="required" value="Submit" id="submitEvent" />
+									<input type="button" class="required" id="formSubmit" value="Form Submit" />
+								</div>
+								<div style="float: left; padding-top: 5px">
+									<span id="formSubmitMessage" style="margin-left: 30px; color: red;">
+									</span>
+									<span id="submitMessage" style="margin-left: 30px; color: red;"></span>
+								</div>
+							</div>
+							<br />
+							<br />
+							<table id="mainTable" class="standard-grid">
+								<thead><tr><th colspan="2">Validation Options</th></tr></thead>
+								<tbody>
+									<tr>
+										<td style="width: 50%">
+											<input type="checkbox" id="requredCheckBox" />
+											Required
+										</td>
+										<td style="width: 50%">&nbsp;
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											<input type="checkbox" id="onBlurCheckBox" class="validateOptions" checked="checked" />
+											Validate onblur
+										</td>
+										<td class="required">
+											<input type="checkbox" id="onChangeCheckBox" class="validateOptions" checked="checked" />
+											Validate onchange
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											<input type="checkbox" id="onSubmitCheckBox" class="validateOptions" />
+											Validate on Submit
+										</td>
+										<td class="required">
+											<input type="checkbox" id="formSubmitCheckBox" class="validateOptions" />
+											Validate on FormSubmit
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											Keep Focus:
+											<select id="keepFocusList" class="validateOptions">
+												<option>never</option>
+												<option>once</option>
+												<option selected="selected">always</option>
+											</select>
+										</td>
+										<td class="required">
+											<input type="checkbox" id="showIconCheckBox" checked="checked" class="validateOptions" />
+											Show Icon
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											Show Animation (ms):
+											<input type="text" id="showAnimationDuration" class="validateOptions" value="300"
+												style="width: 50px" />
+										</td>
+										<td class="required">
+											Hide Animation (ms):
+											<input type="text" id="hideAnimationDuration" class="validateOptions" value="300"
+												style="width: 50px" />
+										</td>
+									</tr>
+									<tr>
+										<td class="required">
+											<input type="checkbox" id="showErrorCheckBox" class="validateOptions" />
+											Show all errors on submit
+										</td>
+										<td class="required">
+											Custom Error Message:
+											<input type="text" id="customErrorMessegeText" class="validateOptions" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						
+					</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+ </form>
+</body>
+</html>
+

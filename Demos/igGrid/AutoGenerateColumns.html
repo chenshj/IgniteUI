@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+    <script type="text/javascript">
+		var products = [];
+		
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igGrid"
+		});
+		
+		$.ig.loader(function () {
+            $("#grid1").igGrid({
+                autoGenerateColumns: true,
+                dataSource: products
+            });
+        });
+	</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Auto-Generate Columns</h2>
+						<p>This sample demonstrates igGrid's automatic generation of columns feature. The columns are generated based on the provided data.</p>
+					</hgroup>
+
+						<div class="sampleContainer">
+							<table id="grid1"></table>
+						</div>
+	
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+    <script type="text/javascript">
+        products[0] = { "ProductID": 1, "Name": "Adjustable Race", "ProductNumber": "AR-5381" };
+        products[1] = { "ProductID": 2, "Name": "Bearing Ball", "ProductNumber": "BA-8327" };
+        products[2] = { "ProductID": 3, "Name": "BB Ball Bearing", "ProductNumber": "BE-2349" };
+        products[3] = { "ProductID": 4, "Name": "Headset Ball Bearings", "ProductNumber": "BE-2908" };
+        products[4] = { "ProductID": 316, "Name": "Blade", "ProductNumber": "BL-2036" };
+        products[5] = { "ProductID": 317, "Name": "LL Crankarm", "ProductNumber": "CA-5965" };
+        products[6] = { "ProductID": 318, "Name": "ML Crankarm", "ProductNumber": "CA-6738" };
+        products[7] = { "ProductID": 319, "Name": "HL Crankarm", "ProductNumber": "CA-7457" };
+        products[8] = { "ProductID": 320, "Name": "Chainring Bolts", "ProductNumber": "CB-2903" };
+        products[9] = { "ProductID": 321, "Name": "Chainring Nut", "ProductNumber": "CN-6137" };
+
+	</script>
+</body>
+</html>

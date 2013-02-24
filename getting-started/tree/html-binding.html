@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../../js/infragistics.loader.js"></script>
+</head>
+<body>
+
+    <!-- The tree can easily consume this structure
+    of nested UL elements for its datasource. See the
+    small amount of instantiation script below. -->
+    <ul id="tree">
+        <li>North America
+            <ul>
+                <li>United States</li>
+                <li>Canada</li>
+                <li>Mexico</li>
+            </ul>
+        </li>
+        <li>South America
+            <ul>
+                <li>Brazil</li>
+                <li>Uruguay</li>
+            </ul>
+        </li>
+        <li>Europe
+            <ul>
+                <li>United Kingdom</li>
+                <li>Germany</li>
+                <li>Bulgaria</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        // The ig.loader is used to load required OctaneUI JavaScript 
+        // and CSS resources. It accepts a configuration object that specifies
+        // default paths and the components to load into the page.
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+
+            //string representing which component resources are required
+            resources: "igTree"
+        });
+
+        //The ig.loader accepts a function that is called after 
+        //all resources are loaded and document.ready has fired.
+        $.ig.loader(function () {
+
+            //This tree binds to the data defined in the HTML above
+            $("#tree").igTree();
+
+        });
+    </script>
+
+</body>
+</html>

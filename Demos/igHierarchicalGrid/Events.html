@@ -1,0 +1,175 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/jquery.tmpl.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igHierarchicalGrid"
+		});
+
+		$.ig.loader(function () {
+			var url = "http://services.odata.org/Northwind/Northwind.svc/Categories?$format=json&$callback=?",
+				jsonp = new $.ig.JSONPDataSource({dataSource: url, responseDataKey: "d.results"});
+		
+			$("#grid1").igHierarchicalGrid({
+				rowExpanding: function (sender, eventArgs) {
+					var message =
+						"<div class='event-fired'>rowExpanding " +
+							"event fired." +
+						"</div>";
+					showEvent(message);
+				},
+				rowExpanded: function (sender, eventArgs) {
+					var message =
+						"<div class='event-fired'>rowExpanded " +
+							"event fired." +
+						"</div>";
+					showEvent(message);
+				},
+				rowCollapsing: function (sender, eventArgs) {
+					var message =
+						"<div class='event-fired'>rowCollapsing " +
+							"event fired." +
+						"</div>";
+					showEvent(message);
+				},
+				rowCollapsed: function (sender, eventArgs) {
+					var message =
+						"<div class='event-fired'>rowCollapsed " +
+							"event fired." +
+						"</div>";
+					showEvent(message);
+				},
+				childrenPopulating: function (sender, eventArgs) {
+					var message =
+						"<div class='event-fired'>childrenPopulating " +
+							"event fired." +
+						"</div>";
+					showEvent(message);
+				},
+				childrenPopulated: function (sender, eventArgs) {
+					var message =
+						"<div class='event-fired'>childrenPopulated " +
+							"event fired." +
+						"</div>";
+					showEvent(message);
+				},
+			
+				odata: true,
+				initialDataBindDepth: 0,
+				dataSource: jsonp,
+				responseDataKey: "d.results",
+				width: "100%",
+
+				autoGenerateColumns: false,
+				primaryKey: "CategoryID",
+				columns: [
+					{ key: "CategoryID", headerText: "Category ID", dataType: "number" },
+					{ key: "CategoryName", headerText: "Category Name", dataType: "string" },
+					{ key: "Description", headerText: "Description", dataType: "string" }
+				],
+			
+				childrenDataProperty: "Products",
+				autoGenerateLayouts: false,
+				columnLayouts: [
+					{
+						key: "Products",
+						responseDataKey: "d.results",
+						autoGenerateColumns: false,
+						primaryKey: "ProductID",
+						foreignKey: "CategoryID",
+						columns: [
+							{ key: "ProductID", headerText: "Product ID", dataType: "number" },
+							{ key: "ProductName", headerText: "Product Name", dataType: "string" },
+							{ key: "QuantityPerUnit", headerText: "Quantity Per Unit", dataType: "string" }
+						]
+					}
+				]	
+			});
+			
+			function showEvent(message) {
+				$("#eventsInfo").html($("#eventsInfo").html() + message).
+								prop({ scrollTop: $("#eventsInfo").prop("scrollHeight") });
+			}
+			$("#btnClear").igButton({ labelText: $("#btnClear").val() });
+			$("#btnClear").click(function(){
+				$("#eventsInfo").html("");
+			});
+		});
+	</script>
+	
+	<style type="text/css">
+		.tooltip-options { padding: 10px; background-color: #EBEBEB; }
+		.tooltip-grid-image { width: 100px; height: 135px; } 
+		.tooltip-grid-descr { overflow: hidden; height: 135px; }
+		.eventsWrapper { border: solid 1px #000; margin: 20px 0; padding: 5px 0px 5px 20px; }
+		.eventsLegend { padding-left: 3px; padding-right: 3px; }
+		.event-fired { font-weight: bold; margin: 5px 0 0; }
+		.tooltip-italic { font-style: italic; }
+		.clear { clear: both; }
+		#btnClear { float: right; }
+		#eventsInfo { border: 1px soild; height: 150px; overflow-y: auto; padding-top: 5px; }
+	</style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Events</h2>
+						<p>This sample shows the events which are triggered when expanding and collapsing the child layouts.Note: You need an Internet connection to be able to access the oData Service.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+							<input id="btnClear" type="button" value="Clear event list"/>
+							<div class="clear"></div>
+						<fieldset class="eventsWrapper">
+							<legend class="eventsLegend">Client events info</legend>
+							<div id="eventsInfo" class="controlPanelEvent" data-scroll="true"></div>
+						</fieldset>
+						<table id="grid1"></table>
+					</div>
+		
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>

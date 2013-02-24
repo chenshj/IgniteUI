@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+    <link href="../content/MapCommon.css" rel="stylesheet" type="text/css"/>
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+    
+    <script type="text/javascript">
+        function ColorPickerByIndex(min, max) {
+            //  Initialize internal state
+            var brushes = ["#8CC3E3", "#308EC5", "#C5B130", "#C56630", "#C56630", "#C53044"];
+            var min = min;
+            var max = max;
+            var interval = (max - min) / (brushes.length - 1)
+
+            //  Public members
+
+            //  Returns a color from the brushes array depending on the input value 
+            this.getColorByIndex = function (val) {
+                var index = Math.round(val / interval);
+
+                if (index < 0) {
+                    index = 0;
+                }
+                else if (index > (brushes.length - 1)) {
+                    index = brushes.length - 1;
+                }
+
+                return brushes[index];
+            }
+
+            //  Returns an array with objects describing the range of values for every color 
+            //  in the brushes array
+            this.getColorLegend = function () {
+                var legend = [];
+                for (var i = 0; i < brushes.length; i++) {
+                    legend[legend.length] = {
+                        color: brushes[i],
+                        range: getRangeForColor(i)
+                    };
+                }
+                return legend;
+            }
+
+            function getRangeForColor(index) {
+                return {
+                    minSize: (index > 0) ? min + index * interval : "",
+                    maxSize: (index < brushes.length - 1) ? min + (index + 1) * interval - 1 : ""
+                };
+            }
+        }
+
+        var populationStyleSelector;
+        //  Create color picker object
+        var colorPicker = new ColorPickerByIndex(100000, 500000000);
+        populationStyleSelector = {
+            selectStyle: function (s, o) {
+                var pop = s.fields.item("POP_CNTRY");
+                var popInt = parseInt(pop);
+                var colString = colorPicker.getColorByIndex(popInt);
+
+                return {
+                    fill: colString,
+                    stroke: "gray"
+                };
+            }
+        }
+
+        function initMapLegend() {
+            var legendRowTemplate =
+                '<tr class="legendRow">' +
+                '<td><span class="colorCell" style="background-color: ${color}; color: ${color};">AAA</span></td>' +
+                '<td class="popCell">${range.minSize}</td>' +
+                '<td class="popCell">${range.maxSize}</td>' +
+                '</tr>';
+
+            var colors = colorPicker.getColorLegend();
+            for (var i = 0; i < colors.length; i++) {
+                var thisRow = $.ig.tmpl(legendRowTemplate, colors[i]);
+                $("#popLegend").append(thisRow);
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igMap"
+        });
+
+        $.ig.loader(function () {
+            $("#map").igMap({
+                width: "500px",
+                crosshairVisibility: "visible",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../Content/Images/World.png",
+                panModifier: "control",
+                backgroundContent: {
+                    type: "openStreet"
+                },
+                series: [{
+                    type: "geographicShape",
+                    name: "worldCountries",
+                    markerType: "none",
+                    shapeDataSource: "../scripts/db/world.shp",
+                    databaseSource: "../scripts/db/world.dbf",
+                    brush: "rgba(68,138,223,.6)",
+                    outline: "rgba(34,108,200,1)",
+                    shapeStyleSelector: populationStyleSelector,
+                    showTooltip: true,
+                    tooltipTemplate: "worldContries"
+                }],
+                windowResponse: "immediate",
+                windowRect: {
+                    left: 0.27,
+                    top: 0.2,
+                    height: 0.5,
+                    width: 0.5
+                }
+            });
+
+            initMapLegend();
+        });
+    </script>
+
+    <script id="worldContries" type="text/html">
+        <table>
+            <tr>
+                <td class="tooltipHeading" colspan="2">${item.fieldValues.CNTRY_NAME}</td>
+            </tr>
+            <tr>
+                <td>Population:</td><td>${item.fieldValues.POP_CNTRY}</td>
+            </tr>
+            <tr>
+                <td>Currency:</td><td>${item.fieldValues.CURR_TYPE} (${item.fieldValues.CURR_CODE})</td>
+            </tr>
+        </table>
+    </script>
+
+    <style>
+        #map { position: relative; float: left; }
+        #popLegend  
+        {
+            position: relative; 
+            float: left;
+            margin-left: 10px;
+        }
+        
+        #popLegend tr { margin: 10px 1px 10px 1px; }
+        #popLegend .colorCell  
+        {
+            padding: 0px 3px 0px 3px; 
+        }
+        #popLegend .popCell  
+        {
+            padding: 0px 2px 0px 2px;
+            text-align: right; 
+            border: 1px dotted grey; 
+        }
+    </style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Shape Style Selector</h2>
+						<p>This sample demonstrates how to configure a custom shape style selector algorythm. This allows different shapes to be depicted with different colors to convey information.</p>
+                        <p><span style="font-weight:bold">Note: </span>This sample must be hosted on a web server along with the javascript, theming and database resources in order for the map control to be able to load necessary files like database, shape or triangulated files.</p>
+                        <p><span style="font-weight:bold">Hint: </span>You can define a virtual folder in your web server which points to the base HTML folder where the samples source code resides.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+                        <div id="map"></div>
+
+                        <table id="popLegend">
+                            <tr>
+                                <th>Color</th>
+                                <th>Min</th>
+                                <th>Max</th>
+                            </tr>
+                        </table>
+
+                        <h4 style="clear: both; width: 500px; text-align: center">World Population</h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

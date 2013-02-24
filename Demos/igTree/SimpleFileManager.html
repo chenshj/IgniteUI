@@ -1,0 +1,357 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<style type="text/css">
+        .eventsWrapper { border: solid 1px #e3e3e3; margin: 20px 0; padding: 5px 0px 5px 20px; }
+        .eventsLegend { padding-left: 3px; padding-right: 3px; color: #656565; }
+        .event-fired { font-weight: bold; margin: 15px 0 0; }
+		.clear { clear: both; }
+		#eventsInfo { border: 1px soild; height: 150px; overflow-y: auto; padding-top: 5px; color: #656565; }
+    </style>
+	
+    <script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script>
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igTree,igDialog,igShared"
+        }); 
+		
+        $.ig.loader(function () {
+			var data = [{Text:"Computer",Value:"Folder",ImageUrl:"../content/images/igTree/Common/computer.png",Folder:[{Text:"Music",Value:"Folder",ImageUrl:"../content/images/igTree/Common/book.png",Folder:[{Text:"Y.Malmsteen",Value:"Folder",ImageUrl:"../content/images/igTree/Common/book.png",Folder:[{Text:"Y.Malmsteen - Making Love",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""},{Text:"Y.Malmsteen - Rising Force",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""},{Text:"Y.Malmsteen - Fire and Ice",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""}]},{Text:"WhiteSnake",Value:"Folder",ImageUrl:"../content/images/igTree/Common/book.png",Folder:[{Text:"WhiteSnake - Trouble",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""},{Text:"WhiteSnake - Bad Boys",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""},{Text:"WhiteSnake - Is This Love",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""}]},{Text:"AC/DC",Value:"Folder",ImageUrl:"../content/images/igTree/Common/book.png",Folder:[{Text:"AC/DC - ThunderStruck",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""},{Text:"AC/DC - T.N.T.",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""},{Text:"AC/DC - The Jack",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""}]},{Text:"Rock",Value:"Folder",ImageUrl:"../content/images/igTree/Common/book.png",Folder:[{Text:"Bon Jovi - It's My Life",Value:"File",ImageUrl:"../content/images/igTree/Common/music.png",Folder:""}]}]},{Text:"My Documents",Value:"Folder",ImageUrl:"../content/images/igTree/Common/DocumentsFolder.png",Folder:[{Text:"2009",Value:"Folder",ImageUrl:"../content/images/igTree/Common/DocumentsFolder.png",Folder:[{Text:"Month Report",Value:"File",ImageUrl:"../content/images/igTree/Common/Documents.png",Folder:""},{Text:"Year Report",Value:"File",ImageUrl:"../content/images/igTree/Common/Documents.png",Folder:""}]},{Text:"2010",Value:"Folder",ImageUrl:"../content/images/igTree/Common/DocumentsFolder.png",Folder:[{Text:"Month Report",Value:"File",ImageUrl:"../content/images/igTree/Common/Documents.png",Folder:""},{Text:"Year Report",Value:"File",ImageUrl:"../content/images/igTree/Common/Documents.png",Folder:""}]}]},{Text:"Pictures",Value:"Folder",ImageUrl:"../content/images/igTree/Common/coins.png",Folder:[{Text:"BirthDay2009",Value:"Folder",ImageUrl:"../content/images/igTree/Common/coins.png",Folder:[{Text:"Picture1",Value:"File",ImageUrl:"../content/images/igTree/Common/coins_add.png",Folder:""},{Text:"Picture2",Value:"File",ImageUrl:"../content/images/igTree/Common/coins_add.png",Folder:""},{Text:"Picture3",Value:"File",ImageUrl:"../content/images/igTree/Common/coins_add.png",Folder:""},{Text:"Picture4",Value:"File",ImageUrl:"../content/images/igTree/Common/coins_add.png",Folder:""}]},{Text:"BirthDay2010",Value:"Folder",ImageUrl:"../content/images/igTree/Common/coins.png",Folder:[{Text:"Picture1",Value:"File",ImageUrl:"../content/images/igTree/Common/coins_add.png",Folder:""},{Text:"Picture2",Value:"File",ImageUrl:"../content/images/igTree/Common/coins_add.png",Folder:""},{Text:"Picture3",Value:"File",ImageUrl:"../content/images/igTree/Common/coins_add.png",Folder:""}]}]},{Text:"Network",Value:"Folder",ImageUrl:"../content/images/igTree/Common/door.png",Folder:[{Text:"Archive",Value:"Folder",ImageUrl:"../content/images/igTree/Common/door_in.png",Folder:""},{Text:"BackUp",Value:"Folder",ImageUrl:"../content/images/igTree/Common/door_in.png",Folder:""},{Text:"FTP",Value:"Folder",ImageUrl:"../content/images/igTree/Common/door_in.png",Folder:""}]},{Text:"Deleted",Value:"Folder",ImageUrl:"../content/images/igTree/Common/bin_empty.png",Folder:""}]}];
+			
+			var deletedNode,
+				helperText;
+			
+			// Initialize the igDialog
+			$("#modalDialog").igDialog({
+				imageClass: "ui-icon ui-icon-alert",
+				state: "closed",
+				modal: true,
+				draggable: false,
+				resizable: false
+			});
+			
+			// Initialize buttons for the Modal igDialog with igButton
+			$("#yesModalDialog").igButton({ labelText: "Yes", width: 80 });
+			$("#noModalDialog").igButton({ labelText: "No", width: 80 });
+			
+			$("#yesModalDialog").live("click", function (e) {
+				if (helperText) {
+					var node = $("#tree").igTree("findNodesByText", helperText);
+					if (node.length > 0)
+					{
+						$("#tree").igTree("removeAt", node[0].path);
+						$("#tree").igTree("addNode", node[0].data, deletedNode[0].element);
+						helperText = "";
+					}
+				}
+				// Close the Modal igDialog
+				$("#modalDialog").igDialog("close");
+			});
+			
+			$("#noModalDialog").live("click", function (e) {
+				// Close the Modal igDialog
+				$("#modalDialog").igDialog("close");
+			});
+			
+			// Initialize the igTree
+            $("#tree").igTree({
+                checkboxMode: "triState",
+                singleBranchExpand: true,
+                dataSource: data,
+                dataSourceType: "json",
+                initialExpandDepth: 0,
+                pathSeparator: ".",
+                bindings: {
+                    textKey: "Text",
+                    valueKey: "Value",
+                    imageUrlKey: "ImageUrl",
+                    childDataProperty: "Folder",
+                },
+				// Enable Drag-and-drop feature
+				dragAndDrop: true,
+				dragAndDropSettings: {
+					dragAndDropMode: "move",
+					customDropValidation: function (element) {
+						// Validates the drop target
+						var droppableNode = $(this),
+							draggableNode = $(element);
+						
+						if (draggableNode.attr("data-path") == "0") {
+							return false;
+						}
+						
+						deletedNode = $("#tree").igTree("findNodesByText", "Deleted");
+						if (deletedNode) {
+							var nodePathArray = draggableNode.attr("data-path").split(".");
+							var deletedNodePathArray = deletedNode[0].path.split(".");
+							if (nodePathArray[0] == deletedNodePathArray[0] && 
+								nodePathArray[1] == deletedNodePathArray[1]) {
+								return false;
+							}
+						}
+						
+						if (droppableNode.is('a') && droppableNode.closest('li[data-role=node]').attr('data-value') === 'File') {
+							return false;
+						}
+
+						return true;
+					}
+				}
+            });
+			
+			$("#trash").droppable({
+				tolerance: "pointer",
+                activeClass: "ui-state-highlight",
+				accept: function (element) {
+						var node = $("#tree").igTree("nodeFromElement", $(element));
+						
+						if (node.path == "0") {
+							return false;
+						}
+						
+						deletedNode = $("#tree").igTree("findNodesByText", "Deleted");
+						if (deletedNode) {
+							var nodePathArray = node.path.split(".");
+							var DeletedNodePathArray = deletedNode[0].path.split(".");
+							if (nodePathArray[0] == DeletedNodePathArray[0] && 
+								nodePathArray[1] == DeletedNodePathArray[1]) {
+								return false;
+							}
+						}
+
+						return true;
+				},
+				over: function(event, ui) {
+					markup = $(ui.helper.html());
+					markup.find("span").removeClass("ui-icon-cancel").addClass("ui-icon-trash").siblings("strong");
+				    ui.helper.
+						removeClass("ui-widget ui-igtree-dropindicator ui-state-error ui-corner-all").
+						addClass("ui-widget ui-igtree-dropindicator ui-state-highlight ui-corner-all").
+						html(markup);
+                },
+                out: function(event, ui) {
+					markup = $(ui.helper.html());
+					markup.find("span").removeClass("ui-icon-trash").addClass("ui-icon-cancel").siblings("strong");
+					
+					ui.helper.
+						removeClass("ui-widget ui-igtree-dropindicator ui-state-highlight ui-corner-all").
+						addClass("ui-widget ui-igtree-dropindicator ui-state-error ui-corner-all").
+						html(markup);
+                },
+                drop: function(event, ui) {
+					helperText = ui.helper.text();
+                    $("#modalDialog").igDialog("option", "headerText", "Permanently delete - " + helperText);
+					$("#modalDialog").igDialog("open");
+                }
+			});
+					
+			$(document).delegate("#tree", "igtreedragstart", function(evt, ui) { 
+				var message =
+					"<div class='event-fired'>dragStart " + ui.data.Text + "</div>" + 
+					"<div class='event-args'>" +
+						"Position Left: " + ui.position.left +
+						" Position Top: " + ui.position.top +
+					"</div>";
+				showEvent(message);
+			});
+			
+			var lastPositionLeft = 0,
+				lastPositionTop = 0,
+				intervalInPx = 30;
+			$(document).delegate("#tree", "igtreedrag", function(evt, ui) { 
+				if ( (ui.position.left > lastPositionLeft + intervalInPx || ui.position.top > lastPositionTop + intervalInPx) ||
+					 (ui.position.left < lastPositionLeft - intervalInPx || ui.position.top < lastPositionTop - intervalInPx) )
+				{
+					lastPositionLeft = ui.position.left;
+					lastPositionTop = ui.position.top;
+					var message =
+						"<div class='event-fired'>drag " + ui.data.Text + "</div>" + 
+						"<div class='event-args'>" +
+							"Position Left: " + ui.position.left +
+							" Position Top: " + ui.position.top +
+						"</div>";
+					showEvent(message);
+				}
+			});
+			
+			$(document).delegate("#tree", "igtreenodedropping", function(evt, ui) { 
+				var message =
+					"<div class='event-fired'>nodeDropping " + ui.data.Text + "</div>" + 
+					"<div class='event-args'>" +
+						"Position Left: " + ui.position.left +
+						" Position Top: " + ui.position.top +
+					"</div>";
+				showEvent(message);
+			});
+			
+			$(document).delegate("#tree", "igtreenodedropped", function(evt, ui) { 
+				var message =
+					"<div class='event-fired'>nodeDropped " + ui.data.Text + "</div>" + 
+					"<div class='event-args'>" +
+						"Position Left: " + ui.position.left +
+						" Position Top: " + ui.position.top +
+					"</div>";
+				showEvent(message);
+			});
+			
+			$(document).delegate("#tree", "igtreedragstop", function(evt, ui) { 
+				var message =
+					"<div class='event-fired'>dragStop</div>" +
+					"<div class='event-args'>" +
+						"Position Left: " + ui.position.left +
+						" Position Top: " + ui.position.top +
+					"</div>";
+				showEvent(message);
+			});
+			
+			function showEvent(message) {
+				$("#eventsInfo").html($("#eventsInfo").html() + message).
+							prop({ scrollTop: $("#eventsInfo").prop("scrollHeight") });
+			}
+        });        
+    </script>
+	<style>
+		#trash 
+		{  
+			float: right;
+			height: 100px; 
+			width: 32%;
+			padding: 1%;
+		} 
+		
+		#trash h4 
+		{ 
+			line-height: 16px; 
+			margin: 0 0 0.4em; 
+		}
+		
+		#trash h4 .ui-icon 
+		{ 
+			float: left; 
+		}
+		
+		.containerTree
+        {
+	        overflow: auto;
+	        width: 100%;
+        }
+    
+        #left 
+		{
+	        display: inline;
+	        float: left;
+        }
+
+        #right 
+		{
+	        float: right;
+			width: 400px;
+        }
+        
+        #tree 
+        {
+            font-size: 10px;
+        }
+		
+		.containerModalDialog
+        {
+	        overflow: auto;
+	        width: 180px;
+			margin: 0 auto;
+			padding-top: 5px;
+        }
+    
+        #leftYes 
+		{
+	        float: left;
+        }
+
+        #rightNo
+		{
+	        float: right;
+        }
+	</style>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1 class="logo">
+                <a href="../index.html">
+                    <img src="../Content/images/infragistics.png" /></a></h1>
+        </header>
+        <div id="main" role="main">
+            <section class="product">
+                <img src="../Content/images/jquery-netadvantage.png" />
+                <p>
+                    Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+            </section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+                    <hgroup>
+                        <h1>
+                            IgniteUI </h1>
+                        <h2>
+                            Simple File Manager</h2>
+                        <p>
+                            This sample demonstrates how to create a simple file manager from files and folders. It has a custom drop validation function to validate dropping files and folders over the tree. The trash is a droppable HTML DIV element. When a node is over the trash, the element’s appearance changes to show a trash icon with the element greyed out. The change in appearance is achieved via updates to the element’s CSS classes. The deleted element goes to Deleted node in the tree. You can see the effect of the drag-and-drop events in the Events Info area as you drag-and-drop items in the tree.</p>
+                    </hgroup>
+                    <div class="sampleContainer">
+						<div class="containerTree">
+	                        <div id="left">
+								<!--igTree target element-->
+								<div id="tree">
+								</div>
+								
+								<!--igDialog target element-->
+								<div id="modalDialog">
+									<div class="containerModalDialog">
+										<div id="leftYes">
+											<button id="yesModalDialog" >
+											</button>
+										</div>
+										
+										<div id="rightNo">
+											<button id="noModalDialog" >
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="right">
+                                <div id="trash" class="ui-widget-content ui-state-default">
+									<h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
+								</div>				
+							</div>
+							
+						</div>
+						<fieldset class="eventsWrapper">
+								<legend class="eventsLegend">Events Info</legend>
+								<div id="eventsInfo" class="controlPanelEvent"></div>
+						</fieldset>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

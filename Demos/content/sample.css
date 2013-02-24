@@ -1,0 +1,116 @@
+﻿.note
+{
+    margin-left:25px;
+    margin-right:25px;
+}
+
+.note+span {font-weight:bold;}
+
+.holder{padding:20px;padding-top:40px;}
+.left, .right
+		{
+		    background: url("images/curvedShadowSprite.jpg") left top no-repeat;
+		    width:45px; height:333px;
+		}
+		
+		.right
+		{
+		    background-position: right top;
+		    width:45px; height:333px;
+		}
+		
+		.left, .center, .right{float:left}
+
+.dataGrid
+{
+    width:448px;
+    height:348px;
+    border-collapse:collapse;
+    color:#333333; 
+    font-size:12px;
+}
+	.dataGrid .alternate{background-color:#EBEBEB;}
+		    
+	.dataGrid thead th
+	{
+	    background:#4F4F4F url("images/dataGridHeader.png") repeat-x;
+	    color:#ffffff;
+	    font-weight:normal;border-collapse:collapse;
+	    
+	    border-top:     1px solid #535353;
+	    border-right:   1px solid #535353;
+	    border-bottom:  1px solid #535353;
+	    border-left:    1px solid #7A7A7A;
+	}
+	
+	.dataGrid tbody
+	{
+	    border:1px solid #B1B1B1;
+	    border-top-width: 0;
+	}
+	.dataGrid tbody td
+	{
+	    border:none;
+	}
+		
+.bntSubmit
+{
+	padding:0 0 5px;margin:0;border:none;
+	width:80px; height:25px; text-align:center; font-size:12px;color:#ffffff;
+	background:url("images/buttonSprite.png") no-repeat left -30px;
+	cursor:pointer; outline:none;
+}
+    .bntSubmit:hover
+    {
+        background:url("images/buttonSprite.png") no-repeat left -60px; outline:none;
+    }
+
+    .bntSubmit:active
+    {
+        background:url("images/buttonSprite.png") no-repeat left -60px; outline:none;
+    }
+
+.samplePage
+{
+    background-color:White;
+    padding:30px;
+}
+
+/**************************
+igRating MVC Sample CSS
+***************************/
+.sampleContents p {margin:8px 0;}
+#igRatingHR_ratingDiv, #igRatingDS_ratingDiv {margin-bottom:10px}
+.ratingOptions label, .ratingOptions select, .ratingOptions input {float:left; margin:10px 10px 10px 0;}
+.clear { clear: both; }
+.rating-column1 { width: 248px; }
+
+.sampleDescription
+{
+    width:972px;  
+    margin:10px auto 10px auto;
+    padding:5px; 
+    background-color:White;
+}
+
+.sampleContainer
+{
+    width:972px;
+    margin-left:auto;
+    margin-right:auto;    
+}
+
+.sample-container { margin: 20px 50px; border: 1px solid #999999; padding: 10px 20px; }
+.sample-dynamic { height: 100px; }
+.sample-container .empty-div { border:  1px solid #b1b1b1; width:200px!important; height:20px!important; line-height:20px; padding:4px; }
+.sample-float-left { float: left; margin-right: 30px; }
+.sample-clear { clear: both; }
+.animate-message { color: #3EC2F9; font-size: 16px; font-weight: bold; }
+.sample-left { float: left; }
+.sample-right { float: right; }
+.clear { clear: both; }
+
+#igRating1 , #igRating2 { margin-bottom: 10px; }
+#button-reset, #selCountItems { margin-right: 20px; }
+#ThemeRoller { margin-top: 10px; }
+

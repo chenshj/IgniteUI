@@ -1,0 +1,14 @@
+﻿.tooltip  
+{
+    border: 1px solid Grey; 
+    background-color: White; 
+    opacity: 0.75; 
+    font-family: Calibri; 
+    border-radius: 3px; 
+}
+
+.tooltipHeading
+{
+    font-weight: bold; 
+    border-bottom: 1px solid grey; 
+}

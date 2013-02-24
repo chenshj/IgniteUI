@@ -1,0 +1,262 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        .labelCol
+        {
+            width: 200px;
+        }
+        
+        .comboSampleButton
+        {
+            width: 150px;
+        }
+        
+        #comboContainer
+        {
+            margin-bottom: 30px;
+        }
+        
+        table.optionsTable td
+        {
+            padding-bottom: 3px;
+            padding-right: 5px;
+        }
+        
+        legend
+        {
+            font-size: large;
+            padding-bottom: 10px;
+        }
+        .comboSampleButton
+        {
+            margin-bottom: 5px;
+        }
+    </style>
+
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/jquery.tmpl.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+
+    <script>
+        //---------------------------- Helper Functions ---------------------------------
+
+        function showFeedback(elementID, message) {
+            "use strict";
+            var selector = '#' + elementID;
+            $(selector).stop(true, true).html(message)
+                .fadeIn(500).delay(3000).fadeOut(500);
+        }
+
+        //-------------------------------------------------------------------------------
+
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igEditors,igCombo,igShared"
+        });
+
+        $.ig.loader(function () {
+            "use strict";
+            var enableDropDownOnFocus = true,
+                enableMultiSelection = "on",
+                comboSelectedIndex = 0,
+                message;
+
+            //Combo Initialization          
+            $("#comboColors").igCombo({
+                width: "350px",
+                dropDownOnFocus: enableDropDownOnFocus,
+                multiSelection: enableMultiSelection,
+                selectedItems: [
+                    {
+                        index: comboSelectedIndex
+                    }
+                ]
+            });
+
+            //Apply Changes
+            $("#btnApplySelection").click(function () {
+
+                //Get the values from the properties UI
+                enableDropDownOnFocus = $("#chkOnFocus").is(":checked");
+                enableMultiSelection = $("#ddMultiSelection").igTextEditor("value");
+                comboSelectedIndex = $("#inpSelectedIndex").igNumericEditor("value");
+
+                //Set the values to the Combo
+                $("#comboColors").igCombo("option", "dropDownOnFocus", enableDropDownOnFocus);
+                $("#comboColors").igCombo("option", "multiSelection", enableMultiSelection);
+                $("#comboColors").igCombo("selectedIndex", comboSelectedIndex);
+
+                //Show feedback
+                message = "Changes Applied";
+                showFeedback("spnFeedback", message);
+            });
+
+            //Get Selection
+            $("#btnGetSelection").click(function () {
+                var items = $("#comboColors").igCombo("option", "selectedItems");
+                var selectedText = $("#comboColors").igCombo("text"),
+                    selectedValue = (items && items[0]) ? items[0].value : "none",
+                    selectedIndex = (items && items[0]) ? items[0].index : -1;
+                for (var i = 1; items && i < items.length; i++) {
+                    selectedValue += ', ' + items[i].value;
+                    selectedIndex += ', ' + items[i].index;
+                }
+
+                    message = "Selected Index: " + selectedIndex +
+                        ", Text: " + selectedText +
+                        ", Value: " + selectedValue;
+
+                //Helper function to display feedback
+                showFeedback("spnFeedback", message);
+
+            });
+
+            //Clear Selection
+            $("#btnClearSelection").click(function () {
+                $("#comboColors").igCombo("selectedIndex", -1);
+            });
+
+            //------------------- Configure Sample Properties UI ----------------------------
+
+            //Set the initial values of the properties UI
+            $("#chkOnFocus").prop("checked", enableDropDownOnFocus);
+            $("#ddMultiSelection").igTextEditor("option", "value", enableMultiSelection);
+
+            //Initialize Numeric Editor
+            $("#inpSelectedIndex").igNumericEditor({
+                button: "spin",
+                minValue: 0,
+                maxValue: 8,
+                value: 0
+            });
+
+            //Initialize Buttons
+            $(".comboSampleButton").each(function () {
+                $(this).igButton({
+                    labelText: $(this).val()
+                });
+            });
+
+            //Configure MultiSelection DropDown
+            $("#ddMultiSelection").igTextEditor({
+                button: "dropdown",
+                dropDownOnReadOnly: true,
+                readOnly: true,
+                listItems: [
+                    { text: "off", value: "off" },
+                    { text: "on", value: "on" },
+                    { text: "onWithCheckboxes", value: "onWithCheckboxes" }
+                ],
+                value: enableMultiSelection
+            });
+
+            //-------------------------------------------------------------------------------
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1 class="logo">
+                <a href="../index.html">
+                    <img src="../Content/images/infragistics.png" alt="Infragistics" />
+                </a>
+            </h1>
+        </header>
+        <div id="main" role="main">
+            <section class="product">
+                <img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+                <p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+            </section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+                    <hgroup>
+                        <h1>IgniteUI </h1>
+                        <h2>Selection and Checkboxes</h2>
+                        <p>The igCombo control supports selection enabled, selection disabled, and selection with checkboxes. Use the keyboard or mouse to select items in the combo and experiment with the different selection options to see the variety of interactions available.</p>
+                    </hgroup>
+                    <div class="sampleContainer">
+                        <div id="comboContainer">
+                            <!--Combo Target Element-->
+                            <select id="comboColors">
+                                <option value="blackVal">Black</option>
+                                <option value="blueVal">Blue</option>
+                                <option value="brownVal">Brown</option>
+                                <option value="greenVal">Green</option>
+                                <option value="orangeVal">Orange</option>
+                                <option value="purpleVal">Purple</option>
+                                <option value="redVal">Red</option>
+                                <option value="whiteVal">White</option>
+                                <option value="yellowVal">Yellow</option>
+                            </select>
+                        </div>
+                        <!-- Selection and Checkbox Options -->
+                        <fieldset id="selectionAndCheckboxProperties">
+                            <legend>Selection and Checkboxes API</legend>
+                            <table class="optionsTable">
+                                <colgroup>
+                                    <col class="labelCol" />
+                                    <col />
+                                </colgroup>
+                                <tr>
+                                    <td>
+                                        Drop Down on Focus
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkOnFocus" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Enable Multiple Selection
+                                    </td>
+                                    <td>
+                                        <div id="ddMultiSelection" class="comboSampleDropDown">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Set Selected Index
+                                    </td>
+                                    <td>
+                                        <input type="number" id="inpSelectedIndex" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <div>
+                                <input type="button" class="comboSampleButton" id="btnApplySelection" value="Apply" /><br />
+                                <input type="button" class="comboSampleButton" id="btnGetSelection" value="Get Selection" /><br />
+                                <input type="button" class="comboSampleButton" id="btnClearSelection" value="Clear Selection" /><br />
+                                <span id="spnFeedback" class="animate-message"></span>
+                            </div>
+                        </fieldset>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

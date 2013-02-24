@@ -1,0 +1,202 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>NetAdvantage for jQuery Samples</title>
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+
+	<!-- Include the two-level hierarchical adventure works database with large number of records -->
+	<script src="../scripts/db/adventureWorks2LevelsLarge.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igHierarchicalGrid.RowSelectors,igHierarchicalGrid.Selection,igHierarchicalGrid.Paging"
+		});
+
+		$.ig.loader(function () {
+			//  Instantiate the selected master rows grid
+			$("#selectedRowsGrid").igGrid({
+				columns: [{
+					key: "index",
+					headerText: "Selected Rows",
+					width: "180px"
+				}]
+			});
+			setSelectedRowsDataSource("#selectedRowsGrid", null);	//  Display the "(No rows selected text)" initially
+
+			//  Instantiate the selected child rows grid
+			$("#selectedChildRowsGrid").igGrid({
+				columns: [{
+					key: "index",
+					headerText: "Selected Child Rows",
+					width: "180px"
+				}]
+			});
+			setSelectedRowsDataSource("#selectedChildRowsGrid", null);
+
+			//  Instantiate and set-up the hierarchical grid
+			initializeGrid();
+		});
+
+		//  Gets currently selected rows and displays the new data
+		function getSelectedRows() {
+			//  Display selected rows from the master level
+			var selectedRows = $("#mainGrid").igGridSelection("selectedRows");
+			setSelectedRowsDataSource("#selectedRowsGrid", selectedRows);
+
+			//  Get selected rows on the child level from all open child grids
+			//  There may be many child grids open in the same moment
+			var childGrids = $("#mainGrid").igHierarchicalGrid("allChildrenWidgets");
+			var selChildRows = [];
+			for (var i = 0; i < childGrids.length; i++) {
+				var data = childGrids[i].selectedRows();
+				if ($.isArray(data)) {
+					for (var j = 0; j < data.length; j++)
+						selChildRows.push(data[j]);
+				}
+			}
+			setSelectedRowsDataSource("#selectedChildRowsGrid", selChildRows);
+		}
+
+		//  Sets the provided data to the selected rows grid
+		function setSelectedRowsDataSource(gridNameSelector, data) {
+			if ($.isArray(data) && data.length > 0) {
+				//  Display selected row indices if any rows are selected
+				$(gridNameSelector).igGrid("dataSourceObject", data);
+			}
+			else {
+				//  Display "(No rows selected)" text if nothing is selected
+				$(gridNameSelector).igGrid("dataSourceObject", [{ index: "(No rows selected)"}]);
+			}
+			$(gridNameSelector).igGrid("dataBind");
+		}
+
+		//  Creates the hierarchical grid
+		function initializeGrid(checkboxesEnabled, numberingSeed) {
+			$("#mainGrid").igHierarchicalGrid({
+				//  data related options
+				initialDataBindDepth: 1,
+				dataSource: adventureWorks,
+				dataSourceType: "json",
+				responseDataKey: "Records",
+				primaryKey: "ProductID",
+
+				//  UI related options
+				width: "100%",
+				autoGenerateColumns: false,
+				autoGenerateLayouts: false,
+				columns: [
+					{ key: "ProductID", headerText: "Product ID", width: "150px" },
+					{ key: "Name", headerText: "Name", width: "265px" },
+					{ key: "ProductNumber", headerText: "Product Number", dataType: "string", width: "150px" },
+					{ key: "Color", headerText: "Color", dataType: "string", width: "150px" }
+				],
+				columnLayouts: [
+					{
+						//  Define looks and behavior for the second level in the hierarchy
+						key: "ProductInventories",
+						responseDataKey: "Records",
+						autoGenerateColumns: false,
+						generateCompactJSONResponse: false,
+						primaryKey: "LocationID",
+						foreignKey: "ProductID",
+						columns: [
+							{ key: "ProductID", headerText: "Product ID", width: "100px" },
+							{ key: "LocationID", headerText: "Address ID", width: "100px" },
+							{ key: "Shelf", headerText: "Shelf", width: "50px" },
+							{ key: "Bin", headerText: "Bin" },
+							{ key: "Quantity", headerText: "Quantity" }
+						],
+						//  Different settings for the child level grids
+						features: [
+							{
+								name: "RowSelectors",
+								rowNumberingSeed: 0 //  Reset the row numbering to start from 1
+							}
+						]
+					}
+				],
+				features: [
+					{
+						name: "RowSelectors",
+						rowSelectorColumnWidth: "75px",
+						enableRowNumbering: true,
+						rowNumberingSeed: 99,
+						enableCheckBoxes: true,
+						inherit: true,
+						checkBoxStateChanged: getSelectedRows
+					},
+					{
+						name: "Selection",
+						mode: "row",
+						multipleSelection: true,
+						rowSelectionChanged: getSelectedRows
+					},
+					{
+						name: "Paging",
+						pageSize: 10,
+						type: "local",
+						pageIndexChanged: getSelectedRows,
+						pageSizeChanged: getSelectedRows
+					}
+				]
+			});
+		}
+	</script>
+	<style type="text/css">
+		.columnOption
+		{
+			float: left;
+			padding-top: 5px;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Row Selector Checkboxes</h2>
+						<p>In this sample we demonstrate a combination of Row Selectors and Paging features in the igHierarchicalGrid control. In this scenario we have checkboxes and row numbering enabled on the RowSelectors feature. Try the following – select multiple rows using checkboxes, then navigate to the next page. When you navigate back to the previous page, the selection is persisted.</p>
+					</hgroup>
+					<div class="sampleContainer">
+						<table id="mainGrid"></table>
+					</div>
+					<div id="selectedRowsPanel" class="columnOption">
+						<table id="selectedRowsGrid"></table>
+					</div>
+					<div id="selectedChildRowsPanel" class="columnOption" style="margin-left: 10px;">
+						<table id="selectedChildRowsGrid"></table>
+					</div>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

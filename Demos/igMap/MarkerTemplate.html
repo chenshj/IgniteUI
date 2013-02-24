@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../scripts/jquery.tmpl.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>    
+    <script type="text/javascript" src="../scripts/db/IGOffices.js"></script>
+    
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igMap"
+        });
+
+        $.ig.loader(function () {
+            $("#map").igMap({
+                width: "100%",
+                crosshairVisibility: "visible",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../Content/Images/World.png",
+                panModifier: "control",
+                backgroundContent: {
+                    type: "openStreet"
+                },
+                series: [
+                    {
+                        type: "geographicSymbol",
+                        name: "igOffices",
+                        dataSource: igOffices,
+                        latitudeMemberPath: "Latitude",
+                        longitudeMemberPath: "Longitude",
+                        //  Defines marker template rendering function
+                        markerTemplate: {
+                            render: function (renderInfo) {
+                                var ctx = renderInfo.context;
+                                var x = renderInfo.xPosition;
+                                var y = renderInfo.yPosition;
+
+                                if (renderInfo.isHitTestRender) {
+                                    //  This is called for tooltip hit test only
+                                    //  Rough marker rectangle size calculation
+                                    ctx.fillStyle = "red";
+                                    ctx.fillRect(x, y, renderInfo.availableWidth, renderInfo.availableHeight);
+                                } else {
+                                    var data = renderInfo.data;
+                                    var name = data.item()["Name"];
+                                    //  Draw text
+                                    ctx.textBaseline = "top";
+                                    ctx.font = '8pt Verdana';
+                                    ctx.fillStyle = "black";
+                                    ctx.textBaseline = "middle";
+                                    wrapText(ctx, name, x + 7, y, 120, 12);
+
+                                    //  Draw marker
+                                    ctx.beginPath();
+                                    ctx.arc(x, y, 3, 0, 2 * Math.PI, false);
+                                    ctx.fillStyle = "#8ED6FF";
+                                    ctx.fill();
+                                    ctx.lineWidth = 1;
+                                    ctx.strokeStyle = "black";
+                                    ctx.stroke();
+                                }
+                            }
+                        }
+                    }
+                ],
+                windowResponse: "immediate",
+                //  Specific initial view for the map
+                windowRect: {
+                    left: 0.35,
+                    top: 0.20,
+                    height: 0.5,
+                    width: 0.5
+                }
+            });
+        });
+
+        //  Plots a rectangle with rounded corners with a semi-transparent frame
+        function plotTextBackground(context, left, top, width, height) {
+            var cornerRadius = 3
+            context.beginPath();
+            //  Upper side and upper right corner
+            context.moveTo(left + cornerRadius, top);
+            context.lineTo(left + width - cornerRadius, top);
+            context.arcTo(left + width, top, left + width, top + cornerRadius, cornerRadius);
+            //  Right side and lower right corner
+            context.lineTo(left + width, top + height - cornerRadius);
+            context.arcTo(left + width, top + height, left + width - cornerRadius, top + height, cornerRadius);
+            //  Lower side and lower left corner
+            context.lineTo(left + cornerRadius, top + height);
+            context.arcTo(left, top + height, left, top + height - cornerRadius, cornerRadius);
+            //  Left side and upper left corner
+            context.lineTo(left, top + cornerRadius);
+            context.arcTo(left, top, left + cornerRadius, top, cornerRadius);
+            //  Fill white with 75% opacity
+            context.globalAlpha = 0.75;
+            context.fillStyle = "white";
+            context.fill();
+            context.globalAlpha = 1;
+            //  Plot grey frame
+            context.lineWidth = 1;
+            context.strokeStyle = "grey";
+            context.stroke();
+        }
+
+        //  Outputs text in a word wrapped fashion in a transparent frame
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            var words = text.split(" ");
+            var line = "";
+            var yCurrent = y;
+            var lines = [], currentLine = 0;
+
+            //  Find the longest word in the text and update the max width if the longest word cannot fit
+            for (var n = 0; n < words.length; n++) {
+                var testWidth = context.measureText(words[n]);
+                if (testWidth > maxWidth)
+                    maxWidth = metrics.width;
+            }
+            //  Arrange all words into lines
+            for (var n = 0; n < words.length; n++) {
+                var testLine = line + words[n];
+                var testWidth = context.measureText(testLine).width;
+                if (testWidth > maxWidth) {
+                    lines[currentLine] = line;
+                    currentLine++;
+                    line = words[n] + " ";
+                }
+                else {
+                    line = testLine + " ";
+                }
+            }
+            lines[currentLine] = line;
+            //  Plot frame and background
+            if (lines.length > 1) {
+                //  Multiline text
+                plotTextBackground(context, x - 2, y - lineHeight / 2 - 2, maxWidth + 3, lines.length * lineHeight + 3);
+            }
+            else {
+                //  Single line text
+                var textWidth = context.measureText(lines[0]).width;    //  Limit frame width to the actual line width
+                plotTextBackground(context, x - 2, y - lineHeight / 2 - 2, textWidth + 3, lines.length * lineHeight + 3);
+            }
+            //  Output lines of text
+            context.fillStyle = "black";
+            for (var n = 0; n < lines.length; n++) {
+                context.fillText(lines[n], x, yCurrent);
+                yCurrent += lineHeight;
+            }
+        }
+    </script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Marker Template</h2>
+						<p>This sample demonstrates how to create a custom marker template in a map control. The marker template is implemented in JavaScript by assigning a function to the corresponding geographic series which is called whenever a marker needs to be rendered on screen. The marker rendering function uses the HTML5 canvas API to draw marker contents. The sample shows all Infragistics offices around the world which are marked by custom marker which contains blue circles for the office location and the name of each office next to the marker.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+                        <div id="map"></div>
+                        <h2 style="text-align: center">Infragistics Offices around the World</h2>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

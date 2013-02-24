@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        #comboContainer
+        {
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/jquery.tmpl.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+    
+    <script>
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igCombo"
+        });
+
+        $.ig.loader(function () {
+            $("#comboNetflix").igCombo({
+                virtualization: true,
+                filteringType: "remote",
+                renderMatchItems: "contains",
+                responseDataKey: "d.results",
+                valueKey: "Name",
+                width: "200px",
+                dataSource: 'http://odata.netflix.com/Catalog/Titles?$format=json&$callback=?'
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1 class="logo">
+                <a href="../index.html">
+                    <img src="../Content/images/infragistics.png" alt="Infragistics" />
+                </a>
+            </h1>
+        </header>
+        <div id="main" role="main">
+            <section class="product">
+                <img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+                <p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+            </section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+                    <hgroup>
+                        <h1>IgniteUI </h1>
+                        <h2>Virtualization</h2>
+                        <p>Enabling UI virtualization allows the igCombo control to quickly and efficiently render large amounts of data in the combo. When this feature is enabled, the igCombo control reuses HTML elements and replaces the contents of these elements while scrolling which significantly reduces the overhead in rendering new data. This sample accesses the <a href="http://developer.netflix.com/docs/oData_Catalog" target="_blank"> Netflix OData API</a></p>
+                    </hgroup>
+                    <div class="sampleContainer">
+                        <div id="comboContainer">
+                            <!--Combo Target Element-->
+                            <div id="comboNetflix">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

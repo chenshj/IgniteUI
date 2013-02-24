@@ -1,0 +1,56 @@
+﻿<feed>
+  <entry>
+    <id>0</id>
+    <title>Bread</title>
+    <summary>Whole grain bread</summary>
+    <content id="0" rating="4" price="2.5"></content>
+  </entry>
+  <entry>
+    <id>1</id>
+    <title>Milk</title>
+    <summary>Low fat milk</summary>
+    <content id="1" rating="3" price="3.5"></content>
+  </entry>
+  <entry>
+    <id>2</id>
+    <title>Vint soda</title>
+    <summary>Americana Variety - Mix of 6 flavors</summary>
+    <content id="2" rating="3" price="20.9"></content>
+  </entry>
+  <entry>
+    <id>3</id>
+    <title>Havina Cola</title>
+    <summary>The Original Key Lime Cola</summary>
+    <content id="3" rating="3" price="19.9"></content>
+  </entry>
+  <entry>
+    <id>4</id>
+    <title>Fruit Punch</title>
+    <summary>Mango flavor, 8.3 Ounce Cans (Pack of 24)</summary>
+    <content id="4" rating="3" price="22.99"></content>
+  </entry>
+  <entry>
+    <id>5</id>
+    <title>Cranberry Juice</title>
+    <summary>16-Ounce Plastic Bottles (Pack of 12)</summary>
+    <content id="5" rating="3" price="22.8"></content>
+  </entry>
+  <entry>
+    <id>6</id>
+    <title>Pink Lemonade</title>
+    <summary>36 Ounce Cans (Pack of 3)</summary>
+    <content id="6" rating="3" price="18.8"></content>
+  </entry>
+  <entry>
+    <id>7</id>
+    <title>DVD Player</title>
+    <summary>1080P Upconversion DVD Player</summary>
+    <content id="7" rating="3" price="35.88"></content>
+  </entry>
+  <entry>
+    <id>8</id>
+    <title>LCD HDTV</title>
+    <summary>42 inch 1080p LCD with Built-in Blu-ray Disc Player</summary>
+    <content id="8" rating="3" price="1088.8"></content>
+  </entry>
+</feed>

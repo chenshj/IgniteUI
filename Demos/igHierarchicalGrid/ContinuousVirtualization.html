@@ -1,0 +1,134 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igHierarchicalGrid.GroupBy"
+		});
+
+		$.ig.loader(function () {
+			var gridData = [], i = -1, a = "A".charCodeAt(0);
+		
+			// generate data for the igHierarchicalGrid
+			while (i++ < 1000) {
+				gridData[i] = {
+					"ProjectId": i,
+					"ProjectName": String.fromCharCode(a + i % 4) + String.fromCharCode(a + 8 - i % 5) + String.fromCharCode(a + 10 - i % 10) + (1 + i % 7),
+					"StartDate": new Date(2009 + i % 4 % 2, (i + 3) % 12, 5 + i * 4 % 24),
+					"EndDate": new Date(2010 + i % 4 % 2, (i + 3) % 12, 5 + i * 4 % 24)
+				};
+				
+				var j = 0;
+				gridData[i]["Scrums"] = new Array();
+				while (j < 100) {
+					gridData[i]["Scrums"].push({
+						"ScrumId": j,
+						"ProjectId": i,
+						"Summary": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+						"Notes": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+					});
+					j++;
+				}
+			}
+			// Initialization the igGrid with continuous virtualization
+			$("#hierarchicalGrid1").igHierarchicalGrid({
+				dataSource: gridData,
+				width: "700px",
+				primaryKey: "ProjectId",
+				initialDataBindDepth: 1,
+				// Enable virtualization
+				virtualization: true,
+				// Enable continuous virtualization
+				virtualizationMode: "continuous",
+				// Height is required for virtualization
+				height: "300px",
+				autoGenerateColumns: false,
+				autoGenerateLayouts: false,
+				columns: [
+						{ headerText: "Project ID", key: "ProjectId", dataType: "number" }, 
+						{ headerText: "Name", key: "ProjectName", dataType: "string" }, 
+						{ headerText: "Start Date", key: "StartDate", dataType: "date" }, 
+						{ headerText: "End Date", key: "EndDate", dataType: "date" }
+				],
+				columnLayouts: [{
+					key: "Scrums",
+					primaryKey: "ScrumId",
+					foreignKey: "ProjectId",
+					width: "600px",
+					localSchemaTransform: false,
+					autoGenerateColumns: false,
+					autoGenerateLayouts: false,
+					// Enable virtualization
+					virtualization: true,
+					// Enable continuous virtualization
+					virtualizationMode: "continuous",
+					// Height is required for virtualization
+					height: "100px",
+					columns: [
+						{ headerText: "Scrum ID", key: "ScrumId", dataType: "number"}, 
+						{ headerText: "Project ID", key: "ProjectId", dataType: "number"}, 
+						{ headerText: "Summary", key: "Summary", dataType: "string"},
+						{ headerText: "Notes", key: "Notes", dataType: "string"}
+					],
+					features: [
+						{ name: "GroupBy" }
+					]	
+				}],
+				features: [
+					{ name: "GroupBy" }
+				]		
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Continuous Virtualization</h2>
+						<p>This sample demonstrates the continuous virtualization capabilities of the igHierarchicalGrid control in OutlookGroupBy mode. Continuous virtualization is a feature that controls how rows are displayed in the grid. As the user scrolls up and down the grid, the virtualization feature determines if the current rows are sufficient to display the next/previous portion of rows. If new rows are required, then the current portion of rows is disposed and the new portion of rows is created. Therefore a grid with 1,000 records in its data source may only display 30 at a time which significantly reduces the DOM overhead.</p>
+					</hgroup>
+					<div class="sampleContainer">
+						<!-- the igHierarchicalGrid target element-->
+						<table id="hierarchicalGrid1"></table>
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>
+

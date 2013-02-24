@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+    <script type="text/javascript" src="../scripts/db/MapHelperData.js"></script>
+
+    <script type="text/javascript">
+        //  Sets provider specific settings which are configured in the control
+        var providerData = [
+            //  --------- OpenStreetMaps --------- 
+            {
+                name: "OpenStreetMaps",
+                type: "openStreet",
+                backgroundContent: { type: "openStreet" },
+                imagery: null,
+                setImagery: function () { return this.backgroundContent; }
+            },
+            //  --------- Bing Maps --------- 
+            {
+                name: "Bing Maps",
+                type: "bing",
+                backgroundContent: { type: "bing", key: bingData, imagerySet: "Aerial" },
+                imagery: [
+                    { name: "Aerial", value: "Aerial" },
+                    { name: "Aerial with Labels", value: "AerialWithLabels" },
+                    { name: "Road", value: "Road" },
+                    { name: "Collins Bart", value: "collinsBart" }
+                ],
+                setImagery: function (imagery) {
+                    var bgr = this.backgroundContent;
+                    bgr.imagerySet = imagery;
+                    return bgr;
+                }
+            },
+            //  --------- CloudMade Maps --------- 
+            {
+                name: "CloudMade Maps",
+                type: "cloudMade",
+                backgroundContent: {
+                    type: "cloudMade",
+                    key: cloudmadeData,
+                    parameter: 1
+                },
+                imagery: [
+                    { name: "The Original", value: 1 },
+                    { name: "Fine Line", value: 2 },
+                    { name: "Tourist", value: 7 },
+                    { name: "Red Alert", value: 8 },
+                    { name: "Midnight Commander", value: 999 }
+                ],
+                setImagery: function (imagery) {
+                    var bgr = this.backgroundContent;
+                    bgr.parameter = imagery;
+                    return bgr;
+                }
+            }
+        ];
+
+        var bingMessage = 'You must provide your own API key for Bing Maps in the code of this sample to display geographic imagery from Bing Maps in the background content of the Geographic Map control. Replace the bingData variable with a string that contains your Bing Maps key.';
+        if (bingData === "") {
+            alert(bingMessage);
+            providerData[1] = providerData[2];
+            delete providerData[2];
+        }
+
+        //  Initialization
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igCombo,igMap"
+        });
+        //  Create initial map
+        $.ig.loader(function () {
+            createMap(providerData[0].backgroundContent);
+        });
+        //  Create provider and imagery combos
+        $.ig.loader(function () {
+            $("#cbxProviders").igCombo({
+                dataSource: providerData,
+                textKey: "name",
+                valueKey: "type",
+                width: "200px",
+                enableClearButton: false,
+                mode: "dropdown",
+                selectedItems: [{ index: 0}],
+                selectionChanged: function (evt, ui) {
+                    //  Add selected item data only if an item has been selected
+                    if (ui.items && ui.items[0]) {
+                        //  Get the selected provider data
+                        var item = providerData[ui.items[0].index];
+
+                        //  Recreate the map with the chosen map provider
+                        removeMap();
+                        createMap(item.backgroundContent);
+
+                        //  Set provider specific imagery
+                        $("#cbxImagery").igCombo("option", "dataSource", item.imagery);
+                        if (item.imagery && item.imagery.length > 0) {
+                            $("#cbxImagery").igCombo("option", "mode", "dropdown");
+                            $("#cbxImagery").igCombo("option", "text", item.imagery[0].name);
+                        }
+                        else {
+                            $("#cbxImagery").igCombo("option", "mode", "readonly");
+                        }
+                    }
+                }
+            });
+
+            $("#cbxImagery").igCombo({
+                dataSource: providerData[0].imagery,
+                textKey: "name",
+                valueKey: "value",
+                width: "200px",
+                enableClearButton: false,
+                mode: "readonly",
+                nullText: "No imagery available",
+                selectionChanged: function (evt, ui) {
+                    //  Add selected item data only if an item has been selected
+                    if (ui.items && ui.items[0]) {
+                        //  Get the selected imagery set and provider
+                        var item = ui.items[0];
+                        var provider = providerData[$("#cbxProviders").igCombo("activeIndex")];
+
+                        //  Recreate the map with the chosen provider and imagery set
+                        removeMap();
+                        createMap(provider.setImagery(item.value));
+                    }
+                }
+            });
+        });
+
+        function createMap(bgrContent) {
+            $("#map").igMap({
+                width: "700px",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../Content/Images/World.png",
+                backgroundContent: bgrContent,
+                windowResponse: "immediate",
+                windowRect: {
+                    left: 0.769547,
+                    top: 0.387994,
+                    height: 0.010006,
+                    width: 0.010006
+                }
+            });
+        }
+
+        function removeMap() {
+            $("#map").igMap("destroy");
+            $("#map").html("");
+        }
+    </script>
+
+    <style>
+        .controls { margin: 10px 0px 10px 0px; width: 700px; }
+        .combo { position: relative; top: 7px; }
+        #groupImagery { position: relative; float: right; }
+    </style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Map Imagery</h2>
+						<p>This sample demonstrates how to bind different map providers and how to bind different imagery sets or styles delivered by map providers.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+                        <div class="controls">
+                            <span id="groupProvider">
+                                <span>Provider: </span>
+                                <span class="combo">
+                                    <span id="cbxProviders"></span>
+                                </span>
+                            </span>
+
+                            <span id="groupImagery">
+                                <span>Imagery: </span>
+                                <span class="combo">
+                                    <span id="cbxImagery"></span>
+                                </span>
+                            </span>
+                        </div>
+                        <div id="map"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

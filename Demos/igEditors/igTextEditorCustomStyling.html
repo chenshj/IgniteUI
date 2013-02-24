@@ -1,0 +1,381 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<style type="text/css">
+		.customAll .ui-igedit-field{ outline:0; border:1px solid #b09090; background: #EFE358; }
+		.customAll .ui-igedit-textarea{ resize:none; overflow:auto; line-height:40px;}
+		.customAll .ui-igedit-hover{ background: #fff0f0; border-color:#a07070; }
+		.customAll .ui-igedit-focus{ background: #fffff0; border-color:#905050; color:#703030; border-width:thick; }
+		.customAll .ui-igedit-bordercolor{ color: #EC000C; }
+		.customAll .ui-igedit-buttonsimagestateoverride{ }
+		.customAll .ui-igedit-negative{ color:#e00000; }
+		.customAll .ui-igedit-nullvalue{ color:#998080; }
+		.customAll .ui-igedit-disabled{ color:#a09090; }
+               
+		.customAll .ui-igedit-fieldincontainer{ height: 15px ; float:left; padding-top:0px; padding-bottom:0px; margin:0px; }
+				
+		.custom1 .ui-igedit-field{ outline:0; border:1px solid #b09090; background: #EFE358; }
+
+		.custom2 .ui-igedit-nullvalue{color: #0564FF;}
+		
+		.custom3 .ui-igedit-hover{ background: #A8FFE7; border-color:#FF1105; border-width:medium; }
+
+        .custom4 .ui-igedit-hover{ background: #A8FFE7; border-color:#FF1105; border-width:medium; }
+        .custom4 .ui-igedit-focus{ background: #C8BED3; border-color:#454149; color:#FF0000; border-width:medium; }
+
+        .custom5 .ui-igedit-focus{ background: #C8BED3; border-color:#454149; color:#FF0000; border-width:medium; }
+        
+        .custom6 .ui-igedit-bordercolor{ border-color: #00FF3B; border-width:medium}
+        
+        .custom7 .ui-igedit-buttonsimagestateoverride{background-color:Red; }
+        
+        .custom8 .ui-igedit-negative{ color:#e00000; font-family:"Times New Roman"; font-style:italic; background-color:#C4C4C4; }
+        
+        .custom9 .ui-igedit-disabled{ filter:alpha(opacity=80); opacity:0.8; color:#a09090; background-color: #5D5757; border-color:#A0A0A0; }
+        .custom9 .ui-igedit-buttondisabled { filter:alpha(opacity=80); opacity:0.8; background: #5D5757; border-color: #A0A0A0; }
+        
+        .custom10 .ui-igedit-fieldincontainer{ height: 15px ; float:right; padding-top:0px; padding-bottom:1px; margin:2px; color: #0A22FF; background-color:#C0C4C1 }
+        
+        .custom11 .ui-igedit-button {border-color:#474848 ; border-width:thin}
+        .custom11 .ui-igedit-buttonimage { background-position: -128px -96px; }
+        .custom11 .ui-igedit-buttonimagehover { background-position: -80px -96px; }
+        .custom11 .ui-igedit-buttonimagepressed { background-position: -96px -96px; }
+        
+        .custom12 .ui-igedit-buttonhover {border-color:#272828 ; border-width:thin}
+        
+        .custom13 .ui-igedit-button { border-color: #FFC082; border-width:thin}
+
+        .custom13 .ui-igedit-buttonimage { background-position: 0 -192px; }
+        .custom13 .ui-igedit-buttondefault { border-color: #FFC082; border-width:thin}
+        .custom13 .ui-igedit-buttonpressed  { border-color: red; border-width:thin}
+        .custom13 .ui-igedit-buttonfocus {border-color: Blue; border-width:thin}
+        
+        
+        .custom14 .ui-igedit-listitem { border-top: #D0B0A0 1px solid; font-size: 12px; }
+        .custom14 .ui-igedit-listitemhover { background-color: #757777}
+        .custom14 .ui-igedit-listitemselected { background-color: #FF4949}
+        .custom14 .ui-igedit-listitemcolumnborder { border-right: 2px groove #D09090 !important; }
+        
+        .custom15 .ui-igedit-field { border-color: #9090E0; }
+        .custom15 .ui-igedit-spinbutton { border-color: #9090E0; border-width:thin}
+        .custom15 .ui-igedit-spinlowerimage { background-position: -64px 0; background-color: #F0E0D0; }
+        .custom15 .ui-igedit-spinupperimage { background-position: 0 0; background-color: #A0E0A0; }
+        .custom15 .ui-igedit-spinlowerimagehover { background-color: #F0C0C0; }
+        .custom15 .ui-igedit-spinlowerimagepressed { background-color: #FF9090; }
+        .custom15 .ui-igedit-spinupperimagehover { background-color: #70E070; }
+        .custom15 .ui-igedit-spinupperimagepressed { background-color: #00E000; }
+        
+        .custom16 .ui-igedit-textarea{ resize:none; overflow:auto; color:#FF1105; background: #f8f8b0; }
+
+	</style>
+
+	
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script>
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+            resources: 'igEditors'
+        });
+
+        $.ig.loader(function () {
+	        $('#textEditor1').igTextEditor({
+	            width: 160,
+	            theme: 'custom1',
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor2').igTextEditor({
+	            width: 160,
+	            theme: 'custom2',
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor3').igTextEditor({
+	            width: 160,
+	            theme: 'custom3',
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor4').igTextEditor({
+	            width: 160,
+	            theme: 'custom4',
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor5').igTextEditor({
+	            width: 160,
+	            theme: 'custom5',
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor6').igTextEditor({
+	            width: 160,
+	            theme: 'custom6',
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor7').igTextEditor({
+	            width: 160,
+	            theme: 'custom7',
+	            listItems: ['Theme1', 'Theme2', 'Theme3', 'Theme4'],
+	            button: 'spin',
+	            spinRollOver: true,
+	            nullText: 'Select Value'
+	        });
+	        $('#textEditor8').igNumericEditor({
+	            width: 160,
+	            theme: 'custom8'
+	        });
+	        $('#textEditor9').igTextEditor({
+	            width: 160,
+	            theme: 'custom9',
+	            button: 'dropdown spin',
+	            nullText: 'Disabled',
+	            disabled: true
+	        });
+	        $('#textEditor10').igTextEditor({
+	            width: 160,
+	            theme: 'custom10',
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor11').igTextEditor({
+	            width: 160,
+	            button: 'dropdown',
+	            theme: 'custom11',
+	            listItems: ['Theme1', 'Theme2', 'Theme3', 'Theme4'],
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor12').igTextEditor({
+	            width: 160,
+	            button: 'dropdown',
+	            theme: 'custom12',
+	            listItems: ['Theme1', 'Theme2', 'Theme3', 'Theme4'],
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor13').igTextEditor({
+	            width: 160,
+	            button: 'dropdown',
+	            theme: 'custom13',
+	            listItems: ['Theme1', 'Theme2', 'Theme3', 'Theme4'],
+	            nullText: 'Enter Text'
+	        });
+            $('#textEditor14').igTextEditor({
+	            width: 160,
+	            button: 'dropdown',
+	            theme: 'custom14',
+	            nullText: 'Enter Text',
+	            listColumns: 2,
+	            listWidth: 270,
+	            listItems: [
+		            'String item',
+		            { text: 'Render IMG', getHtml: function () {
+			            return '<img src="./expand.gif" height="10px" style="border-width:2px; border-color: Black"/>&nbsp;' + this.text;
+		            } 
+		                },
+		            { text: 'Red SPAN', getHtml: function () {
+			            return '<span style="background:red;display:inline-block;width:10px;height:10px;"></span>&nbsp;' + this.text;
+		            } 
+		                },
+		            { text: 'Blue SPAN', getHtml: function () {
+			            return '<span style="background:blue;display:inline-block;width:10px;height:10px;"></span>&nbsp;' + this.text;
+		            } 
+		                },
+		            { text: 'BUTTON', getHtml: function () {
+			            return '<input type="button" onmousedown="alert(\'item:' + this.text + '\')" style="width:10px;height:10px;padding:0px;margin:0px;" />&nbsp;' + this.text;
+		            } 
+		                },
+		            { text: 'Object with "text"' },
+		            { text: function () { return 'function with "text()"'; } },
+		            { text: 'Text inside SPAN', getHtml: function () {
+			            return '<span style="background:#f0f000;font-weight:bold;">' + this.text + '</span>';
+		            } 
+		                },
+		            { text: 'Italic SPAN', getHtml: function () {
+			            return '<span style="font-style:italic;">' + this.text + '&nbsp;</span><span style="background:orange;display:inline-block;width0:20px;height0:12px;">[extra]</span>';
+		            } 
+		                },
+		            { text: 'Courier SPAN', getHtml: function () {
+			            return '<span style="font-family:courier;">' + this.text + '</span>';
+		            } 
+		                }
+                ]
+            });
+	        $('#textEditor15').igTextEditor({
+	            width: 160,
+	            button: 'spin',
+	            theme: 'custom15',
+	            listItems: ['Theme1', 'Theme2', 'Theme3', 'Theme4'],
+	            nullText: 'Enter Text'
+	        });
+	        $('#textEditor16').igTextEditor({
+	            width: 160,
+	            theme: 'custom16'
+	        });
+        });
+
+    </script>
+</head>
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>igTextEditor Custom Style</h2>
+						<p>This sample demonstrates custom styling of igTextEditor.  Every editor on the page has a custom theme applied which specifies a custom css class.  The title above the editor shows which css class is customized. For a detailed list of these classes please visit our online help.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+						
+						
+						<table class="standard-grid">
+							<tr>
+                            <td>
+                                ui-igedit-field
+                                <br />
+                                <br />
+                                <input id="textEditor1" type="text" />
+                            </td>
+                            <td>
+                                ui-igedit-nullvalue
+                                <br />
+                                <br />
+                                <input type="text" id="textEditor2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 50px;">
+                                ui-igedit-hover
+                                <br />
+                                <br />
+                                <input id="textEditor3" type="text" />
+                            </td>
+                            <td>
+                                ui-igedit-hover & ui-igedit-focus
+                                <br />
+                                <br />
+                                <input type="text" id="textEditor4" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 50px;">
+                                ui-igedit-focus
+                                <br />
+                                <br />
+                                <input id="textEditor5" type="text" />
+                            </td>
+                            <td>
+                                ui-igedit-bordercolor
+                                <br />
+                                <br />
+                                <input type="text" id="textEditor6" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ui-igedit-buttonsimagestateoverride
+                                <br />
+                                <br />
+                                <input id="textEditor7" type="text" />
+                            </td>
+                            <td>
+                                ui-igedit-negative
+                                <br />
+                                <br />
+                                <input type="text" id="textEditor8" value="-356.25" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                .ui-igedit-disabled
+                                <br />
+                                <br />
+                                <input id="textEditor9" type="text" />
+                            </td>
+                            <td>
+                                .ui-igedit-fieldincontainer
+                                <br />
+                                <br />
+                                <input type="text" id="textEditor10" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                .ui-igedit-button (ui-icon-comment)
+                                <br />
+                                <br />
+                                <input id="textEditor11" type="text" />
+                            </td>
+                            <td>
+                                .ui-igedit-buttonhover
+                                <br />
+                                <br />
+                                <input type="text" id="textEditor12" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                button classes (ui-icon-circle-plus)
+                                <br />
+                                <br />
+                                <input id="textEditor13" type="text" />
+                            </td>
+                            <td>
+                                list classes
+                                <br />
+                                <br />
+                                <input type="text" id="textEditor14" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                spin classes
+                                <br />
+                                <br />
+                                <input id="textEditor15" type="text" />
+                            </td>
+                            <td>
+                                .ui-igedit-textarea
+                                <br />
+                                <br />
+                                <textarea rows="2" cols="1" id="textEditor16">textarea</textarea>
+                            </td>
+                        </tr>
+                    </table>
+						
+					</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>
+

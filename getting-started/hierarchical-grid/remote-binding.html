@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../../js/infragistics.loader.js"></script>
+</head>
+<body>
+
+    <table id="hierarchicalGrid"></table>
+
+    <script>
+        // The ig.loader is used to load required OctaneUI JavaScript 
+        // and CSS resources. It accepts a configuration object that specifies
+        // default paths and the components to load into the page.
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+
+            //string representing which component resources are required
+            resources: "igHierarchicalGrid"
+        });
+
+        //The ig.loader accepts a function that is called after 
+        //all resources are loaded and document.ready has fired.
+        $.ig.loader(function () {
+
+            //The callback url parameter is used to retrieve JSONP formatted data
+            //from a server on a different domain than the page (cross domain). 
+            //This formatting must be explicitly configured on the server and 
+            //is not necessary for JSON data originating at the same domain
+            var url = "http://localhost:25515/api/categories?withProducts=true&$callback=?";
+
+            $("#hierarchicalGrid").igHierarchicalGrid({
+                width: "600px",
+
+                //string URL defined above fetches hierarchical JSON data
+                dataSource: url,
+                columns: [
+                    { key: "ID", headerText: "ID" },
+                    { key: "Name", headerText: "Name" },
+                ],
+                columnLayouts: [{
+                    key: "Products"
+                }]
+            });
+
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Sub Pages On Init</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+      
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+     <script>
+        $(document).bind("mobileinit", function () {
+        });
+    </script>
+	<script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igmList.Filtering",
+            theme: "ios"
+        });
+    </script>
+    <style type="text/css">
+        .noHand
+        {
+            cursor : default;
+        }
+    </style>
+    <!--Sample JSON Data-->
+    <script type="text/javascript" src="../scripts/db/adventureWorksProductsInventories.js"></script>
+</head>	
+
+<body>
+<div data-role="page" id="myID">
+	<div data-role="header" >
+		<a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+			<h1>Create Sub Pages On Init</h1>
+		<a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+	</div>
+	<div data-role="content">
+		<div data-role="controlgroup">
+			<a data-role="button" href="ListViewProductInventories.html&ui-page=listView1-ProductID/1">Adjustable Race Location</a>
+			<a data-role="button" href="ListViewProductInventories.html&ui-page=listView1-ProductID/2">Bering Ball Location</a>
+			<a data-role="button" href="ListViewProductInventories.html&ui-page=listView1-ProductID/3">BB Ball Bearing Location</a>
+			<a data-role="button" href="ListViewProductInventories.html&ui-page=listView1-ProductID/4">Headset Ball Berings Location</a>
+			<a data-role="button" href="ListViewProductInventories.html&ui-page=listView1-ProductID/316">Blade Location</a>
+			<a data-role="button" href="ListViewProductInventories.html&ui-page=listView1-ProductID/320">Chainring Bolts Location</a>
+		</div>	
+        <p>
+            In some browsers, ajax requests are not allowed to request other files.  This is required in order to navigate directly to a sub-page.  Please allow these operations or run this sample as part of an IIS application.
+        </p>
+	</div>
+</div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                This sample demonstrates how the createSubPagesOnInit option is used to navigate directly to child layouts of the igListView widget from an outer page.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

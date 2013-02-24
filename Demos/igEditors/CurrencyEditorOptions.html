@@ -1,0 +1,339 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+ 
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+            resources: 'modules/i18n/regional/infragistics.ui.regional-i18n.js,igShared,igEditors,igValidator'
+        });
+
+        $.ig.loader(function () {
+	        $('#regionalSettings').change(function () {
+	            var end, regional = $(this).val();
+	            end = regional.indexOf(' ');
+	            if (end > 1) {
+	                regional = regional.substring(0, end);
+	            }
+	            $('.option').val("default").trigger('change');
+	            $('#currencyGroupSettings').val(3).trigger('change');
+	            $('#currencyMinDecimalSettings').val(2).trigger('change');
+	            $('#currencyMaxDecimalSettings').val(2).trigger('change');
+	            $('#currencyEditor').igCurrencyEditor('option', 'regional', regional);
+	        });
+	        $('#decimalCurrencySeparatorSettings').change(function () {
+	            var separator = $(this).val();
+	            if (separator === 'default') {
+	                separator = null;
+	            } else {
+	                separator = separator.substring(0, 1);
+	            }
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencyDecimalSeparator', separator);
+	        });
+	        $('#customCurrencySymbollist').change(function () {
+	            var symbol = $(this).val();
+	            if (symbol === 'default') {
+	                symbol = null;
+	            }
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencySymbol', symbol);
+	        });
+	        $('#positivePatternSettings').change(function () {
+	            var pattern = $(this).val();
+	            if (pattern === 'default') {
+	                pattern = null;
+	            }
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencyPositivePattern', pattern);
+	        });
+	        $('#negativePatternSettings').change(function () {
+	            var pattern = $(this).val();
+	            if (pattern === 'default') {
+	                pattern = null;
+	            }
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencyNegativePattern', pattern);
+	        });
+	        $('#currencyGroupSeparatorSettings').change(function () {
+	            var separator = $(this).val();
+	            if (separator === 'default') {
+	                separator = null;
+	            } else {
+	                separator = separator.substring(0, 1);
+	            }
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencyGroupSeparator', separator);
+	        });
+	        $('#currencyGroupSettings').change(function () {
+	            var size = $(this).val();
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencyGroups', size);
+	        });
+	        $('#currencyMaxDecimalSettings').change(function () {
+	            var size = $(this).val();
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencyMaxDecimals', size);
+	        });
+	        $('#currencyMinDecimalSettings').change(function () {
+	            var size = $(this).val();
+	            $('#currencyEditor').igCurrencyEditor('option', 'currencyMinDecimals', size);
+	        });
+	        $('#currencyEditor').igCurrencyEditor({
+	            width: 200
+	        });
+	    });
+
+	</script>
+	
+	<style type="text/css">
+	.altRow {background:#DCDCDC; }
+	.textAlignR { text-align: right}
+	</style>
+	
+</head>
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Currency Options</h2>
+						<p>This sample demonstrates different options of the igCurrencyEditor.  Selecting different values from drop down lists changes the igCurrencyEditor option.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+					
+									   
+													<p>Currency Editor</p>
+													  <input id="currencyEditor" type="text" value="-12345678.56723456"/>  
+													<br /> 
+													<br />
+											<table class="standard-grid">
+												<thead><tr><th colspan="2">Currency Editor Options</th></tr></thead>
+											<tbody>
+												<tr class="altRow">
+													<td class="textAlignR" style="width:200px">
+													  Regional Options:  
+													</td>
+													<td>      
+														<select id="regionalSettings" style="width:260px;">
+															<option selected="selected">en-US (English, United States)</option>
+															<option>af (South Africa)</option>
+															<option>ar (Arabic)</option>
+															<option>az (Azerbaijan, Latin)</option>
+															<option>bg (Bulgaria)</option>
+															<option>bs (Bosnia)</option>
+															<option>ca (Catalan)</option>
+															<option>cs (Czech)</option>
+															<option>da (Denmark)</option>
+															<option>de (Germany)</option>
+															<option>el (Greece)</option>
+															<option>en-GB (English, United Kingdom)</option>
+															<option>es (Spain)</option>
+															<option>et (Estonia)</option>
+															<option>fa (Farsi, Iran)</option>
+															<option>fi (Finland)</option>
+															<option>fo (Faroe)</option>
+															<option>fr-CH (French, Switzerland)</option>
+															<option>fr (France)</option>
+															<option>he (Hebrew, Israel)</option>
+															<option>hr (Croatia)</option>
+															<option>hu (Hungary)</option>
+															<option>hy (Armenia)</option>
+															<option>id (Indonesia)</option>
+															<option>is (Iceland)</option>
+															<option>it (Italy)</option>
+															<option>ja (Japan)</option>
+															<option>ko (Korea)</option>
+															<option>lt (Lithuania)</option>
+															<option>lv (Latvia)</option>
+															<option>ms (Malaysia)</option>
+															<option>nl (Dutch, Netherlands)</option>
+															<option>no (Norway)</option>
+															<option>pl (Poland)</option>
+															<option>pt-BR (Brazil)</option>
+															<option>ro (Romania)</option>
+															<option>ru (Russia)</option>
+															<option>sk (Slovakia)</option>
+															<option>sl (Slovenia)</option>
+															<option>sq (Albania)</option>
+															<option>sr (Cyrillic, Serbia)</option>
+															<option>sr-SR (Latin, Serbia)</option>
+															<option>sv (Sweden)</option>
+															<option>ta (Tamil, India)</option>
+															<option>th (Thailand)</option>
+															<option>tr (Turkey)</option>
+															<option>uk (Ukraine)</option>
+															<option>vi (Vietnam)</option>
+															<option>zh-CN (PRC, China)</option>
+															<option>zh-HK (Hong Kong SAR PRC, China)</option>
+															<option>zh-TW (Taiwan, China)</option>
+															<option>zh-CN (PRC, China)</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td class="textAlignR">
+													   Currency Decimal Separator: 
+													</td>
+													<td>
+															<select id="decimalCurrencySeparatorSettings" class="option" style="width:260px;">
+																<option selected="selected">. (Dot)</option>
+																<option>' (Apostrophe)</option>
+																<option>" (Quotes)</option>
+																<option>` (Grave Accent)</option>
+																<option>default</option>
+															</select>
+													</td>
+												</tr>
+												<tr class="altRow">
+													<td class="textAlignR">
+														Custom Currency Symbol:
+													</td>
+													<td>
+														<select id="customCurrencySymbollist" class="option" style="width:260px">
+															<option>default</option>
+															<option selected="selected">$</option>
+															<option>£</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td class="textAlignR">
+														Positive Pattern:
+													</td>
+													<td>
+														<select id="positivePatternSettings" class="option" style="width:260px;">
+															<option selected="selected">$n</option>
+															<option>$ n</option>
+															<option>$&nbsp &nbsp n</option>
+															<option>$&nbsp &nbsp &nbsp n</option>
+															<option>n$</option>
+															<option>n $</option>
+															<option>n&nbsp &nbsp $</option>
+															<option>n&nbsp &nbsp &nbsp $</option>
+															<option>default</option>
+														</select>	
+													</td>
+												</tr>
+												<tr class="altRow">
+													<td class="textAlignR">
+														Negative Pattern:
+													</td>
+													<td>
+														<select id="negativePatternSettings" class="option" style="width:260px;">
+															<option selected="selected">$(n)</option>
+															<option >$-n</option>
+															<option>$ -n</option>
+															<option>$&nbsp &nbsp-n</option>
+															<option>$&nbsp &nbsp &nbsp-n</option>
+															<option>-n$</option>
+															<option>-n &nbsp$</option>
+															<option>-n &nbsp &nbsp $</option>
+															<option>-n &nbsp &nbsp &nbsp $</option>
+															<option>default</option>
+														</select>	
+													</td>
+												</tr>
+												<tr>
+													<td class="textAlignR">
+														Group Separator:
+													</td>
+													<td>
+														<select id="currencyGroupSeparatorSettings" class="option" style="width:260px;">
+															<option selected="selected">, (Comma)</option>
+															<option>. (Dot)</option>
+															<option>' (Apostrophe)</option>
+															<option>" (Quotes)</option>
+															<option>` (Grave Accent)</option>
+															<option>default</option>
+														</select>
+													</td>
+												</tr>
+												<tr class="altRow">
+													<td class="textAlignR">
+														Group Size:
+													</td>
+													<td>
+														<select id="currencyGroupSettings" style="width:260px;">
+															<option>1</option>
+															<option>2</option>
+															<option selected="selected">3</option>
+															<option>4</option>
+															<option>5</option>
+															<option>6</option>
+															<option>7</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<td class="textAlignR">
+														Min Decimals:
+													</td>
+													<td>
+														<select id="currencyMinDecimalSettings" style="width:260px;">
+															<option>1</option>
+															<option selected="selected">2</option>
+															<option>3</option>
+															<option>4</option>
+															<option>5</option>
+															<option>6</option>
+															<option>7</option>
+														</select>                   
+													</td>
+												</tr>
+												<tr class="altRow">
+													<td class="textAlignR">
+														Max Decimals:
+													</td>
+													<td>
+													   <select id="currencyMaxDecimalSettings" style="width:260px;">
+															<option>1</option>
+															<option selected="selected">2</option>
+															<option>3</option>
+															<option>4</option>
+															<option>5</option>
+															<option>6</option>
+															<option>7</option>
+														</select>
+													</td>
+												</tr>
+											</tbody>
+											</table>
+						
+					</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>
+

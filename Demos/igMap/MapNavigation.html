@@ -1,0 +1,632 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+   	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+    <link href="../content/MapCommon.css" rel="stylesheet" type="text/css"/>
+
+    <script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+    <script type="text/javascript" src="../scripts/db/WorldCities.js"></script>
+    
+    <script id="cityTemplate" type="text/x-jquery-tmpl">
+        <table>
+            <tr><td class="tooltipHeading" colspan="2">${item.Name}, ${item.Country}</td></tr>
+            <tr>
+                <td>Latitude:</td>
+                <td>${item.Latitude}</td>
+            </tr>
+            <tr>
+                <td>Longitude:</td>
+                <td>${item.Longitude}</td>
+            </tr>
+        </table>
+    </script>
+
+    <script type="text/javascript">
+        //  Initialize the IG resources Loader
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igShared,igDialog,igEditors,igCombo,igMap"
+        });
+
+        //  Initialize the map control
+        $.ig.loader(function () {
+            $("#map").igMap({
+                dataSource: data,
+                width: "700px",
+                height: "500px",
+                crosshairVisibility: "visible",
+                verticalZoomable: true,
+                horizontalZoomable: true,
+                overviewPlusDetailPaneVisibility: "visible",
+                overviewPlusDetailPaneBackgroundImageUri: "../Content/Images/World.png",
+                backgroundContent: {
+                    type: "openStreet"
+                },
+                panModifier: "control",
+                series: [{
+                    type: "geographicSymbol",
+                    name: "worldCities",
+                    latitudeMemberPath: "Latitude",
+                    longitudeMemberPath: "Longitude",
+                    markerType: "automatic",
+                    markerCollisionAvoidance: "fade",
+                    markerBrush: "#1B559D",
+                    markerOutline: "black",
+                    showTooltip: true,
+                    tooltipTemplate: "cityTemplate"
+                }],
+                windowResponse: "immediate",
+                windowRect: {
+                    left: 0,
+                    top: 0,
+                    height: 0.7143,
+                    width: 1
+                }
+            });
+        });
+
+        //  Initialize page
+        $(function () {
+            //  Overview Plus Detail (OPD) panel visibility control
+            $("#cbShowOPD").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#map").igMap("option", "overviewPlusDetailPaneVisibility", "visible");
+                } else {
+                    $("#map").igMap("option", "overviewPlusDetailPaneVisibility", "collapsed");
+                }
+            });
+
+            //  Update positioning controls every time the map location and zoom level change
+            $(document).delegate("#map", "igmapwindowrectchanged", function (evt, ui) {
+                //  Convert from relative to geographic coordinates
+                var geographic = $("#map").igMap("getGeographicFromZoom",
+                                {
+                                    left: ui.newLeft,
+                                    top: ui.newTop,
+                                    width: ui.newWidth,
+                                    height: ui.newHeight
+                                }
+                    );
+                //  Assign coordinates to geographic area editors
+                $("#leftGeo").igNumericEditor("option", "value", geographic.left);
+                $("#topGeo").igNumericEditor("option", "value", geographic.top);
+                $("#widthGeo").igNumericEditor("option", "value", geographic.width);
+                $("#heightGeo").igNumericEditor("option", "value", geographic.height);
+
+                //  Calculate central point and radius and assign to Center and Zoom editors
+                var centered = centeredFromGeographic(geographic);
+                $("#centerLatitude").igNumericEditor("option", "value", centered.latitude);
+                $("#centerLongitude").igNumericEditor("option", "value", centered.longitude);
+                $("#centerRadius").igNumericEditor("option", "value", centered.radius);
+            });
+        });
+
+        function NavigationList() {
+            var list = [];
+            var currentPosition = 0;
+
+            this.addPosition = function (item) {
+                list[list.length] = item;
+                currentPosition = list.length - 1;
+            };
+
+            this.getPrevious = function () {
+                currentPosition--;
+                return getCurrentItem();
+            }
+
+            this.getNext = function () {
+                currentPosition++;
+                return getCurrentItem();
+            }
+
+            function getCurrentItem() {
+                if (currentPosition < 0) {
+                    currentPosition = 0;
+                    return undefined;
+                }
+                if (currentPosition >= list.length) {
+                    currentPosition = list.length - 1;
+                    return undefined;
+                }
+                if (list.length == 0) return undefined;
+
+                return list[currentPosition];
+            }
+        }
+
+        //  Initialize location setting buttons
+        $.ig.loader(function () {
+            var mapWindowList = new NavigationList();
+            var suppressAdd = false;
+            $(document).on("igmapwindowrectchanged", "#map", function (evt, ui) {
+                if (!suppressAdd) {
+                    mapWindowList.addPosition({
+                        left: ui.newLeft,
+                        top: ui.newTop,
+                        width: ui.newWidth,
+                        height: ui.newHeight
+                    });
+                }
+                else {
+                    suppressAdd = false;
+                }
+            });
+
+            $("#btnSetRectangle").igButton({
+                click: function () {
+                    var geo = {
+                        left: $("#leftGeo").igNumericEditor("option", "value"),
+                        top: $("#topGeo").igNumericEditor("option", "value"),
+                        width: $("#widthGeo").igNumericEditor("option", "value"),
+                        height: $("#heightGeo").igNumericEditor("option", "value")
+                    };
+                    var zoom = $("#map").igMap("getZoomFromGeographic", geo);
+                    $("#map").igMap("option", "windowRect", zoom);
+                }
+            });
+            $("#btnSetCentered").igButton({
+                click: function () {
+                    var centered = 
+                        {
+                            latitude: $("#centerLatitude").igNumericEditor("option", "value"),
+                            longitude: $("#centerLongitude").igNumericEditor("option", "value"),
+                            radius: $("#centerRadius").igNumericEditor("option", "value")
+                        };
+                    var geo = geographichFromCentered(centered);
+                    var zoom = $("#map").igMap("getZoomFromGeographic", geo);
+                    $("#map").igMap("option", "windowRect", zoom);
+                }
+            });
+
+            $("#btnPrevious").igButton({
+                click: function () {
+                    var zoom = mapWindowList.getPrevious();
+                    if (zoom != undefined) {
+                        suppressAdd = true;
+                        $("#map").igMap("option", "windowRect", zoom);
+                    }
+                }
+            });
+
+            $("#btnNext").igButton({
+                click: function () {
+                    var zoom = mapWindowList.getNext();
+                    if (zoom != undefined) {
+                        suppressAdd = true;
+                        $("#map").igMap("option", "windowRect", zoom);
+                    }
+                }
+            });
+        });
+
+        //  Initialize navigation and positioning controls dialogs
+        $.ig.loader(function () {
+            var dialogPos = $("#map").offset();
+            dialogPos.left -= 0;
+            dialogPos.top += 0;
+
+            $('#navControls').igDialog({
+                width: "250px",
+                height: "350px",
+                container: "navDialog",
+                headerText: "Navigation Controls",
+                showCloseButton: false,
+                showMinimizeButton: true,
+                resizable: false,
+                position: [dialogPos.left, dialogPos.top],
+                state: "minimized"
+            });
+
+            dialogPos.left += 600;
+            $("#posControls").igDialog({
+                width: "250px",
+                height: "360px",
+                container: "posDialog",
+                headerText: "Positioning Controls",
+                showCloseButton: false,
+                showMinimizeButton: true,
+                resizable: false,
+                position: [dialogPos.left, dialogPos.top],
+                state: "minimized"
+            });
+        });
+
+        //  Initialize map positioning editor controls
+        $.ig.loader(function () {
+            $(".geoLat").igNumericEditor({
+                dataMode: "float",
+                maxValue: 90,
+                minValue: -90,
+                button: "spin",
+                width: 100
+            });
+
+            $(".geoLong").igNumericEditor({
+                dataMode: "float",
+                maxValue: 180,
+                minValue: -180,
+                button: "spin",
+                width: 100
+            });
+        });
+
+        //  --------------- INTERACTIVE FEATURES CONTROLS -------------------------------
+        //  Initialize interaction features combo boxes
+        $.ig.loader(function () {
+            $("#cbxDefaultMode").igCombo({
+                width: "100px",
+                enableClearButton: false,
+                selectionChanged: function (evt, ui) {
+                    $("#map").igMap("option", "defaultInteraction", ui.items[0].value);
+                }
+            });
+
+            $("#cbxPanModifier").igCombo({
+                width: "100px",
+                enableClearButton: false,
+                selectionChanged: function (evt, ui) {
+                    $("#map").igMap("option", "panModifier", ui.items[0].value);
+                }
+            });
+
+            $("#cbxZoomModifier").igCombo({
+                width: "100px",
+                enableClearButton: false,
+                selectionChanged: function (evt, ui) {
+                    $("#map").igMap("option", "dragModifier", ui.items[0].value);
+                }
+            });
+        });
+
+        //  --------------- NAVIGATION API BUTTONS --------------------------------------
+        //  Initialize navigation buttons
+        $.ig.loader(function () {
+            initPanningButtons();
+            initZoomButtons();
+        });
+
+        var panFactor = 0.2;
+        function initPanningButtons() {
+            //  Move to the North
+            $("#btnNorth").igButton({
+                width: "100%", height: "100%",
+                click: function () { panNorth("#map", panFactor); }
+            });
+            //  Move to the South
+            $("#btnSouth").igButton({
+                width: "100%", height: "100%",
+                click: function () { panSouth("#map", panFactor); }
+            });
+            //  Move to the West
+            $("#btnWest").igButton({
+                width: "100%",
+                height: "100%",
+                click: function () { panWest("#map", panFactor); }
+            });
+            //  Move to the East
+            $("#btnEast").igButton({
+                width: "100%",
+                height: "100%",
+                click: function () { panEast("#map", panFactor); }
+            });
+        }
+
+        var zoomScale = 0.05;   //  Zoom scale to be used for zoom in/out operations
+        function initZoomButtons() {
+            $("#btnResetZoom").igButton({
+                width: "100%", height: "100%",
+                click: function () { $("#map").igMap("resetZoom"); }
+            });
+
+            $("#btnZoomIn").igButton({
+                width: "100%", height: "100%",
+                click: function () { zoomIn("#map", zoomScale); }
+            });
+
+            $("#btnZoomOut").igButton({
+                width: "100%", height: "100%",
+                click: function () { zoomOut("#map", zoomScale); }
+            });
+        }
+
+        //  --------------- HELPFULL METHODS ----------------------------------------------
+        //  Calculates and sets a new window rectangle for the specified map control with
+        //  the specified amount of panning to the North
+        function panNorth(mapSelector, panFactor) {
+            var map = $(mapSelector);
+            var mapWindow = map.igMap("option", "windowRect");
+            var panScale = Math.min(mapWindow.width, mapWindow.height) * 0.2;
+
+            mapWindow.top = Math.max(0.0, mapWindow.top - panScale);
+
+            map.igMap("option", "windowRect", mapWindow);
+        }
+
+        //  Calculates and sets a new window rectangle for the specified map control with
+        //  the specified amount of panning to the South
+        function panSouth(mapSelector, panFactor) {
+            var map = $(mapSelector);
+            var mapWindow = map.igMap("option", "windowRect");
+            var panScale = Math.min(mapWindow.width, mapWindow.height) * 0.2;
+
+            mapWindow.top = Math.min(1.0 - mapWindow.height, mapWindow.top + panScale);
+
+            map.igMap("option", "windowRect", mapWindow);
+        }
+
+        //  Calculates and sets a new window rectangle for the specified map control with
+        //  the specified amount of panning to the West
+        function panWest(mapSelector, panFactor) {
+            var map = $(mapSelector);
+            var mapWindow = map.igMap("option", "windowRect");
+            var panScale = Math.min(mapWindow.width, mapWindow.height) * 0.2;
+
+            mapWindow.left = Math.max(0.0, mapWindow.left - panScale);
+
+            map.igMap("option", "windowRect", mapWindow);
+        }
+
+        //  Calculates and sets a new window rectangle for the specified map control with
+        //  the specified amount of panning to the East
+        function panEast(mapSelector, panFactor) {
+            var map = $(mapSelector);
+            var mapWindow = map.igMap("option", "windowRect");
+            var panScale = Math.min(mapWindow.width, mapWindow.height) * panFactor;
+
+            mapWindow.left = Math.min(1.0 - mapWindow.width, mapWindow.left + panScale);
+
+            map.igMap("option", "windowRect", mapWindow);
+        }
+        //  Calculates and sets a new zoomed in window rectangle for the specified map control, and
+        //  specified zoom factor
+        function zoomIn(mapSelector, zoomFactor) {
+            var map = $(mapSelector);
+            var aspectRatio = map.width() / map.height();
+
+            var mapWindow = map.igMap("option", "windowRect");
+            var zoomScaleAbs = mapWindow.width * zoomFactor;
+
+            mapWindow.width = mapWindow.width - (2 * zoomScaleAbs);
+            mapWindow.height = mapWindow.width / aspectRatio;
+
+            mapWindow.left = Math.min(1.0, mapWindow.left + zoomScaleAbs);
+            mapWindow.top = Math.min(1.0, mapWindow.top + zoomScaleAbs);
+
+            map.igMap("option", "windowRect", mapWindow);
+        }
+
+        //  Calculates and sets a new zoomed out window rectangle for the specified map control, and
+        //  specified zoom factor
+        function zoomOut(mapSelector, zoomFactor) {
+            var map = $(mapSelector);
+            var aspectRatio = map.width() / map.height();
+
+            var mapWindow = map.igMap("option", "windowRect");
+            var zoomScaleAbs = mapWindow.width * zoomScale;
+
+            mapWindow.width = mapWindow.width + (2 * zoomScaleAbs);
+            mapWindow.height = mapWindow.width / aspectRatio;
+
+            mapWindow.left = Math.max(0.0, mapWindow.left - zoomScaleAbs);
+            mapWindow.top = Math.max(0.0, mapWindow.top - zoomScaleAbs);
+
+            map.igMap("option", "windowRect", mapWindow);
+        }
+
+        //  Calculates the geographich coordinates of a square around a central point and radius
+        function geographichFromCentered(centered) {
+            var geographic =
+            {
+                left: centered.longitude - centered.radius,
+                top: centered.latitude - centered.radius,
+                width: centered.radius * 2,
+                height: centered.radius * 2
+            };
+            return geographic;
+        }
+        //  Calculates the central point and radius of the specified rectangle in
+        //  geographic coordinates
+        function centeredFromGeographic(geographic) {
+            var centered =
+                {
+                    latitude: geographic.top + (geographic.height / 2),
+                    longitude: geographic.left + (geographic.width / 2),
+                    radius: Math.min(geographic.height / 2, geographic.width / 2)
+                };
+            return centered;
+        }
+    </script>
+
+    <style type="text/css">
+        #navControlsTable td 
+        {
+            width: 28px;
+            height: 28px;
+            padding: 2px 2px 2px 2px;
+        }
+        
+        #navControls, #posControls
+        {
+            font-size: smaller;
+            overflow: hidden;
+        }
+        
+        .grouplabel { font-weight: bold; margin: 10px 0px 10px 0px; }
+        
+        .optionRow
+        {
+            margin: 5px 3px 10px 10px;
+        }
+        
+        .optionCombo
+        {
+            position: relative;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Map Navigation</h2>
+						<p>This sample demonstrates various navigation methods available in the igMap control. Panning and zooming through the control’s content can be performed using built-in keyboard navigation (Arrows, Page Up/Down, Home key), built-in mouse navigation (Shift + mouse drag, mouse scroll, mouse down + mouse drag), and built-in map overview pane, as well as from code-behind using the control's window position and scale properties.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+
+                        <div id="map"></div>
+                        <h2 style="text-align: center; width: 700px; ">World Cities</h2>
+
+                        <!-- Navigation controls window markup -->
+                        <div id="navControls">
+                            <label class="grouplabel">Interactions</label>
+                            <div class="optionRow">
+                                <span>Default</span>
+                                <span class="optionCombo">
+                                    <select id="cbxDefaultMode">
+                                        <option selected="selected" value="dragPan">Drag Pan</option>
+                                        <option value="dragZoom">Drag Zoom</option>
+                                        <option value="none">None</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <span>Pan Modifier</span>
+                                <span class="optionCombo">
+                                    <select id="cbxPanModifier">
+                                        <option value="shift" selected="selected">Shift</option>
+                                        <option value="control">Control</option>
+                                        <option value="alt">Alt</option>
+                                        <option value="none">None</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <span>Zoom</span>
+                                <span class="optionCombo">
+                                    <select id="cbxZoomModifier">
+                                        <option value="shift">Shift</option>
+                                        <option value="control" selected="selected">Control</option>
+                                        <option value="alt">Alt</option>
+                                        <option value="none">None</option>
+                                    </select>
+                                </span>
+                            </div>
+
+                            <label class="grouplabel">Navigation Controls</label>
+                            <div class="optionRow">
+                                <input id="cbShowOPD" type="checkbox" title="Show Map Overview Pane" value="showOPD" class="optionRow" checked="checked" />
+                                <label for="cbShowOPD">Enable Pane</label>
+                            </div>
+
+                            <label class="grouplabel">Navigation API</label>
+                            <div class="optionRow">
+                                <table id="navControlsTable">
+                                    <tr> <td></td>      <td><div id="btnNorth">˄</div></td>  </tr>
+                                    <tr> <td><div id="btnWest">˂</div></td>  <td><div id="btnResetZoom">X</div></td>  <td><div id="btnEast">˃</div></td>   <td></td>
+                                        <td><div id="btnZoomIn">+</div></td> <td><div id="btnZoomOut">─</div></td></tr>
+                                    <tr> <td></td>      <td><div id="btnSouth">˅</div></td>  </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Positioning controls window markup -->
+                        <div id="posControls">
+                            <label class="grouplabel">Map Area</label>
+                            <div class="optionRow">
+                                <span>Left</span>
+                                <span class="optionCombo">
+                                    <input type="text" value="0.0" id="leftGeo" class="geoLat" />
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <span>Top</span>
+                                <span class="optionCombo">
+                                    <input type="text" value="0.0" id="topGeo" class="geoLong" />
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <span>Width</span>
+                                <span class="optionCombo">
+                                    <input type="text" value="0.0" id="widthGeo" class="geoLat" />
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <span>Height</span>
+                                <span class="optionCombo">
+                                    <input type="text" value="0.0" id="heightGeo" class="geoLong" />
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <div id="btnSetRectangle">Go To</div>
+                            </div>
+
+                            <label class="grouplabel">Center and Zoom</label>
+                            <div class="optionRow">
+                                <span>Latitude</span>
+                                <span class="optionCombo">
+                                    <input type="text" value="53.0" id="centerLatitude" class="geoLat" />
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <span>Latitude</span>
+                                <span class="optionCombo">
+                                    <input type="text" value="0.0" id="centerLongitude" class="geoLong" />
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <span>Radius</span>
+                                <span class="optionCombo">
+                                    <input type="text" value="10.0" id="centerRadius" class="geoLat" />
+                                </span>
+                            </div>
+                            <div class="optionRow">
+                                <div id="btnSetCentered" style="position: relative; float: left;">Go To</div>
+                                <div id="btnNext" style="position: relative; float: right;">>></div>
+                                <div id="btnPrevious" style="position: relative; float: right;"><<</div>
+                            </div>
+                        </div>
+
+                        <!-- The actual Navigation Controls dialog element and code -->
+                        <div id="navDialog"></div>
+                        <div id="posDialog"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

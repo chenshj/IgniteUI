@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+  <Folder Text="Computer" ImageUrl="../content/images/igTree/Common/computer.png" Value="Folder">
+      <Folder Text="Music" ImageUrl="../content/images/igTree/Common/book.png" Value="Folder">
+        <Folder Text="Y.Malmsteen" ImageUrl="../content/images/igTree/Common/book.png" Value="Folder">
+          <Folder Text="Y.Malmsteen - Making Love" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+          <Folder Text="Y.Malmsteen - Rising Force" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+          <Folder Text="Y.Malmsteen - Fire and Ice" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+        </Folder>
+        <Folder Text="WhiteSnake" ImageUrl="../content/images/igTree/Common/book.png" Value="Folder">
+          <Folder Text="WhiteSnake - Trouble" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+          <Folder Text="WhiteSnake - Bad Boys" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+          <Folder Text="WhiteSnake - Is This Love" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+        </Folder>
+        <Folder Text="AC/DC" ImageUrl="../content/images/igTree/Common/book.png" Value="Folder">
+          <Folder Text="AC/DC - ThunderStruck" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+          <Folder Text="AC/DC - T.N.T." ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+          <Folder Text="AC/DC - The Jack" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+        </Folder>
+        <Folder Text="Rock" ImageUrl="../content/images/igTree/Common/book.png" Value="Folder">
+          <Folder Text="Bon Jovi - It's My Life" ImageUrl="../content/images/igTree/Common/music.png" Value="File"></Folder>
+        </Folder>
+       </Folder>
+    <Folder Text="My Documents" ImageUrl="../content/images/igTree/Common/DocumentsFolder.png" Value="Folder">
+      <Folder Text="2009" ImageUrl="../content/images/igTree/Common/DocumentsFolder.png" Value="Folder">
+        <Folder Text="Month Report" ImageUrl="../content/images/igTree/Common/Documents.png" Value="File"></Folder>
+        <Folder Text="Year Report" ImageUrl="../content/images/igTree/Common/Documents.png" Value="File"></Folder>
+      </Folder>
+      <Folder Text="2010" ImageUrl="../content/images/igTree/Common/DocumentsFolder.png" Value="Folder">
+        <Folder Text="Month Report" ImageUrl="../content/images/igTree/Common/Documents.png" Value="File"></Folder>
+        <Folder Text="Year Report" ImageUrl="../content/images/igTree/Common/Documents.png" Value="File"></Folder>
+      </Folder>
+    </Folder>
+    <Folder Text="Pictures" ImageUrl="../content/images/igTree/Common/coins.png" Value="Folder">
+      <Folder Text="BirthDay2009" ImageUrl="../content/images/igTree/Common/coins.png" Value="Folder">
+        <Folder Text="Picture1" ImageUrl="../content/images/igTree/Common/coins_add.png" Value="File"></Folder>
+        <Folder Text="Picture2" ImageUrl="../content/images/igTree/Common/coins_add.png" Value="File"></Folder>
+        <Folder Text="Picture3" ImageUrl="../content/images/igTree/Common/coins_add.png" Value="File"></Folder>
+        <Folder Text="Picture4" ImageUrl="../content/images/igTree/Common/coins_add.png" Value="File"></Folder>
+      </Folder>
+      <Folder Text="BirthDay2010" ImageUrl="../content/images/igTree/Common/coins.png" Value="Folder">
+        <Folder Text="Picture1" ImageUrl="../content/images/igTree/Common/coins_add.png" Value="File"></Folder>
+        <Folder Text="Picture2" ImageUrl="../content/images/igTree/Common/coins_add.png" Value="File"></Folder>
+        <Folder Text="Picture3" ImageUrl="../content/images/igTree/Common/coins_add.png" Value="File"></Folder>
+      </Folder>
+      </Folder>
+    <Folder Text="Network" ImageUrl="../content/images/igTree/Common/door.png" Value="Folder">     
+          <Folder Text="Archive" ImageUrl="../content/images/igTree/Common/door_in.png" Value="Folder"></Folder>
+          <Folder Text="BackUp" ImageUrl="../content/images/igTree/Common/door_in.png" Value="Folder"></Folder>
+          <Folder Text="FTP" ImageUrl="../content/images/igTree/Common/door_in.png" Value="Folder"></Folder>
+     </Folder>
+    <Folder Text="Deleted" ImageUrl="../content/images/igTree/Common/bin_empty.png" Value="Folder"></Folder>
+  </Folder>

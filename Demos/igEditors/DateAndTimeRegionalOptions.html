@@ -1,0 +1,296 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+  
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+            resources: 'modules/i18n/regional/infragistics.ui.regional-i18n.js,igEditors,igValidator'
+        });
+        $.ig.loader(function () {
+	        $('#dateLong').igDateEditor({
+	            width: 230,
+	            dateInputFormat: 'dateLong',
+	            button: 'spin',
+	            regional: 'en-US'
+	        });
+	        $('#datepicker1').igDatePicker({
+	            width: 230,
+	            dateInputFormat: 'dateLong',
+	            regional: 'en-US'
+	        });
+	        $('#minNumberOfDateFieldsEditor').igDateEditor({
+	            width: 100,
+	            minNumberOfDateFields: 3,
+	            dateInputFormat: "yyyy/MM/dd hh:mm",
+	            regional: 'en-US'
+	        });
+	        $('#RegionalDateEditor').igDateEditor({
+	            width: 150,
+	            dateTimePattern: "yyyy/MM/dd hh:mm",
+	            regional: 'en-US'
+	        });
+	        $('#timeLongAM').igDateEditor({
+	            width: 230,
+	            dateInputFormat: 'dateTime',
+	            button: 'spin',
+	            regional: 'en-US'
+	        });
+	        $('#timeLongPM').igDatePicker({
+	            width: 230,
+	            dateInputFormat: 'dateTime',
+	            regional: 'en-US'
+	        });
+	        $('#regionals').change(function () {
+	            var end, regional = $(this).val();
+	            end = regional.indexOf(' ');
+	            if (end > 1) {
+	                regional = regional.substring(0, end);
+	            }
+	            $('#RegionalDateEditor').igDateEditor('option', 'regional', regional);
+	            $('#dateLong').igDateEditor('option', 'regional', regional);
+	            $('#datepicker1').igDatePicker('option', 'regional', regional);
+	            $('#timeLongAM').igDateEditor('option', 'regional', regional);
+	            $('#timeLongPM').igDatePicker('option', 'regional', regional);
+	            fillNames();
+	        });
+	        $('#amList').change(function () {
+	            var val = $(this).val();
+	            $('#timeLongAM').igDateEditor('option', 'am', val);
+	        });
+	        $('#pmList').change(function () {
+	            var val = $(this).val();
+	            $('#timeLongPM').igDatePicker('option', 'pm', val);
+	        });
+           fillNames();
+	    });
+	    function fillNames () {
+	            var monthNames = $('#dateLong').igDateEditor('getRegionalOption', 'monthNames');
+	            var monthNamesShort = $('#dateLong').igDateEditor('getRegionalOption', 'monthNamesShort');
+	            var dayNames = $('#dateLong').igDateEditor('getRegionalOption', 'dayNames');
+	            var dayNamesShort = $('#dateLong').igDateEditor('getRegionalOption', 'dayNamesShort');
+	            $('#monthNames').removeData().empty();
+	            $('#monthNamesShort').removeData().empty();
+	            $('#dayNames').removeData().empty();
+	            $('#dayNamesShort').removeData().empty();
+	            $.each(monthNames, function () {
+	                $('#monthNames').append(this + '<br />');
+	            });
+	            $.each(monthNamesShort, function () {
+	                $('#monthNamesShort').append(this + '<br />');
+	            });
+	            $.each(dayNames, function () {
+	                $('#dayNames').append(this + '<br />');
+	            });
+	            $.each(dayNamesShort, function () {
+	                $('#dayNamesShort').append(this + '<br />');
+	            });
+	    }
+	</script>
+	<style type="text/css">
+	.standard-grid {margin-bottom:20px;}
+	</style>
+	
+</head>
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Date and Time Localization</h2>
+						<p>This sample demonstrates different regional options of the igDateEditor and igDatePicker.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+						<table class="standard-grid">
+							<tr>
+								<td>
+									Date (Long)
+									<br />
+									<br />
+									<input id="dateLong" type="text" value="2010-9-25-7-6-5-4" />
+								</td>
+								<td>
+									Date Picker
+									<br />
+									<br />
+									<input id="datepicker1" type="text" value="2010-9-8-19-6-5-4" />
+									<br />
+								</td>
+							</tr>
+							<tr>
+								<td>
+									Time (Long AM)
+									<br />
+									<br />
+									<input id="timeLongAM" type="text" value="2010-9-8-4-6-5-4" style="margin-bottom: 5px;" />
+								</td>
+								<td>
+									Time (Long PM)
+									<br />
+									<br />
+									<input id="timeLongPM" type="text" value="2010-9-8-19-6-5-4" />
+								</td>
+							</tr>
+						</table>
+						<table class="standard-grid">
+							<thead><tr><th colspan="3">Regional Options</th></tr></thead>
+							<tbody>
+							<tr>
+								<td style="width: 50%;">
+									Select region from the DropDown
+									<br />
+									<select id="regionals">
+										<option selected="selected">en-US (English, United States)</option>
+										<option>af (South Africa)</option>
+										<option>ar (Arabic)</option>
+										<option>az (Azerbaijan, Latin)</option>
+										<option>bg (Bulgaria)</option>
+										<option>bs (Bosnia)</option>
+										<option>ca (Catalan)</option>
+										<option>cs (Czech)</option>
+										<option>da (Denmark)</option>
+										<option>de (Germany)</option>
+										<option>el (Greece)</option>
+										<option>en-GB (English, United Kingdom)</option>
+										<option>es (Spain)</option>
+										<option>et (Estonia)</option>
+										<option>fa (Farsi, Iran)</option>
+										<option>fi (Finland)</option>
+										<option>fo (Faroe)</option>
+										<option>fr-CH (French, Switzerland)</option>
+										<option>fr (France)</option>
+										<option>he (Hebrew, Israel)</option>
+										<option>hr (Croatia)</option>
+										<option>hu (Hungary)</option>
+										<option>hy (Armenia)</option>
+										<option>id (Indonesia)</option>
+										<option>is (Iceland)</option>
+										<option>it (Italy)</option>
+										<option>ja (Japan)</option>
+										<option>ko (Korea)</option>
+										<option>lt (Lithuania)</option>
+										<option>lv (Latvia)</option>
+										<option>ms (Malaysia)</option>
+										<option>nl (Dutch, Netherlands)</option>
+										<option>no (Norway)</option>
+										<option>pl (Poland)</option>
+										<option>pt-BR (Brazil)</option>
+										<option>ro (Romania)</option>
+										<option>ru (Russia)</option>
+										<option>sk (Slovakia)</option>
+										<option>sl (Slovenia)</option>
+										<option>sq (Albania)</option>
+										<option>sr (Cyrillic, Serbia)</option>
+										<option>sr-SR (Latin, Serbia)</option>
+										<option>sv (Sweden)</option>
+										<option>ta (Tamil, India)</option>
+										<option>th (Thailand)</option>
+										<option>tr (Turkey)</option>
+										<option>uk (Ukraine)</option>
+										<option>vi (Vietnam)</option>
+										<option>zh-CN (PRC, China)</option>
+										<option>zh-HK (Hong Kong SAR PRC, China)</option>
+										<option>zh-TW (Taiwan, China)</option>
+										<option>zh-CN (PRC, China)</option>
+									</select>
+
+								</td>
+								<td style="width: 25%">
+									Select custom value for "AM"
+									<br />
+									<select id="amList" style="width: 100px">
+										<option selected="selected">AM</option>
+										<option>am</option>
+										<option>a</option>
+										<option>A</option>
+									</select>
+								</td>
+								<td style="width: 25%">
+									Select custom value for "PM"
+									<br />
+									<select id="pmList" style="width: 100px">
+										<option selected="selected">PM</option>
+										<option>pm</option>
+										<option>p</option>
+										<option>P</option>
+									</select>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						
+						<table class="standard-grid" >
+							<caption>Day and Month Names</caption>
+							<thead>
+							<tr>
+								<th style="width: 25%">
+									Month Names
+								</th>
+								<th style="width:  25%">
+									Month Names (short)
+								</th>
+								<th style="width:  25%">
+									Day Names
+								</th>
+								<th style="width:  25%">
+									Day Names (short)
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>
+									<span id="monthNames"></span>
+								</td>
+								<td>
+									<span id="monthNamesShort"></span>
+								</td>
+								<td>
+									<span id="dayNames"></span>
+								</td>
+								<td>
+									<span id="dayNamesShort"></span>
+								</td>
+							</tr>
+						</tbody>
+						</table>
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

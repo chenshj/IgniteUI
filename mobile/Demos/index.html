@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" href="content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="content/css/overrides.css" />
+    
+    <script type="text/javascript" src="scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>
+    <script type="text/javascript" src="scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../js/infragistics.mobile.loader.js"></script>
+    <script>
+        $.ig.loader({
+            scriptPath: "../js/",
+            cssPath: "../css/",
+            theme: "ios",
+            resources: "igmList"
+        });
+    </script>
+    
+</head>
+<body>
+    <div id="toc" data-role="page">
+        <div data-role="header">
+            <h1>
+                <img src="content/images/infragistics.png" /></h1>
+        </div>
+        <div data-role="content">
+            <ul id="controlListView" data-role="iglistview" data-image-mode="none">
+                <li data-role="list-divider">igListView</li>
+                    <li><a href="iglistview/jsonbinding.html">JSON Binding</a></li>
+                    <li><a href="iglistview/dynamicbinding.html">Dynamic Binding</a></li>
+                    <li><a href="iglistview/listdividers.html">List Dividers</a></li>
+                    <li><a href="iglistview/sortandgrouppresets.html">Sort and Group Presets</a></li>
+                    <li><a href="iglistview/searchfiltering.html">Search Filtering</a></li>
+                    <li><a href="iglistview/filterpresets.html">Filter Presets</a></li>
+                    <li><a href="iglistview/customgroups.html">Custom Groups</a></li>
+                    <li><a href="iglistview/templates.html">Templates</a></li>
+                    <li><a href="iglistview/customexpandbutton.html">Custom Expand Button</a></li>
+                    <li><a href="iglistview/CreateSubPagesOnInit.html">Create Sub Pages On Init</a></li>
+                <li data-role="list-divider">igRating</li>  
+                    <li><a href="igrating/AnimatedRating.html">Animated Rating</a></li>
+                    <li><a href="igrating/CommentForm.html">Comment Form</a></li>
+                    <li><a href="igrating/DefaultRating.html">Default Rating</a></li>
+                    <li><a href="igrating/RatingCustomItems.html">Custom Items</a></li>
+                    <li><a href="igrating/RatingListView.html">Rating in a List View</a></li>             
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,851 @@
+﻿<GetProductsXMLResponse xmlns="JsonStockService">
+  <GetProductsXMLResult xmlns:a="http://schemas.datacontract.org/2004/07/" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>1</a:ProductID>
+      <a:ProductName>Chai</a:ProductName>
+      <a:QuantityPerUnit>10 boxes x 20 bags</a:QuantityPerUnit>
+      <a:SupplierID>1</a:SupplierID>
+      <a:UnitPrice>18.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>39</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>2</a:ProductID>
+      <a:ProductName>Chang</a:ProductName>
+      <a:QuantityPerUnit>24 - 12 oz bottles</a:QuantityPerUnit>
+      <a:SupplierID>1</a:SupplierID>
+      <a:UnitPrice>19.0000</a:UnitPrice>
+      <a:UnitsInOrder>40</a:UnitsInOrder>
+      <a:UnitsInStock>17</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>3</a:ProductID>
+      <a:ProductName>Aniseed Syrup</a:ProductName>
+      <a:QuantityPerUnit>12 - 550 ml bottles</a:QuantityPerUnit>
+      <a:SupplierID>1</a:SupplierID>
+      <a:UnitPrice>10.0000</a:UnitPrice>
+      <a:UnitsInOrder>70</a:UnitsInOrder>
+      <a:UnitsInStock>13</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>4</a:ProductID>
+      <a:ProductName>Chef Anton's Cajun Seasoning</a:ProductName>
+      <a:QuantityPerUnit>48 - 6 oz jars</a:QuantityPerUnit>
+      <a:SupplierID>2</a:SupplierID>
+      <a:UnitPrice>22.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>53</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>5</a:ProductID>
+      <a:ProductName>Chef Anton's Gumbo Mix</a:ProductName>
+      <a:QuantityPerUnit>36 boxes</a:QuantityPerUnit>
+      <a:SupplierID>2</a:SupplierID>
+      <a:UnitPrice>21.3500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>0</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>6</a:ProductID>
+      <a:ProductName>Grandma's Boysenberry Spread</a:ProductName>
+      <a:QuantityPerUnit>12 - 8 oz jars</a:QuantityPerUnit>
+      <a:SupplierID>3</a:SupplierID>
+      <a:UnitPrice>25.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>120</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>7</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>7</a:ProductID>
+      <a:ProductName>Uncle Bob's Organic Dried Pears</a:ProductName>
+      <a:QuantityPerUnit>12 - 1 lb pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>3</a:SupplierID>
+      <a:UnitPrice>30.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>15</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>8</a:ProductID>
+      <a:ProductName>Northwoods Cranberry Sauce</a:ProductName>
+      <a:QuantityPerUnit>12 - 12 oz jars</a:QuantityPerUnit>
+      <a:SupplierID>3</a:SupplierID>
+      <a:UnitPrice>40.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>6</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>6</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>9</a:ProductID>
+      <a:ProductName>Mishi Kobe Niku</a:ProductName>
+      <a:QuantityPerUnit>18 - 500 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>4</a:SupplierID>
+      <a:UnitPrice>97.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>29</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>10</a:ProductID>
+      <a:ProductName>Ikura</a:ProductName>
+      <a:QuantityPerUnit>12 - 200 ml jars</a:QuantityPerUnit>
+      <a:SupplierID>4</a:SupplierID>
+      <a:UnitPrice>31.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>31</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>11</a:ProductID>
+      <a:ProductName>Queso Cabrales</a:ProductName>
+      <a:QuantityPerUnit>1 kg pkg.</a:QuantityPerUnit>
+      <a:SupplierID>5</a:SupplierID>
+      <a:UnitPrice>21.0000</a:UnitPrice>
+      <a:UnitsInOrder>30</a:UnitsInOrder>
+      <a:UnitsInStock>22</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>12</a:ProductID>
+      <a:ProductName>Queso Manchego La Pastora</a:ProductName>
+      <a:QuantityPerUnit>10 - 500 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>5</a:SupplierID>
+      <a:UnitPrice>38.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>86</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>13</a:ProductID>
+      <a:ProductName>Konbu</a:ProductName>
+      <a:QuantityPerUnit>2 kg box</a:QuantityPerUnit>
+      <a:SupplierID>6</a:SupplierID>
+      <a:UnitPrice>6.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>24</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>7</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>14</a:ProductID>
+      <a:ProductName>Tofu</a:ProductName>
+      <a:QuantityPerUnit>40 - 100 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>6</a:SupplierID>
+      <a:UnitPrice>23.2500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>35</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>15</a:ProductID>
+      <a:ProductName>Genen Shouyu</a:ProductName>
+      <a:QuantityPerUnit>24 - 250 ml bottles</a:QuantityPerUnit>
+      <a:SupplierID>6</a:SupplierID>
+      <a:UnitPrice>15.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>39</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>16</a:ProductID>
+      <a:ProductName>Pavlova</a:ProductName>
+      <a:QuantityPerUnit>32 - 500 g boxes</a:QuantityPerUnit>
+      <a:SupplierID>7</a:SupplierID>
+      <a:UnitPrice>17.4500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>29</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>6</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>17</a:ProductID>
+      <a:ProductName>Alice Mutton</a:ProductName>
+      <a:QuantityPerUnit>20 - 1 kg tins</a:QuantityPerUnit>
+      <a:SupplierID>7</a:SupplierID>
+      <a:UnitPrice>39.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>0</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>18</a:ProductID>
+      <a:ProductName>Carnarvon Tigers</a:ProductName>
+      <a:QuantityPerUnit>16 kg pkg.</a:QuantityPerUnit>
+      <a:SupplierID>7</a:SupplierID>
+      <a:UnitPrice>62.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>42</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>19</a:ProductID>
+      <a:ProductName>Teatime Chocolate Biscuits</a:ProductName>
+      <a:QuantityPerUnit>10 boxes x 12 pieces</a:QuantityPerUnit>
+      <a:SupplierID>8</a:SupplierID>
+      <a:UnitPrice>9.2000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>25</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>20</a:ProductID>
+      <a:ProductName>Sir Rodney's Marmalade</a:ProductName>
+      <a:QuantityPerUnit>30 gift boxes</a:QuantityPerUnit>
+      <a:SupplierID>8</a:SupplierID>
+      <a:UnitPrice>81.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>40</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>21</a:ProductID>
+      <a:ProductName>Sir Rodney's Scones</a:ProductName>
+      <a:QuantityPerUnit>24 pkgs. x 4 pieces</a:QuantityPerUnit>
+      <a:SupplierID>8</a:SupplierID>
+      <a:UnitPrice>10.0000</a:UnitPrice>
+      <a:UnitsInOrder>40</a:UnitsInOrder>
+      <a:UnitsInStock>3</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>5</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>22</a:ProductID>
+      <a:ProductName>Gustaf's KnÃ¤ckebrÃ¶d</a:ProductName>
+      <a:QuantityPerUnit>24 - 500 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>9</a:SupplierID>
+      <a:UnitPrice>21.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>104</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>5</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>23</a:ProductID>
+      <a:ProductName>TunnbrÃ¶d</a:ProductName>
+      <a:QuantityPerUnit>12 - 250 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>9</a:SupplierID>
+      <a:UnitPrice>9.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>61</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>24</a:ProductID>
+      <a:ProductName>GuaranÃ¡ FantÃ¡stica</a:ProductName>
+      <a:QuantityPerUnit>12 - 355 ml cans</a:QuantityPerUnit>
+      <a:SupplierID>10</a:SupplierID>
+      <a:UnitPrice>4.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>20</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>25</a:ProductID>
+      <a:ProductName>NuNuCa NuÃŸ-Nougat-Creme</a:ProductName>
+      <a:QuantityPerUnit>20 - 450 g glasses</a:QuantityPerUnit>
+      <a:SupplierID>11</a:SupplierID>
+      <a:UnitPrice>14.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>76</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>26</a:ProductID>
+      <a:ProductName>GumbÃ¤r GummibÃ¤rchen</a:ProductName>
+      <a:QuantityPerUnit>100 - 250 g bags</a:QuantityPerUnit>
+      <a:SupplierID>11</a:SupplierID>
+      <a:UnitPrice>31.2300</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>15</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>27</a:ProductID>
+      <a:ProductName>Schoggi Schokolade</a:ProductName>
+      <a:QuantityPerUnit>100 - 100 g pieces</a:QuantityPerUnit>
+      <a:SupplierID>11</a:SupplierID>
+      <a:UnitPrice>43.9000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>49</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>7</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>28</a:ProductID>
+      <a:ProductName>RÃ¶ssle Sauerkraut</a:ProductName>
+      <a:QuantityPerUnit>25 - 825 g cans</a:QuantityPerUnit>
+      <a:SupplierID>12</a:SupplierID>
+      <a:UnitPrice>45.6000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>26</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>6</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>29</a:ProductID>
+      <a:ProductName>ThÃ¼ringer Rostbratwurst</a:ProductName>
+      <a:QuantityPerUnit>50 bags x 30 sausgs.</a:QuantityPerUnit>
+      <a:SupplierID>12</a:SupplierID>
+      <a:UnitPrice>123.7900</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>0</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>30</a:ProductID>
+      <a:ProductName>Nord-Ost Matjeshering</a:ProductName>
+      <a:QuantityPerUnit>10 - 200 g glasses</a:QuantityPerUnit>
+      <a:SupplierID>13</a:SupplierID>
+      <a:UnitPrice>25.8900</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>10</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>31</a:ProductID>
+      <a:ProductName>Gorgonzola Telino</a:ProductName>
+      <a:QuantityPerUnit>12 - 100 g pkgs</a:QuantityPerUnit>
+      <a:SupplierID>14</a:SupplierID>
+      <a:UnitPrice>12.5000</a:UnitPrice>
+      <a:UnitsInOrder>70</a:UnitsInOrder>
+      <a:UnitsInStock>0</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>32</a:ProductID>
+      <a:ProductName>Mascarpone Fabioli</a:ProductName>
+      <a:QuantityPerUnit>24 - 200 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>14</a:SupplierID>
+      <a:UnitPrice>32.0000</a:UnitPrice>
+      <a:UnitsInOrder>40</a:UnitsInOrder>
+      <a:UnitsInStock>9</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>33</a:ProductID>
+      <a:ProductName>Geitost</a:ProductName>
+      <a:QuantityPerUnit>500 g</a:QuantityPerUnit>
+      <a:SupplierID>15</a:SupplierID>
+      <a:UnitPrice>2.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>112</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>34</a:ProductID>
+      <a:ProductName>Sasquatch Ale</a:ProductName>
+      <a:QuantityPerUnit>24 - 12 oz bottles</a:QuantityPerUnit>
+      <a:SupplierID>16</a:SupplierID>
+      <a:UnitPrice>14.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>111</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>35</a:ProductID>
+      <a:ProductName>Steeleye Stout</a:ProductName>
+      <a:QuantityPerUnit>24 - 12 oz bottles</a:QuantityPerUnit>
+      <a:SupplierID>16</a:SupplierID>
+      <a:UnitPrice>18.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>20</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>36</a:ProductID>
+      <a:ProductName>Inlagd Sill</a:ProductName>
+      <a:QuantityPerUnit>24 - 250 g  jars</a:QuantityPerUnit>
+      <a:SupplierID>17</a:SupplierID>
+      <a:UnitPrice>19.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>112</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>37</a:ProductID>
+      <a:ProductName>Gravad lax</a:ProductName>
+      <a:QuantityPerUnit>12 - 500 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>17</a:SupplierID>
+      <a:UnitPrice>26.0000</a:UnitPrice>
+      <a:UnitsInOrder>50</a:UnitsInOrder>
+      <a:UnitsInStock>11</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>38</a:ProductID>
+      <a:ProductName>CÃ´te de Blaye</a:ProductName>
+      <a:QuantityPerUnit>12 - 75 cl bottles</a:QuantityPerUnit>
+      <a:SupplierID>18</a:SupplierID>
+      <a:UnitPrice>263.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>17</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>39</a:ProductID>
+      <a:ProductName>Chartreuse verte</a:ProductName>
+      <a:QuantityPerUnit>750 cc per bottle</a:QuantityPerUnit>
+      <a:SupplierID>18</a:SupplierID>
+      <a:UnitPrice>18.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>69</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>40</a:ProductID>
+      <a:ProductName>Boston Crab Meat</a:ProductName>
+      <a:QuantityPerUnit>24 - 4 oz tins</a:QuantityPerUnit>
+      <a:SupplierID>19</a:SupplierID>
+      <a:UnitPrice>18.4000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>123</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>41</a:ProductID>
+      <a:ProductName>Jack's New England Clam Chowder</a:ProductName>
+      <a:QuantityPerUnit>12 - 12 oz cans</a:QuantityPerUnit>
+      <a:SupplierID>19</a:SupplierID>
+      <a:UnitPrice>9.6500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>85</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>5</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>42</a:ProductID>
+      <a:ProductName>Singaporean Hokkien Fried Mee</a:ProductName>
+      <a:QuantityPerUnit>32 - 1 kg pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>20</a:SupplierID>
+      <a:UnitPrice>14.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>26</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>43</a:ProductID>
+      <a:ProductName>Ipoh Coffee</a:ProductName>
+      <a:QuantityPerUnit>16 - 500 g tins</a:QuantityPerUnit>
+      <a:SupplierID>20</a:SupplierID>
+      <a:UnitPrice>46.0000</a:UnitPrice>
+      <a:UnitsInOrder>10</a:UnitsInOrder>
+      <a:UnitsInStock>17</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>44</a:ProductID>
+      <a:ProductName>Gula Malacca</a:ProductName>
+      <a:QuantityPerUnit>20 - 2 kg bags</a:QuantityPerUnit>
+      <a:SupplierID>20</a:SupplierID>
+      <a:UnitPrice>19.4500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>27</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>45</a:ProductID>
+      <a:ProductName>Rogede sild</a:ProductName>
+      <a:QuantityPerUnit>1k pkg.</a:QuantityPerUnit>
+      <a:SupplierID>21</a:SupplierID>
+      <a:UnitPrice>9.5000</a:UnitPrice>
+      <a:UnitsInOrder>70</a:UnitsInOrder>
+      <a:UnitsInStock>5</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>46</a:ProductID>
+      <a:ProductName>Spegesild</a:ProductName>
+      <a:QuantityPerUnit>4 - 450 g glasses</a:QuantityPerUnit>
+      <a:SupplierID>21</a:SupplierID>
+      <a:UnitPrice>12.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>95</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>47</a:ProductID>
+      <a:ProductName>Zaanse koeken</a:ProductName>
+      <a:QuantityPerUnit>10 - 4 oz boxes</a:QuantityPerUnit>
+      <a:SupplierID>22</a:SupplierID>
+      <a:UnitPrice>9.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>36</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>48</a:ProductID>
+      <a:ProductName>Chocolade</a:ProductName>
+      <a:QuantityPerUnit>10 pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>22</a:SupplierID>
+      <a:UnitPrice>12.7500</a:UnitPrice>
+      <a:UnitsInOrder>70</a:UnitsInOrder>
+      <a:UnitsInStock>15</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>49</a:ProductID>
+      <a:ProductName>Maxilaku</a:ProductName>
+      <a:QuantityPerUnit>24 - 50 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>23</a:SupplierID>
+      <a:UnitPrice>20.0000</a:UnitPrice>
+      <a:UnitsInOrder>60</a:UnitsInOrder>
+      <a:UnitsInStock>10</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>50</a:ProductID>
+      <a:ProductName>Valkoinen suklaa</a:ProductName>
+      <a:QuantityPerUnit>12 - 100 g bars</a:QuantityPerUnit>
+      <a:SupplierID>23</a:SupplierID>
+      <a:UnitPrice>16.2500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>65</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>7</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>51</a:ProductID>
+      <a:ProductName>Manjimup Dried Apples</a:ProductName>
+      <a:QuantityPerUnit>50 - 300 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>24</a:SupplierID>
+      <a:UnitPrice>53.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>20</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>5</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>52</a:ProductID>
+      <a:ProductName>Filo Mix</a:ProductName>
+      <a:QuantityPerUnit>16 - 2 kg boxes</a:QuantityPerUnit>
+      <a:SupplierID>24</a:SupplierID>
+      <a:UnitPrice>7.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>38</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>6</a:CategoryID>
+      <a:Discontinued>true</a:Discontinued>
+      <a:ProductID>53</a:ProductID>
+      <a:ProductName>Perth Pasties</a:ProductName>
+      <a:QuantityPerUnit>48 pieces</a:QuantityPerUnit>
+      <a:SupplierID>24</a:SupplierID>
+      <a:UnitPrice>32.8000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>0</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>6</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>54</a:ProductID>
+      <a:ProductName>TourtiÃ¨re</a:ProductName>
+      <a:QuantityPerUnit>16 pies</a:QuantityPerUnit>
+      <a:SupplierID>25</a:SupplierID>
+      <a:UnitPrice>7.4500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>21</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>6</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>55</a:ProductID>
+      <a:ProductName>PÃ¢tÃ© chinois</a:ProductName>
+      <a:QuantityPerUnit>24 boxes x 2 pies</a:QuantityPerUnit>
+      <a:SupplierID>25</a:SupplierID>
+      <a:UnitPrice>24.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>115</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>5</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>56</a:ProductID>
+      <a:ProductName>Gnocchi di nonna Alice</a:ProductName>
+      <a:QuantityPerUnit>24 - 250 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>26</a:SupplierID>
+      <a:UnitPrice>38.0000</a:UnitPrice>
+      <a:UnitsInOrder>10</a:UnitsInOrder>
+      <a:UnitsInStock>21</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>5</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>57</a:ProductID>
+      <a:ProductName>Ravioli Angelo</a:ProductName>
+      <a:QuantityPerUnit>24 - 250 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>26</a:SupplierID>
+      <a:UnitPrice>19.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>36</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>58</a:ProductID>
+      <a:ProductName>Escargots de Bourgogne</a:ProductName>
+      <a:QuantityPerUnit>24 pieces</a:QuantityPerUnit>
+      <a:SupplierID>27</a:SupplierID>
+      <a:UnitPrice>13.2500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>62</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>59</a:ProductID>
+      <a:ProductName>Raclette Courdavault</a:ProductName>
+      <a:QuantityPerUnit>5 kg pkg.</a:QuantityPerUnit>
+      <a:SupplierID>28</a:SupplierID>
+      <a:UnitPrice>55.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>79</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>60</a:ProductID>
+      <a:ProductName>Camembert Pierrot</a:ProductName>
+      <a:QuantityPerUnit>15 - 300 g rounds</a:QuantityPerUnit>
+      <a:SupplierID>28</a:SupplierID>
+      <a:UnitPrice>34.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>19</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>61</a:ProductID>
+      <a:ProductName>Sirop d'Ã©rable</a:ProductName>
+      <a:QuantityPerUnit>24 - 500 ml bottles</a:QuantityPerUnit>
+      <a:SupplierID>29</a:SupplierID>
+      <a:UnitPrice>28.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>113</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>62</a:ProductID>
+      <a:ProductName>Tarte au sucre</a:ProductName>
+      <a:QuantityPerUnit>48 pies</a:QuantityPerUnit>
+      <a:SupplierID>29</a:SupplierID>
+      <a:UnitPrice>49.3000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>17</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>63</a:ProductID>
+      <a:ProductName>Vegie-spread</a:ProductName>
+      <a:QuantityPerUnit>15 - 625 g jars</a:QuantityPerUnit>
+      <a:SupplierID>7</a:SupplierID>
+      <a:UnitPrice>43.9000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>24</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>5</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>64</a:ProductID>
+      <a:ProductName>Wimmers gute SemmelknÃ¶del</a:ProductName>
+      <a:QuantityPerUnit>20 bags x 4 pieces</a:QuantityPerUnit>
+      <a:SupplierID>12</a:SupplierID>
+      <a:UnitPrice>33.2500</a:UnitPrice>
+      <a:UnitsInOrder>80</a:UnitsInOrder>
+      <a:UnitsInStock>22</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>65</a:ProductID>
+      <a:ProductName>Louisiana Fiery Hot Pepper Sauce</a:ProductName>
+      <a:QuantityPerUnit>32 - 8 oz bottles</a:QuantityPerUnit>
+      <a:SupplierID>2</a:SupplierID>
+      <a:UnitPrice>21.0500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>76</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>66</a:ProductID>
+      <a:ProductName>Louisiana Hot Spiced Okra</a:ProductName>
+      <a:QuantityPerUnit>24 - 8 oz jars</a:QuantityPerUnit>
+      <a:SupplierID>2</a:SupplierID>
+      <a:UnitPrice>17.0000</a:UnitPrice>
+      <a:UnitsInOrder>100</a:UnitsInOrder>
+      <a:UnitsInStock>4</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>67</a:ProductID>
+      <a:ProductName>Laughing Lumberjack Lager</a:ProductName>
+      <a:QuantityPerUnit>24 - 12 oz bottles</a:QuantityPerUnit>
+      <a:SupplierID>16</a:SupplierID>
+      <a:UnitPrice>14.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>52</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>3</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>68</a:ProductID>
+      <a:ProductName>Scottish Longbreads</a:ProductName>
+      <a:QuantityPerUnit>10 boxes x 8 pieces</a:QuantityPerUnit>
+      <a:SupplierID>8</a:SupplierID>
+      <a:UnitPrice>12.5000</a:UnitPrice>
+      <a:UnitsInOrder>10</a:UnitsInOrder>
+      <a:UnitsInStock>6</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>69</a:ProductID>
+      <a:ProductName>Gudbrandsdalsost</a:ProductName>
+      <a:QuantityPerUnit>10 kg pkg.</a:QuantityPerUnit>
+      <a:SupplierID>15</a:SupplierID>
+      <a:UnitPrice>36.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>26</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>70</a:ProductID>
+      <a:ProductName>Outback Lager</a:ProductName>
+      <a:QuantityPerUnit>24 - 355 ml bottles</a:QuantityPerUnit>
+      <a:SupplierID>7</a:SupplierID>
+      <a:UnitPrice>15.0000</a:UnitPrice>
+      <a:UnitsInOrder>10</a:UnitsInOrder>
+      <a:UnitsInStock>15</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>71</a:ProductID>
+      <a:ProductName>Flotemysost</a:ProductName>
+      <a:QuantityPerUnit>10 - 500 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>15</a:SupplierID>
+      <a:UnitPrice>21.5000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>26</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>4</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>72</a:ProductID>
+      <a:ProductName>Mozzarella di Giovanni</a:ProductName>
+      <a:QuantityPerUnit>24 - 200 g pkgs.</a:QuantityPerUnit>
+      <a:SupplierID>14</a:SupplierID>
+      <a:UnitPrice>34.8000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>14</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>8</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>73</a:ProductID>
+      <a:ProductName>RÃ¶d Kaviar</a:ProductName>
+      <a:QuantityPerUnit>24 - 150 g jars</a:QuantityPerUnit>
+      <a:SupplierID>17</a:SupplierID>
+      <a:UnitPrice>15.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>101</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>7</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>74</a:ProductID>
+      <a:ProductName>Longlife Tofu</a:ProductName>
+      <a:QuantityPerUnit>5 kg pkg.</a:QuantityPerUnit>
+      <a:SupplierID>4</a:SupplierID>
+      <a:UnitPrice>10.0000</a:UnitPrice>
+      <a:UnitsInOrder>20</a:UnitsInOrder>
+      <a:UnitsInStock>4</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>75</a:ProductID>
+      <a:ProductName>RhÃ¶nbrÃ¤u Klosterbier</a:ProductName>
+      <a:QuantityPerUnit>24 - 0.5 l bottles</a:QuantityPerUnit>
+      <a:SupplierID>12</a:SupplierID>
+      <a:UnitPrice>7.7500</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>125</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>1</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>76</a:ProductID>
+      <a:ProductName>LakkalikÃ¶Ã¶ri</a:ProductName>
+      <a:QuantityPerUnit>500 ml</a:QuantityPerUnit>
+      <a:SupplierID>23</a:SupplierID>
+      <a:UnitPrice>18.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>57</a:UnitsInStock>
+    </a:Product>
+    <a:Product>
+      <a:CategoryID>2</a:CategoryID>
+      <a:Discontinued>false</a:Discontinued>
+      <a:ProductID>77</a:ProductID>
+      <a:ProductName>Original Frankfurter grÃ¼ne SoÃŸe</a:ProductName>
+      <a:QuantityPerUnit>12 boxes</a:QuantityPerUnit>
+      <a:SupplierID>12</a:SupplierID>
+      <a:UnitPrice>13.0000</a:UnitPrice>
+      <a:UnitsInOrder>0</a:UnitsInOrder>
+      <a:UnitsInStock>32</a:UnitsInStock>
+    </a:Product>
+  </GetProductsXMLResult>
+</GetProductsXMLResponse>

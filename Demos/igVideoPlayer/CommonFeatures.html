@@ -1,0 +1,333 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+<style type="text/css">
+		canvas
+		{
+			margin-bottom: 3px;
+		}
+
+		span.green
+		{
+			display: inline;
+			color: white;
+			padding:2px;
+			background:green;
+			-moz-border-radius		:2px;
+			-webkit-border-radius	:2px;
+			border-radius			:2px;
+		}
+
+		span.red
+		{
+			display: inline;
+			color: white;
+			padding:2px;
+			background:red;
+			-moz-border-radius		:2px;
+			-webkit-border-radius	:2px;
+			border-radius			:2px;
+		}
+
+		.controlsContainer
+		{
+			width: 310px;
+			height: 317px;
+			margin-left: 7px;
+			background: none repeat scroll 0 0 #CFCFCF;
+			border: 1px solid #B1B1B1;
+			border-radius: 4px;
+			moz-border-radius: 4px;
+			webkit-border-radius: 4px;
+			float: left;
+		}
+
+		.leftContainer
+		{
+			width: 150px;
+			height: 329px;
+			padding: 10px;
+			float: left;
+		}
+
+		.rightContainer
+		{
+			width: 112px;
+			height: 290px;
+			border-color: #999999;
+			border-style: none none none solid;
+			border-width: 1px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			margin-left: 5px;
+			margin-top: 10px;
+			padding-left: 16px;
+			padding-right: 10px;
+			padding-bottom: 10px;
+			float: left;
+		}
+
+		.buttons
+		{
+			width: 150px;
+			margin-top: 2px;
+		}
+
+		.videoPlayerContainer
+		{
+			float: left;
+			width: 380px;
+		}
+
+		.screenshot
+		{
+			background: white;
+			border: 1px solid #B1B1B1;
+			display: block;
+			height: 38px;
+			left: 50%;
+			margin-left: -54px;
+			position: relative;
+			width: 100px;
+		}
+
+		.ui-slider-handle
+		{
+			background-image: url(../Content/images/slider_handles.png) !important;
+		}
+
+		#videoPlayer1
+		{
+			z-index: 1000;
+		}
+
+		#html5Video, #h264Video, #oggVideo, #webMVideo, #currentTime
+		{
+			font-family: "Segoe UI", Arial, sans-serif;
+			font-size: 0.8em;
+			margin-bottom: 5px !important;
+		}
+
+		#currentTime
+		{
+			margin-top: 20px;
+		}
+	</style>
+	
+	<script type="text/javascript">
+		var playing = false;
+
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igVideoPlayer"
+		});
+		$.ig.loader(function () {
+			$("#videoPlayer1").igVideoPlayer({
+				sources: ["http://dl.infragistics.com/pg/2011-1/web/shared/videoplayer/videos/big_buck_bunny.mp4",
+						  "http://dl.infragistics.com/pg/2011-1/web/shared/videoplayer/videos/big_buck_bunny.webm",
+						  "http://dl.infragistics.com/pg/2011-1/web/shared/videoplayer/videos/big_buck_bunny.ogv"
+				],
+				width: 380,
+				posterUrl: "../Content/images/Big_Buck_Bunny.png",
+				fullscreen: false,
+				browserControls: false,
+				autoplay: false,
+				title: 'Big Buck Bunny',
+				muted: false,
+				autohide: false,
+				bookmarks: [
+					{
+						title: 'River',
+						description: 'River',
+						time: 13
+					},
+					{
+						title: 'Big Buck Bunny Appears',
+						description: 'Big Buck Bunny Appears',
+						time: 33
+					}
+				]
+			});
+
+			if ($("#videoPlayer1").igVideoPlayer("supports_video"))
+				$("#html5Video").html($("#html5Video").html() + '<span class="green">YES</span>');
+			else
+				$("#html5Video").html($("#html5Video").html() + '<span class="red">NO</span>');
+
+			if ($("#videoPlayer1").igVideoPlayer("supports_h264_baseline_video"))
+				$("#h264Video").html($("#h264Video").html() + '<span class="green">YES</span>');
+			else
+				$("#h264Video").html($("#h264Video").html() + '<span class="red">NO</span>');
+
+			if ($("#videoPlayer1").igVideoPlayer("supports_ogg_theora_video"))
+				$("#oggVideo").html($("#oggVideo").html() + '<span class="green">YES</span>');
+			else
+				$("#oggVideo").html($("#oggVideo").html() + '<span class="red">NO</span>');
+
+			if ($("#videoPlayer1").igVideoPlayer("supports_webm_video"))
+				$("#webMVideo").html($("#webMVideo").html() + '<span class="green">YES</span>');
+			else
+				$("#webMVideo").html($("#webMVideo").html() + '<span class="red">NO</span>');
+
+			$("#videoPlayer1").igVideoPlayer().bind({
+				igvideoplayerplaying: function () {
+					playing = true;
+					$('#btnPlay span').html("Pause");
+				},
+				igvideoplayerended: function () {
+					playing = false;
+					$('#btnPlay span').html("Play");
+				},
+				igvideoplayerpaused: function () {
+					playing = false;
+					$('#btnPlay span').html("Play");
+				},
+				igvideoplayerprogress: function () {
+					$("#currentTime span").html($("#videoPlayer1").igVideoPlayer("currentTime"));
+				},
+				igvideoplayerenterfullscreen: function () {
+					$("html").css('overflow-y', 'hidden');
+				},
+				igvideoplayerexitfullscreen: function () {
+					$("html").css('overflow-y', 'scroll');
+				}
+			});
+
+			$("#btnAddScreenShot").igButton().click(function () {
+				var canvas = $("#videoPlayer1").igVideoPlayer("screenshot");
+
+				$(canvas).addClass("screenshot");
+				$("#screenShots").append(canvas);
+			});
+
+			$("#btnPlay").igButton().click(function () {
+				if (playing)
+					$("#videoPlayer1").igVideoPlayer("pause");
+				else
+					$("#videoPlayer1").igVideoPlayer("play");
+			});
+
+			$("#slider").slider({ value: 50 }).bind("slide", function (event, ui) {
+				var value = ui.value;
+				$("#videoPlayer1").igVideoPlayer("option", "volume", value / 100);
+			});
+
+			if ($("#videoPlayer1").igVideoPlayer("supports_video") === false) {
+				$("#rightControls").hide();
+				$("#copyrightContainer").hide();
+			}
+		});	
+		
+	</script>	
+</head>
+
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Common Features</h2>
+						<p>The following sample demonstrates some of the basic features of the jQuery Video Player including an out-of-the-box playback and volume control, creating screenshot of the currently displayed video frame and browser compatibility detection. You can learn about the HTML5 video support of the various browsers by running this sample in each of them. Note: When running this sample on a mobile device, the default device video player controls are rendered, unless the Modernizr JavaScript library is undefined. If for some reason you don’t have the Modernizr library available on your page, then the igVideoPlayer control is rendered, which in some cases may have fewer touch capabilities than the default device video player. That’s why this sample uses the Modernizr library and in mobile contexts the igVideoPlayer falls back to the default device video player.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+		<div style="width: 100%; overflow: hidden;">
+			<div class="videoPlayerContainer">
+				<div id="videoPlayer1">
+				</div>
+			</div>
+			<div id="rightControls" class="controlsContainer" style="width: 323px;">
+				<div id="controls" class="leftContainer" style="width: 155px;">
+					<center>
+						<button id="btnPlay" class="buttons" type="button">
+							Play
+						</button>
+						<button id="btnAddScreenShot" class="buttons" type="button">
+							Add screenshot
+						</button>
+						<div style="width: 120px; height: 20px; margin-top: 10px;">
+							<div style="width: 40px; float: left; margin-right: 10px; font-size: small;">
+								Volume
+							</div>
+							<div id="slider" style="width: 60px; float: left; background-color: White; margin-top: 7px;">
+							</div>
+							<div style="clear: both;">
+							</div>
+						</div>
+					</center>
+					<p id="currentTime">
+						Current Time <span style="display: inline; color: blue;">0</span>
+					</p>
+					<p id="html5Video">
+						Supports HTML5 video:
+					</p>
+					<p id="h264Video">
+						Supports H264/AVC video:
+					</p>
+					<p id="oggVideo">
+						Supports Ogg/Theora video:
+					</p>
+					<p id="webMVideo">
+						Supports WebM video:
+					</p>
+				</div>
+				<div id="screenShots" class="rightContainer">
+					<center>
+						<p style="font-weight: bold;">
+							Screenshots
+						</p>
+					</center>
+				</div>
+			</div>
+			<div style="clear: both;">
+			</div>
+		</div>
+		<div id="copyrightContainer" style="width: 100%; margin-top: 10px;">
+			<p>
+				(c) copyright 2008, Blender Foundation / <a href="http://www.bigbuckbunny.org">www.bigbuckbunny.org</a>
+			</p>
+		</div>
+	</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>

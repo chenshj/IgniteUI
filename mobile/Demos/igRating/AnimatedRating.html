@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+    
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>    
+    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../scripts/modernizr.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css",
+            resources: "igmRating",
+            theme: "ios"
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+    $.ig.loader(function() {
+		$("#igRating1").bind({ igratingvaluechange: function(e, args){
+			var margin, 
+				tempMargin,
+				animationStep;
+			
+			hideMainRating(true);
+			margin = (args.value - args.oldValue);
+			if (margin !== 0) {
+				animationStep = margin/10;
+			} else {
+				return;
+			}
+			tempMargin = args.oldValue;
+			animateRating(tempMargin, animationStep, args.value);
+		}});
+		
+		function animateRating(tempAnimatedValue, animationStep, value)
+		{
+			tempAnimatedValue = tempAnimatedValue + animationStep;
+			if (animationStep > 0 && tempAnimatedValue > value || animationStep < 0 && tempAnimatedValue < value) {
+				hideMainRating(false);
+				return;
+			}
+			$("#igRating2").igRating("option", "value", tempAnimatedValue);
+			setTimeout(function() { animateRating(tempAnimatedValue, animationStep, value)}, 70);
+		}
+		
+		function hideMainRating(hide) {
+			var containerToHide,
+				containerToShow;
+			if(hide){
+				containerToHide = $("#container1");
+				containerToShow = $("#container2");
+			} else {
+				containerToHide = $("#container2");
+				containerToShow = $("#container1");
+			}
+			containerToHide.hide().css("display", "none");
+			containerToShow.show();
+		}
+    });
+    </script>
+	<style type="text/css">
+		#container2 { display: none; }
+		#container1, #container2 { padding: 10px; margin-bottom: 20px; border: 1px solid black; width: 264px; }
+	</style>
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+            <h1>Animated Rating</h1>
+            <a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+        </div>
+        <div data-role="content">
+			<div id="container1">
+				<div id="igRating1" data-role="igrating" data-vote-count="6" data-value="0"></div>
+			</div>
+			<div id="container2">
+				<div id="igRating2" data-role="igrating" data-vote-count="6" data-value="0"></div>
+			</div>
+		</div>
+	</div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                This sample demonstrates a custom animation, achieved by using an additional rating. By default when you rate an item, the new value is selected immediately. In this sample when you select a value then the rating progress is animated similar to a progress bar, where the increase is gradual.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+    
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css",
+            resources: "igmRating",
+            theme: "ios"
+        });
+    </script>
+	<style type="text/css">
+		#igRatingGhost .ui-igrating-vote
+		{
+			background-image : url("../content/images/rating/ig-rating-ghost.png")!important;
+			background-position: -75px 0;
+			background-size: auto;
+		}
+		#igRatingGhost .ui-igrating-voteselected
+		{
+			background-image : url("../content/images/rating/ig-rating-ghost.png")!important;
+			background-position: 0 0;
+			background-size: auto;
+		}
+		#igRatingGhost .ui-igrating-votehover
+		{
+			background-image : url("../content/images/rating/ig-rating-ghost.png")!important;
+			background-position: -50px 0;
+			background-size: auto;
+		}
+		#igRatingBasket .ui-igrating-vote
+		{
+			background-image : url("../content/images/rating/ig-rating-basket.png")!important;
+			background-position: -75px 0;
+			background-size: auto;
+		}
+		#igRatingBasket .ui-igrating-voteselected
+		{
+			background-image : url("../content/images/rating/ig-rating-basket.png")!important;
+			background-position: 0 0;
+			background-size: auto;
+		}
+		#igRatingBasket .ui-igrating-votehover
+		{
+			background-image : url("../content/images/rating/ig-rating-basket.png")!important;
+			background-position: -25px 0;
+			background-size: auto;
+		}
+		
+		.ratingWrapper { padding: 10px; margin-bottom: 20px; border: 1px solid black; width: 200px; }
+	</style>
+</head>
+<body>
+
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+            <h1>Custom Items</h1>
+            <a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+        </div>
+        <div data-role="content">
+			<div class="ratingWrapper">
+				<div id="igRatingGhost" data-role="igrating" 
+					data-vote-count="10" data-value="2" 
+					data-vote-width="20" data-vote-height="20">
+				</div>
+			</div>
+			<div class="ratingWrapper">
+				<div id="igRatingBasket" data-role="igrating" 
+					data-vote-count="10" data-value="3" 
+					data-vote-width="20" data-vote-height="20">
+				</div>
+			</div>
+		</div>
+	</div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                This sample demonstrates how to set custom images for the rating control using CSS rules and overwriting the control’s default classes.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

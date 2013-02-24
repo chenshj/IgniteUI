@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="../scripts/modernizr.min.js" type="text/javascript"></script>
+    <script src="../scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+
+
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igEditors,igCombo,igShared"
+        });
+	    $.ig.loader(function () {
+            "use strict";
+			$("#comboCountry").igCombo({
+				textKey: "txtCountry",
+				selectedItems: [ { index: 1 } ],
+				valueKey: "valCountry",
+				dataSource: dsCountry,
+				selectionChanged: function(e, args) {
+					if(args.owner.selectedIndex() === 0) {
+						$("#state").css("display","inline");
+						$("#district").css("display","none");
+					} else {
+						$("#state").css("display","none");
+						$("#district").css("display","inline");
+					}
+				}
+			});
+			$("#comboDistrict").igCombo({
+				valueKey: "valDistrict",
+				textKey: "txtDistrict",
+				dataSource: dsCascDistrict,
+				parentComboKey: "keyCountry",
+				parentCombo: "#comboCountry"
+			});
+			$("#comboTown").igCombo({
+				valueKey: "valTown",
+				textKey: "textTown",
+				dataSource: dsCascTowns,
+				parentComboKey: "keyDistirct",
+				parentCombo: "#comboDistrict"
+			});
+		
+			
+			$("#comboCountryCascading").igCombo({
+				textKey: "txtCountry",
+				valueKey: "valCountry",
+				selectedItems: [ { index: 1 } ],
+				dataSource: dsCountryCascading,
+				selectionChanged: function(e, args) {
+					if(args.owner.selectedIndex() === 0) {
+						$("#stateCascading").css("display","inline");
+						$("#districtCascading").css("display","none");
+					} else {
+						$("#stateCascading").css("display","none");
+						$("#districtCascading").css("display","inline");
+					}
+				}
+			});
+			$("#comboDistrictCascading").igCombo({
+				cascadingDataSources: dsCascStatesDistricts,
+				parentCombo: $("#comboCountryCascading")
+			});
+        });
+    </script>
+
+    <style type="text/css">
+		.label-container { margin: 5px 0; }
+		.label-container span { display: block; float: left; width: 170px; margin-bottom: 5px; }
+		.clear-floating { clear: both; }
+		span[id^="combo"] { margin-right: 15px; }
+		#state, #stateCascading { display: none; } { display: none; }
+		.group-container { border: 1px solid black; padding: 10px; margin-bottom: 10px; border-radius: 10px; }
+		.group-title { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1 class="logo">
+                <a href="../index.html">
+                    <img src="../Content/images/infragistics.png" alt="Infragistics" />
+                </a>
+            </h1>
+        </header>
+        <div id="main" role="main">
+            <section class="product">
+                <img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+                <p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+            </section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+                    <hgroup>
+                        <h1>IgniteUI </h1>
+                        <h2>Cascading</h2>
+                        <p>This sample demonstrates the use of three cascading igCombo controls. Imagine that you want to find the office of a multicultural company. By selecting the value in any previous combo the next control’s values are automatically filtered by the selected value in the previous combo box.         In this sample shows how to bind each instance of the igCombo control with separate data source, and how to bind an igCombo to a cascading data source. Notice that the results for the first two igCombo instances are the same. If you want to find more information about the cascading igCombo specific properties, please refer to the Cascading Combo topic or and API documentation.</p>
+                    </hgroup>
+                    <div class="sampleContainer">
+                        <!-- Sample -->
+                        <div class="group-container">
+							<span class="group-title">Individual Data Sources</span>
+							<div class="label-container">
+								<span>Country</span>
+								<span id="state">State</span>
+								<span id="district">District</span>
+								<span>Town</span>
+							</div>
+							<div class="clear-floating"></div>
+							<div>
+								<span id="comboCountry"></span>
+								<span id="comboDistrict"></span>
+								<span id="comboTown"></span>
+							</div>
+						</div>
+						<div class="group-container">
+							<span class="group-title">Cascading Data Sources</span>
+							<div class="label-container">
+								<span>Country</span>
+								<span id="stateCascading">State</span>
+								<span id="districtCascading">District</span>
+							</div>
+							<div class="clear-floating"></div>
+							<div>
+								<span id="comboCountryCascading"></span>
+								<span id="comboDistrictCascading"></span>
+							</div>
+						</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+	<script type="text/javascript">
+		var dsCountry, dsCascTowns, dsCountryCascading,
+			dsCountryCascading, dsStatesUSCascading, dsDistrictBGCascading;
+		dsCountry = [
+			{ txtCountry: "United States", valCountry: "US" },
+			{ txtCountry: "Bulgaria", valCountry: "BG" }
+		];
+		dsCascDistrict = [
+			{ keyCountry: "US", txtDistrict: "New Jersey", valDistrict: "NJ" },
+			{ keyCountry: "US", txtDistrict: "California", valDistrict: "CA" },
+			{ keyCountry: "US", txtDistrict: "Illinois", valDistrict: "IL" },
+			{ keyCountry: "US", txtDistrict: "New York", valDistrict: "NY" },
+			{ keyCountry: "US", txtDistrict: "Florida", valDistrict: "FL" },
+			{ keyCountry: "BG", txtDistrict: "Sofia", valDistrict: "SA" },
+			{ keyCountry: "BG", txtDistrict: "Plovdiv", valDistrict: "PV" },
+			{ keyCountry: "BG", txtDistrict: "Varna", valDistrict: "V" },
+			{ keyCountry: "BG", txtDistrict: "Yambol", valDistrict: "Y" }
+		];
+		dsCascTowns = [
+			{ keyDistirct: "NJ", textTown: "Atlantic City", valTown: "AtlanticCity" },
+			{ keyDistirct: "NJ", textTown: "Dover", valTown: "Dover" },
+			{ keyDistirct: "CA", textTown: "Los Angeles", valTown: "LosAngeles" },
+			{ keyDistirct: "CA", textTown: "San Francisco", valTown: "San Francisco" },
+			{ keyDistirct: "CA", textTown: "San Diego", valTown: "SanDiego" },
+			{ keyDistirct: "IL", textTown: "Chicago", valTown: "Chicago" },
+            { keyDistirct: "NY", textTown: "New York", valTown: "NewYork" },
+			{ keyDistirct: "NY", textTown: "Buffalo", valTown: "Buffalo" },
+			{ keyDistirct: "FL", textTown: "Miami", valTown: " Miami" },
+			{ keyDistirct: "FL", textTown: "Orlando", valTown: "Orlando" },
+			{ keyDistirct: "SA", textTown: "Sofia", valTown: "Sofia" },
+			{ keyDistirct: "SA", textTown: "Pernik", valTown: "Pernik" },
+			{ keyDistirct: "PV", textTown: "Plovdiv", valTown: "Plovdiv" },
+			{ keyDistirct: "PV", textTown: "Asenovgrad", valTown: "Asenovgrad" },
+			{ keyDistirct: "V", textTown: "Varna", valTown: "Varna" },
+			{ keyDistirct: "V", textTown: "Kavarna", valTown: "Kavarna" },
+			{ keyDistirct: "V", textTown: "Balchik", valTown: "Balchik" },
+			{ keyDistirct: "Y", textTown: "Yambol", valTown: "Yambol" },
+			{ keyDistirct: "Y", textTown: "Kermen", valTown: "Kermen" },
+			{ keyDistirct: "Y", textTown: "Elhovo", valTown: "Elhovo" },
+			{ keyDistirct: "Y", textTown: "Bolyarovo", valTown: "Bolqrovo" },
+		];
+	</script>
+	
+	<script type="text/javascript">
+		dsCountryCascading = [
+			{ txtCountry: "United States", valCountry: "US" },
+			{ txtCountry: "Bulgaria", valCountry: "BG" },
+		];
+		dsStatesUSCascading = [
+			{ state: "New Jersey" },
+			{ state: "California" },
+			{ state: "Illinois" },
+			{ state: "New York" },
+			{ state: "Florida" }
+		];
+		
+		dsDistrictBGCascading = [
+			{ district: "Sofia" },
+			{ district: "Plovdiv" },
+			{ district: "Varna" },
+			{ district: "Yambol" }
+		];
+		
+		dsCascStatesDistricts = {
+			"US": { dataSource: dsStatesUSCascading, textKey: "state" },
+			"BG": { dataSource: dsDistrictBGCascading, textKey: "district" }
+		};		
+	</script>
+</body>
+</html>

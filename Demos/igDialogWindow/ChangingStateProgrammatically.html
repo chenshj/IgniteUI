@@ -1,0 +1,153 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+  
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script>
+	$.ig.loader({
+		scriptPath: '../../js/',
+		cssPath: '../../css/',
+		resources: 'igShared,igDialog'
+	});
+
+	$.ig.loader(function () {
+		// Initialize buttons for create, destroy, open and close the igDialog
+		$("#createDialog").igButton({ labelText: "Create"});
+		$("#destroyDialog").igButton({ labelText: "Destroy", disabled: true });
+		$("#openDialog").igButton({ labelText: "Open", disabled: true });
+		$("#closeDialog").igButton({ labelText: "Close", disabled: true });
+		
+		// Create the igDialog
+		$("#createDialog").live("click", function (e) {
+			// Initialize the igDialog
+			$("#dialog").igDialog({
+				stateChanging: function (evt, ui) {
+					// Check the igDialog state 
+					if (ui.action === "close")
+					{
+						// If the igDialog was close, we enable the open button 
+						$("#openDialog").igButton({ disabled: false });
+						
+						// And disable the close button
+						$("#closeDialog").igButton({ disabled: true });
+					}
+				},
+				height: 480,
+				minHeight: 340,
+				maxHeight: 600,
+				width: 440,
+				minWidth: 300,
+				maxWidth: 600,
+				headerText: "Dialog Header Text",
+				showFooter: true,
+				footerText: "Dialog Footer Text",
+				openAnimation: "fade",
+				closeAnimation: "fade"
+			});
+			
+			// Disable the create button
+			$("#createDialog").igButton({ disabled: true });
+			
+			// Enable buttons for destroy and close
+			$("#destroyDialog").igButton({ disabled: false });
+			$("#closeDialog").igButton({ disabled: false });
+		});
+		
+		$("#destroyDialog").live("click", function (e) {
+			// Destroy the igDialog
+			$("#dialog").igDialog("destroy");
+			
+			// Enable the create button
+			$("#createDialog").igButton({ disabled: false });
+			
+			// Disable buttons for destroy, open and close
+			$("#destroyDialog").igButton({ disabled: true });
+			$("#openDialog").igButton({ disabled: true });
+			$("#closeDialog").igButton({ disabled: true });
+		});
+		
+		$("#openDialog").live("click", function (e) {
+			// Open the igDialog
+			$("#dialog").igDialog("open");
+			
+			// Disable the open button
+			$("#openDialog").igButton({ disabled: true });
+			
+			// Enable the close button
+			$("#closeDialog").igButton({ disabled: false });
+		});
+		
+		$("#closeDialog").live("click", function (e) {
+			// Close the igDialog
+			$("#dialog").igDialog("close");
+			
+			// Enable the open button
+			$("#openDialog").igButton({ disabled: false });
+			
+			// Disable the close button
+			$("#closeDialog").igButton({ disabled: true });
+		});
+	});
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1 class="logo">
+                <a href="../index.html">
+                    <img src="../Content/images/infragistics.png" /></a></h1>
+        </header>
+        <div id="main" role="main">
+            <section class="product">
+                <img src="../Content/images/jquery-netadvantage.png" />
+                <p>
+                    Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+            </section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+                    <hgroup>
+                        <h1>
+                            IgniteUI </h1>
+						 <h2>
+                            igDialogWindow Changing State Programmatically</h2>
+                        <p>
+                           This sample demonstrates how to change the states of the igDialog control programmatically. When you click on the create button, the dialog initializes with default content and includes close button. When you click on the Close button the dialog disappears and may be reopened anytime by clicking on the open button. Clicking on the Destroy button completely removes the dialog window from the DOM.</p>
+                    </hgroup>
+                    <div class="sampleContainer">
+						<button id="createDialog">
+						</button>
+						<button id="destroyDialog">
+						</button>
+						<button id="openDialog">
+						</button>
+						<!--igDialog target element-->
+                        <div id="dialog" style="vertical-align: bottom; display: none;">
+                            <p><img src="../Content/images/DialogContentImage.jpg" alt="Content" /></p>
+                            <button id="closeDialog">
+							</button>
+		                </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

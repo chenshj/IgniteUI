@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igmList.Sorting",
+            theme: "ios"
+        });
+    </script>
+
+    <!--Sample JSON Data-->
+    <script type="text/javascript" src="../scripts/db/nw-products.js"></script>
+
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+            <h1>Sort and Group Presets</h1>
+            <a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+        </div>
+        <div data-role="content">
+
+            <ul id="sortingPresetsListView"
+                data-role="iglistview" 
+                data-image-mode="icon"
+                data-data-source="northwindProducts"                 
+                data-auto-generate-layouts="False" 
+                data-bindings-text-key="ProductName"
+                data-bindings-description-key="CategoryName"
+                data-bindings-image-url-key="ImageUrl"
+                data-bindings-count-key="InStock"
+                data-sorting-name="Sorting" 
+                data-sorting="true" 
+                data-sorting-type="local"
+                data-sorting-sort-presets-label="Sorting Options" 
+                data-sorting-auto-generate-sort-presets="false" 
+                data-sorting-presets='[ {"text":"Inventory","sortedFields":[ {"fieldName":"InStock","direction":"asc"} ]}, {"text":"Category Groups","showGrouping":"true","sortedFields":[ {"fieldName":"CategoryName","direction":"asc"} ]} ]'>
+            </ul>            
+
+        </div>
+    </div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                Sorting and grouping are similar features and can be configured using the ListView’s sorting feature. This sample shows how to configure a default sort by using the sorted fields collection. In addition, you can configure sort and group presets to appear in the sort tray. Click on the preset button to display the corresponding sorting or grouping.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

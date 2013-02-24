@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+    
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>    
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igmList",
+            theme: "ios"
+        });
+    </script>
+    
+    <!--Sample JSON Data-->
+    <script type="text/javascript" src="../scripts/db/nw-employees.js"></script>
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+            <h1>List Dividers</h1>
+            <a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+        </div>
+        <div data-role="content">
+            
+        <ul id="listDividersListView" data-role="iglistview" data-image-mode="icon">
+            <li data-role="list-divider">Primary Colors</li>
+            <li><img alt="Red" src="../content/images/colors/red.png" />Red</li>
+            <li><img alt="Blue" src="../content/images/colors/blue.png" />Blue</li>
+            <li><img alt="Yellow" src="../content/images/colors/yellow.png" />Yellow</li>
+            <li data-role="list-divider">Secondary Colors</li>
+            <li><img alt="Green" src="../content/images/colors/green.png" />Green</li>
+            <li><img alt="Orange" src="../content/images/colors/orange.png" />Orange</li>
+            <li><img alt="Purple" src="../content/images/colors/purple.png" />Purple</li>
+            <li data-role="list-divider">Neutral Colors</li>
+            <li><img alt="Brown" src="../content/images/colors/brown.png" />Brown</li>
+            <li><img alt="Black" src="../content/images/colors/black.png" />Black</li>
+            <li><img alt="White" src="../content/images/colors/white.png" />White</li>
+        </ul>
+
+        </div>
+    </div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                List dividers can be created declaratively in markup by setting the ‘data-role’ attribute to ‘list-divider’.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

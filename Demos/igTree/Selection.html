@@ -1,0 +1,179 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script>
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igTree"
+        }); 
+	$.ig.loader(function () {
+		//tree initialization
+		$("#igTree").igTree({
+			singleBranchExpand: true,
+			bindings: {
+				textKey: 'Text',
+				valueKey: 'Value',
+				childDataProperty: 'Trips',
+				bindings: {
+					textKey: 'Text',
+					valueKey: 'Value',
+					childDataProperty: 'Packages',
+					bindings: {
+						textKey: 'Duration',
+						valueKey: 'Price'
+					}
+				}
+			},
+			dataSource: data
+		});
+
+		$('#igTree').bind('igtreeselectionchanged', function (sender, eventArgs) {
+			var value,
+				text,
+				binding = eventArgs.selectedNodes[0].binding,
+				node = eventArgs.selectedNodes[0];
+
+			//using node.path you can determine that the selected node is at the root
+			if (node.path === '0') {
+				//set table values
+				$('#Dest').text('');
+				$('#Pack').text('');
+				$('#Price').text('');
+				return;
+			}
+
+			//by checking the valuekey of the binding, 
+			//you can determine which binding you are using for the selected node
+			if (binding.valueKey === 'Price') {
+				value = node.data[binding.valueKey];
+				var parent = $('#igTree').igTree('parentNode', node.element);
+				parent = $('#igTree').igTree('nodeFromElement', parent);
+				text = parent.data[parent.binding.textKey];
+
+				//set table values
+				$('#Dest').text(text);
+				$('#Pack').text(node.data[binding.textKey]);
+				$('#Price').text(value);
+			} else {
+				text = node.data[binding.textKey];
+
+				//set table values
+				$('#Dest').text(text);
+				$('#Pack').text('');
+				$('#Price').text('');
+			}
+		});
+	});
+</script>
+	<style type="text/css">
+        #Info
+        {
+            float: right;
+            margin-bottom:25px;
+        }
+		
+		#Info td, #Info th
+        {
+            padding:4px;
+            text-align:left;
+            width: 100px;   
+        }
+        
+        #Info table 
+        {
+            table-layout: fixed;
+            border-spacing:0;
+            border:none;
+			width: 400px;
+        }
+	</style>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <h1 class="logo">
+                <a href="../index.html">
+                    <img src="../Content/images/infragistics.png" /></a></h1>
+        </header>
+        <div id="main" role="main">
+            <section class="product">
+                <img src="../Content/images/jquery-netadvantage.png" />
+                <p>
+                    Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+            </section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+                    <hgroup>
+                        <h1>
+                            IgniteUI </h1>
+                        <h2>
+                            Using Selection</h2>
+                        <p>
+                            This sample demonstrates how to utilize the selection functionality of the igTree control. When a node is selected on the igTree control on the left, the values populate the table on the right.</p>
+                    </hgroup>
+                    <div class="sampleContainer">
+                        <div id="Info" class="ui-iggrid ui-widget">
+                            <!--Table to display selected node information-->
+                            <table class="ui-iggrid-table ui-widget-content">
+                                <thead class="ui-widget-header">
+                                    <tr>
+                                        <th class="ui-iggrid-header ui-widget-header">
+                                        </th>
+                                        <th class="ui-iggrid-header ui-widget-header">
+                                            Destination
+                                        </th>
+                                        <th class="ui-iggrid-header ui-widget-header">
+                                            Package
+                                        </th>
+                                        <th class="ui-iggrid-header ui-widget-header">
+                                            Price
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="ui-widget-content ui-iggrid-tablebody ui-ig-record ui-iggrid-record">
+                                    <tr>
+                                        <td>
+                                            IG Touring
+                                        </td>
+                                        <td id="Dest">
+                                        </td>
+                                        <td id="Pack">
+                                        </td>
+                                        <td id="Price">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--igTree target element-->
+                        <div id="igTree">
+                        </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+var data = [{ "Text": "IG Touring", "Value": "IG Touring", "Trips": [{ "Text": "Rome", "Value": "Rome", "Packages": [{ "Duration": "One Week", "Price": "$1178" }, { "Duration": "Two Weeks", "Price": "$1997"}] }, { "Text": "Paris", "Value": "Paris", "Packages": [{ "Duration": "One Week", "Price": "$1549.99" }, { "Duration": "Two Weeks", "Price": "$2799.99"}] }, { "Text": "Madrid", "Value": "Madrid", "Packages": [{ "Duration": "One Week", "Price": "$999.49" }, { "Duration": "Two Weeks", "Price": "$1799.49"}] }, { "Text": "Vienna", "Value": "Vienna", "Packages": [{ "Duration": "One Week", "Price": "$799" }, { "Duration": "Two Weeks", "Price": "$1499"}] }, { "Text": "Sofia", "Value": "Sofia", "Packages": [{ "Duration": "One Week", "Price": "$849" }, { "Duration": "Two Weeks", "Price": "$1499"}] }, { "Text": "Athens", "Value": "Athens", "Packages": [{ "Duration": "One Week", "Price": "$1100" }, { "Duration": "Two Weeks", "Price": "$2100"}] }, { "Text": "London", "Value": "London", "Packages": [{ "Duration": "One Week", "Price": "$1399" }, { "Duration": "Two Weeks", "Price": "$2599"}]}]}];
+</script>

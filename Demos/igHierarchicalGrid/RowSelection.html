@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	<script src="../scripts/db/adventureWorks2LevelsLarge.js" type="text/javascript"></script>
+
+	<style type="text/css">
+		#SelectionApi
+		{
+			border: 1px soild;
+			height: 200px;
+			overflow-y: auto;
+			padding-top: 5px;
+		}
+		.columnOptions
+		{
+			border: solid 1px;
+			margin-top: 5px;
+			margin-bottom: 10px;
+			padding: 5px 5px 5px 10px;
+		}
+		.columnOption
+		{
+			float: left;
+			margin-left: 15px;
+			padding-top: 5px;
+		}
+	</style>	
+
+	<script type="text/javascript">
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igHierarchicalGrid.Selection,igHierarchicalGrid.Paging,igDialog"
+		});
+
+		$.ig.loader(function () {
+			$("#applyButton").igButton({ labelText: $("#applyButton").val()});
+			$("#btnClearSelection").igButton({ labelText: $("#btnClearSelection").val() });
+			$("#btnGetSelectedRow").igButton({ labelText: $("#btnGetSelectedRow").val() });
+			$("#btnSelectRow").igButton({ labelText: $("#btnSelectRow").val()});
+			$("#edtRowNumber").igNumericEditor(
+				{
+				width: 100,
+				minValue: 1, 
+				maxValue: 100, 
+				nullText: 1
+				});
+			createGrid();
+		});
+		// Shows popup dialog with the selected row data
+		function popupRowDetails() {
+			$("#dialog").html($("#details").html());
+			$("#dialog").igDialog({ state: "opened", height: 150, width: 300 });
+		}
+		// Formats row data and displays it into the details pane
+		function getSelectedRow(row, grid) {
+			$("#details").children().remove();
+			var text = "";
+			var offset = 0;
+			// skip toggle column
+			if ($(row.element[0].cells[0]).hasClass("ui-iggrid-expandcolumn"))
+				offset = 1;
+			for (var i = 0; i < grid.options.columns.length; i++) {
+				text = grid.options.columns[i].headerText + " : " + $(row.element[0].cells[i + offset]).html();
+				$("#details").append("<div>" + text + "</div>");
+			}
+		}
+		// Selects row by using the API
+		function selectRow(rowNumber) {
+			$("#grid1").igGridSelection("selectRow", parseInt(rowNumber)-1);
+		}
+		// Deselect all selected rows
+		function clearSelection() {
+			$("#grid1").igGridSelection("clearSelectionAll");
+			$("#details").children().remove();
+		}
+		
+		function createGrid() {
+			$("#grid1").igHierarchicalGrid("destroy");
+			$("#grid1").remove();
+
+			$("<table id='grid1'></table>").appendTo(".sampleContainer").igHierarchicalGrid({
+				initialDataBindDepth: 1,
+				odata: true,
+				dataSource: adventureWorks,
+				dataSourceType: "json",
+				responseDataKey: "Records",
+				width: "100%",
+				height: "500px",
+				autoGenerateColumns: false,
+				autoGenerateLayouts: false,
+				primaryKey: "ProductID",
+				loadOnDemand: false,
+				columns: [
+					{ key: "ProductID", headerText: "Product ID", width: "150px" },
+					{ key: "Name", headerText: "Name", width: "265px" },
+					{ key: "ProductNumber", headerText: "Product Number", dataType: "string", width: "150px" },
+					{ key: "Color", headerText: "Color", dataType: "string", width: "150px" },
+				],
+				columnLayouts: [
+					{
+						key: "ProductInventories",
+						responseDataKey: "Records",
+						autoGenerateColumns: false,
+						autoGenerateLayouts: false,
+						generateCompactJSONResponse: false,
+						primaryKey: "LocationID",
+						foreignKey: "ProductID",
+						columns: [
+							{ key: "ProductID", headerText: "Product ID", width: "100px" },
+							{ key: "LocationID", headerText: "Address ID", width: "100px" },
+							{ key: "Shelf", headerText: "Shelf", width: "50px" },
+							{ key: "Bin", headerText: "Bin", width: "50px" },
+							{ key: "Quantity", headerText: "Quantity", width: "100px" },
+						]
+					}
+				],
+				features: [
+					{
+						name: "Selection",
+						mode: "row",
+						multipleSelection: false,
+						activation: true,
+						wrapAround: true,
+						skipChildren: false
+					},
+					{
+						name: "Paging",
+						type: "local"
+					}
+				]
+			});
+			// Hooks to activeRowChanged event
+			$(document).delegate("#grid1", "iggridselectionactiverowchanged", function (evt, ui) {
+				getSelectedRow(ui.row, ui.owner.grid);
+			});
+		}
+	</script>
+</head>
+<body>
+<div id="dialog" title="Selection details" style="display: none;">
+
+</div>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" alt="Infragistics logo"/></a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="jQuery NetAdvantage logo" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Row Selection</h2>
+						<p>This sample demonstrates the row selection feature of the igHierarchicalGrid control. Enter the row number in “Row number” field and press “Select Row” to select the row. Press “Clear Selection” button to unselect the selected rows. Press “Get Selected Row” to see details pane below the grid with row data. In the “Selection Details” pane you can see data for the currently selected row.</p>
+					</hgroup>
+					<div class="sampleContainer">
+						<table id="grid1"></table>
+					</div>
+					<fieldset class="columnOptions">
+						<legend>Row Selection Options</legend>
+						
+						<div class="columnOption">
+							<label for="edtRowNumber">Row Number</label>
+							<input type="text" id="edtRowNumber" />
+							<input type="button" id="btnSelectRow" value="Select Row" onclick="selectRow($('#edtRowNumber').val())"/>
+							<input type="button" id="btnClearSelection" value="Clear Selection" onclick="clearSelection()"/>
+							<input type="button" id="btnGetSelectedRow" value="Get Selected Row" onclick="popupRowDetails()"/>
+					</fieldset>
+					<fieldset class="columnOptions" style="height: 110px;">
+						<legend>Selection details</legend>
+						<div id="details"></div>
+					</fieldset>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

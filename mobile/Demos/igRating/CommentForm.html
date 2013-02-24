@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+    
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css",
+            resources: "igmRating",
+            theme: "ios"
+        });
+    </script>
+	
+	<script type="text/javascript">
+	    $.ig.loader(function() {
+	        $("#igRating").live({ igratingvaluechange: function (e, args) {
+	            if ($("#popup-form").css("display") === "none") {
+	                showPopup(true);
+	            }
+                return false;
+	        }});
+
+	        $("#ratingWrapper").click(function () {
+	            showPopup(true);
+	        });
+
+	        $("#igRatingForm").live({ igratingvaluechange: function (e, args) {
+	            var ratingCount = $("#igRatingForm").igRating("option", "voteCount");
+	            if (args.oldValue === ratingCount) {
+	                $("#plus").prop("disabled", false);
+	            }
+	            if (args.value === ratingCount) {
+	                $("#plus").prop("disabled", true);
+	            }
+	            if (args.oldValue === 0) {
+	                $("#minus").prop("disabled", false);
+	            }
+	            if (args.value === 0) {
+	                $("#minus").prop("disabled", true);
+	            }
+	            animateCount(args.value);
+	        }});
+
+	        $("#minus").live({ click: function () {
+	            var ratingValue = $("#igRatingForm").igRating("option", "value") - 1,
+					ratingCount = $("#igRatingForm").igRating("option", "voteCount");
+	            if (ratingValue <= 0) {
+	                $("#minus").prop("disabled", true);
+	            }
+	            if (ratingValue === ratingCount - 1) {
+	                $("#plus").prop("disabled", false);
+	            }
+				if (ratingValue >= 0) {
+					$("#igRatingForm").igRating("option", "value", ratingValue);
+					animateCount(ratingValue);
+				}
+	        }});
+
+	        $("#plus").live({ click: function () {
+	            var ratingValue = $("#igRatingForm").igRating("option", "value") + 1,
+					ratingCount = $("#igRatingForm").igRating("option", "voteCount");
+	            if (ratingValue >= ratingCount) {
+	                $("#plus").prop("disabled", true);
+	            }
+	            if (ratingValue === 1) {
+	                $("#minus").prop("disabled", false);
+	            }
+				if (ratingValue <= ratingCount) {
+					$("#igRatingForm").igRating("option", "value", ratingValue);
+					animateCount(ratingValue);
+				}
+	        }});
+
+	        $("#btnOK").live({ click: function () {
+                var titleLabel = "Title",
+                    descrLabel = "Description";
+	            $("#igRating").igRating("option", "value", $("#igRatingForm").igRating("option", "value"));
+
+
+                $("#newTitle").html("Title : " + $("#title").val()).stop(true, true).fadeOut(1).fadeIn(500);
+                $("#newDescription").html("Description : " + $("#descr").val()).stop(true, true).fadeOut(1).fadeIn(500);
+                if ($("#descr").val() === descrLabel) {
+                    $("#newDescription").html("");
+                }
+                if ($("#title").val() === titleLabel) {
+                    $("#newTitle").html("");
+                }
+
+	            showPopup(false);
+	        }});
+
+	        $("#btnCancel").live({ click: function () {
+	            showPopup(false);
+	        }});
+
+            $("#title").live({ click: function () {
+                var titleLabel = "Title";
+                if ($("#title").val() === titleLabel) {
+                    $("#title").val("");
+                }
+            }, focusout: function () {
+                var titleLabel = "Title";
+                if ($("#title").val() === "") {
+                    $("#title").val(titleLabel);
+                }
+            }});
+
+            $("#descr").live({ click: function () {
+                var descrLabel = "Description";
+                if ($("#descr").val() === descrLabel) {
+                    $("#descr").val("");
+                }
+            }, blur: function () {
+                var descrLabel = "Description";
+                if ($("#descr").val() === "") {
+                    $("#descr").val(descrLabel);
+                }
+            }});
+
+	        function animateCount(count) {
+	            var message;
+	            switch (count) {
+	                case 0: message = "No Rating"; break;
+	                case 1: message = "Poor"; break;
+	                case 2: message = "Weak"; break;
+	                case 3: message = "Average"; break;
+	                case 4: message = "Good"; break;
+	                case 5: message = "Excellent"; break;
+	            }
+	            $("#count").html(message);
+	        }
+
+	        function showPopup(show) {
+	            if (show) {
+                    $("#title").val("Title");
+                    $("#descr").val("Description");
+                    $("#igRatingForm").igRating("option", "value", 3)
+	                $("#popup-form").css("display", "block");
+                    $("#plus").prop("disabled", false);
+                    $("#minus").prop("disabled", false);
+	                $("#ratingWrapper").prop("disabled", true);
+	            } else {
+	                $("#popup-form").css("display", "none");
+	                $("#ratingWrapper").prop("disabled", false);
+	            }
+	        }
+	    });
+		
+	</script>
+	<style type="text/css">
+		.ratingWrapper { padding: 10px; margin-bottom: 20px; border: 1px solid black; }
+		.ratingWrapper label, .title-description { margin: 10px 5px; font-weight: bold; color: #38532B; }
+		.form-container { padding: 2px; }
+		.rating-left { float: left; }
+		.rating-right { float: right; }
+		.rating-clear { clear: both; }
+		.form-buttons { padding: 5px 0; background-color: #94958E; }
+		.form-title { padding: 10px; color: #C2C3BF; font-size: 24px; border: 1px solid #585458; }
+		.form-title img { width: 40px; height: 30px; }
+		#popup-form { position: absolute; z-index: 1000; margin-left: 50%; left: -150px; top: 50px; display: none; width: 300px; max-height: 600px; background-color: #152324; border: 1px solid #585458; }
+		#btnOK, #btnCancel { margin: 0 5px; width: 140px; height: 40px; border: 1px solid black; background-color: #C2C3BF; font-weght: bold; }
+		#plus, #minus { margin: 12px 3px; width: 23px; height: 23px; border: 2px solid black; background-color: #C2C3BF; font-weght: bold; }
+		#count { text-align: center; padding: 10px; color: #4775B0; font-size: 11px; font-weight: bold; }
+		#title, #descr { width: 286px; margin: 3px; padding: 0; border-width: 1px; }
+		#igRatingForm { margin: 0 5px; }
+		.ratingWrapper .ui-igrating-hovered { display:none;}
+	</style>
+</head>
+<body>
+
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+            <h1>Comment Form</h1>
+            <a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+        </div>
+        <div data-role="content">
+			<div id="ratingWrapper" class="ratingWrapper">
+				<label class="rating-left">Give feedback and rating</label>
+				<div id="igRating" data-role="igrating" data-vote-count="5" data-value="3" class="rating-right"></div>
+				<div class="rating-clear"></div>
+			</div>
+            <div id="newTitle" class="title-description"></div>
+            <div id="newDescription" class="title-description"></div>
+			<div id="popup-form">
+				<div class="form-container form-title">
+					<img src="../content/images/rating/ig-rating.png" />
+					<label>Give your rating !</label>
+				</div>
+				<div data-scroll="true">
+					<div class="form-container">
+						<div>
+							<div class="rating-left">
+								<input id="minus" type="button" value="-" data-role="none"/>
+							</div>
+							<div class="rating-left">
+								<div id="igRatingForm" data-role="igrating" data-vote-count="5" data-value="3" ></div>
+							</div>
+							<div class="rating-left">
+								<input id="plus" type="button" value="+" data-role="none"/>
+							</div>
+							<div class="rating-clear"></div>
+							<div id="count">Average</div>
+						</div>
+					</div>
+					<div class="form-container"> 
+						<input id="title" type="text" value="Title" data-role="none" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" />
+					</div>
+					<div class="form-container">
+						<textarea id="descr" data-scroll="true" data-role="none" class="ui-input-text ui-body-c ui-corner-all ui-shadow-inset" style="resize:none;">Description</textarea>
+					</div>
+				</div>
+				<div class="form-buttons">
+					<input id="btnOK" type="button" value="OK" class="rating-left" data-role="none"/>
+					<input id="btnCancel" type="button" value="Cancel" class="rating-right" data-role="none"/>
+					<div class="rating-clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                This sample demonstrates how to integrate the igRating control in a typical feedback form.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

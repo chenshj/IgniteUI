@@ -1,0 +1,261 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		#eventList
+		{
+			border: 1px soild;
+			height: 200px;
+			overflow-y: auto;
+			padding-top: 5px;
+			color: #656565;
+		}
+		
+		.eventsWrapper
+		{
+			border: solid 1px #e3e3e3;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			padding: 5px 0px 5px 20px;
+		}
+		
+		.eventsLegend
+		{
+			padding-left: 3px;
+			padding-right: 3px;
+			color: #656565;
+		}
+	</style>
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+	<script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igHierarchicalGrid.Selection,igHierarchicalGrid.Paging,igHierarchicalGrid.Updating"
+		});
+		$.ig.loader(function () {
+			var gridData = [], i = -1, a = "A".charCodeAt(0);
+		
+			// generate data for the igHierarchicalGrid
+			while (i++ < 40) {
+				var inStock = Math.random() > 0.5;
+			
+				gridData[i] = {
+					"ProductID": i,
+					"Code": String.fromCharCode(a + i % 4) + String.fromCharCode(a + 8 - i % 5) + String.fromCharCode(a + 10 - i % 10) + (1 + i % 7),
+					"InStock": inStock,
+					"OrderDate": new Date(2009 + i % 4 % 2, (i + 3) % 12, 5 + i * 4 % 24),
+					"ListPrice": (i === 3) ? null : Math.pow((6 - i % 4), 7) * 1.25 + i,
+				};
+			
+				gridData[i]["Stores"] = new Array();
+				var storesCount = Math.floor(Math.random() * 11), j = -1;
+				while (j++ < storesCount) {
+					var quantity = Math.floor(Math.random() * 11) * Math.floor(Math.random() * 11) * inStock;
+				
+					gridData[i]["Stores"].push({
+						"ProductID": i,
+						"StoreCode": String.fromCharCode(a + Math.floor(Math.random() * 11) % 4) + 
+									 String.fromCharCode(a + 8 - Math.floor(Math.random() * 11) % 5) + 
+									 String.fromCharCode(a + 10 - Math.floor(Math.random() * 11) % 10) + (1 + Math.floor(Math.random() * 11) % 7),
+						"Quantity": quantity,
+						"Ship": false
+					});
+				}
+			}
+		
+			$("#hierarchicalGrid1").igHierarchicalGrid({
+				initialDataBindDepth: 1,
+				dataSource: gridData,
+				width: "100%",
+				height: "500px",
+				autoGenerateColumns: false,
+				autoGenerateLayouts: false,
+				primaryKey: "ProductID",
+				// enabling render checkboxes on a column
+				renderCheckboxes: true,
+				columns: [ { 
+						key: "ProductID", 
+						headerText: "Product ID", 
+						dataType: "number", 
+						width: "150px" 
+					}, { 
+						key: "Code", 
+						headerText: "Code", 
+						dataType: "string", 
+						width: "265px" 
+					}, { 
+						key: "InStock", 
+						headerText: "In Stock", 
+						dataType: "bool", 
+						width: "150px" 
+					}, {
+						headerText: "Order Data", 
+						key: "OrderDate", 
+						width: "120px", 
+						dataType: "date"
+					}, {
+						headerText: "List Price", 
+						key: "ListPrice", 
+						width: "150px", 
+						dataType: "number", 
+						format: "currency"
+					}
+				],
+				columnLayouts: [ {
+						key: "Stores",
+						autoGenerateColumns: false,
+						autoGenerateLayouts: false,
+						primaryKey: "ProductID",
+						foreignKey: "ProductID",
+						// enabling render checkboxes on a column
+						renderCheckboxes: true,
+						columns: [ { 
+								key: "ProductID", 
+								headerText: "Product ID", 
+								dataType: "number",
+								width: "150px"
+							}, { 
+								key: "StoreCode", 
+								headerText: "Store Code", 
+								dataType: "string",
+								width: "150px"
+							}, { 
+								key: "Quantity", 
+								headerText: "Quantity",
+								dataType: "number", 
+								width: "150px"
+							}, { 
+								key: "Ship", 
+								headerText: "Ship", 
+								// note: rendering checkboxes on a column required to set dataType to "bool"
+								dataType: "bool", 
+								width: "150px" 
+							}
+						],
+						features: [ {
+								name: "Selection",
+								mode: "row"
+							}, {
+								name: "Updating",
+								enableAddRow: false,
+								editMode: "row",
+								editCellEnding: function (evt, ui) {
+									// get cell’s checkbox value when it is changed
+									if (ui.update) {
+										if (ui.columnKey === "Ship" ) {
+											logEvent("editCellEnded event fired. column key = " + ui.columnKey + "; The row index in the table is  = " + ui.rowID + "; cell value = " + ui.value + "; update = " + ui.update);
+										}
+									}
+								},
+								enableDeleteRow: false,
+								columnSettings: [ {
+									columnKey: "ProductID",
+									readOnly: true
+								}, {
+									columnKey: "Bool"
+								} ]
+							}
+						]
+					}
+				],
+				features: [ {
+						name: "Selection",
+						mode: "row"
+					}, {
+						name: "Paging",
+						type: "local"
+					}, {
+						name: "Updating",
+						enableAddRow: false,
+						editMode: "row",
+						editCellEnding: function (evt, ui) {
+							// get cell’s checkbox value when it is changed
+							if (ui.update) {
+								if (ui.columnKey === "InStock" ) {
+									logEvent("editCellEnded event fired. column key = " + ui.columnKey + "; The row index in the table is  = " + ui.rowID + "; cell value = " + ui.value + "; update = " + ui.update);
+								}
+							}
+						},
+						enableDeleteRow: false,
+						columnSettings: [ {
+							columnKey: "ProductID",
+							readOnly: true
+						}, {
+							columnKey: "Name",
+							editorType: "string",
+						}, {
+							columnKey: "ProductNumber",
+							editorType: "string",
+						} ]
+					}
+				]
+			});
+			
+			$("#hierarchicalGrid1").live("iggridupdatingdatadirty", function (event, ui) {
+                $("#hierarchicalGrid1").igHierarchicalGrid("commit");
+                return false;
+            });		
+		
+			// show the raised event
+			function logEvent(message) {
+				var evntWrap = $("#eventList");
+				$(evntWrap).append("<div>" +  message + "<div>"); 
+				$(evntWrap).prop("scrollTop", $(evntWrap).prop("scrollHeight"));
+			}
+		 });
+	</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" alt="Infragistics logo"/></a></h1>
+		</header>
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="jQuery NetAdvantage logo" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Checkbox Column</h2>
+						<p>This sample shows how to render checkboxes for columns that contain boolean data types in the igHierarchicalGrid control. This sample demonstrates how to handle client events and detect when the cell checkbox value is changed.</p>
+					</hgroup>
+					<div class="sampleContainer">
+						<!-- igHierarchicalGrid target element-->
+						<table id="hierarchicalGrid1"></table>
+						
+						<fieldset class="eventsWrapper">
+							<legend class="eventsLegend">
+								Event List</legend>
+							<div id="eventList" class="controlPanelEvent" data-scroll="true">
+							</div>
+						</fieldset> 
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

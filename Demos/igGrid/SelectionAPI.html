@@ -1,0 +1,189 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+    <style type="text/css">
+        #SelectionApi
+        {
+            border: 1px soild;
+            height: 200px;
+            overflow-y: auto;
+            padding-top: 5px;
+            color: #656565;
+        }
+    </style>
+    <script type="text/javascript">
+	    var evntCounter = 0,
+            products = [],
+            evntWrap;
+		
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igGrid.Selection,igGrid.RowSelectors"
+		});
+		
+        $.ig.loader(function () {
+            if(Modernizr.touch) {
+                $("#grid1").igGrid({
+				    autoGenerateColumns: false,
+                    columns: [
+				        { headerText: "Product ID", key: "ProductID", dataType: "number" },
+				        { headerText: "Product Name", key: "Name", dataType: "string" },
+				        { headerText: "Product Number", key: "ProductNumber", dataType: "string" }
+			        ],
+                    dataSource: products,
+                    tabIndex: 1,
+                    features: [
+				        {
+				            name: "Selection",
+				            mode: "row",
+                            multipleSelection: true,
+				    	    rowSelectionChanging: function (ui, args) {  logEvent('rowSelectionChanging event fired. Row Index = ' + args.row.index); },
+				    	    rowSelectionChanged: function (ui, args) { logEvent('rowSelectionChanged event fired. Row Index = ' + args.row.index); },
+				    	    activeRowChanging: function (ui, args) { logEvent('activeRowChanging event fired. Row Index = ' + args.row.index); },
+				    	    activeRowChanged: function (ui, args) { logEvent('activeRowChanged event fired. Row Index = ' + args.row.index); },
+				        },
+                        {
+                            name: "RowSelectors",
+                            enableCheckBoxes: true
+                        }
+			        ]
+                });
+            } else {
+                $("#grid1").igGrid({
+				    autoGenerateColumns: false,
+                    columns: [
+				        { headerText: "Product ID", key: "ProductID", dataType: "number" },
+				        { headerText: "Product Name", key: "Name", dataType: "string" },
+				        { headerText: "Product Number", key: "ProductNumber", dataType: "string" }
+			        ],
+                    dataSource: products,
+                    tabIndex: 1,
+                    features: [
+				        {
+				            name: "Selection",
+				            mode: "row",
+                            multipleSelection: true,
+				    	    rowSelectionChanging: function (ui, args) {  logEvent('rowSelectionChanging event fired. Row Index = ' + args.row.index); },
+				    	    rowSelectionChanged: function (ui, args) { logEvent('rowSelectionChanged event fired. Row Index = ' + args.row.index); },
+				    	    activeRowChanging: function (ui, args) { logEvent('activeRowChanging event fired. Row Index = ' + args.row.index); },
+				    	    activeRowChanged: function (ui, args) { logEvent('activeRowChanged event fired. Row Index = ' + args.row.index); },
+				        }
+			        ]
+                });
+            }
+		
+            AddRowOptions();
+        });
+
+        function AddRowOptions() {
+			for(var i = 0; i < products.length; i++) {
+				$('#RowSelect').append('<option>' + i + '</option>');
+			}
+		}
+
+       function logEvent(message) {
+		    evntWrap = $('#SelectionApi');
+		    $(evntWrap).append('<div>' + (++evntCounter) + '. '  +  message + '.<div>'); 
+		    $(evntWrap).prop('scrollTop', $(evntWrap).prop("scrollHeight"));
+	   }
+
+		$('#SelectRow').live({
+			click: function (event) {
+				$('#grid1').igGridSelection('selectRow', parseInt($('#RowSelect').val()));
+			}
+		});
+
+		$('#GetSelectedRows').live({
+
+		    click: function (event) {
+		        var rows = $('#grid1').igGridSelection('selectedRows');
+		        $('#SelectionApi').append('<div> The number of selected rows is: ' + rows.length + '.</div>')
+		        $.each(rows, function (i, val) {
+		            $('#SelectionApi').append('<div> Row with index ' + val.index + ' is selected.<div>');
+                
+                });
+                evntWrap = $('#SelectionApi');
+                $('#SelectionApi').prop('scrollTop', $(evntWrap).prop("scrollHeight"));
+		    }
+		});
+		
+		$('#ClearSelection').live({
+			click: function (event) {
+				$('#grid1').igGridSelection('clearSelection');
+				$('#SelectionApi').empty();
+                evntCounter = 0;
+			}
+		});
+    </script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Selection API</h2>
+						<p>This sample demonstrates how the igGrid selection API can be put to use and the selection-specific events - processed by custom handlers. Note: When you want to select an igGrid row under touch platform devices, the only way to do this is to use the igGrid row selector’s checkboxes. In this sample igGrid checkboxes are enabled when the sample is opened from a touch device browser, while under Desktop browser they are off, because in such cases you are not required to use the checkboxes.</p>
+					</hgroup>
+					<div class="sampleContainer">
+						<label for="RowSelect">Select Row Index: </label>
+						<select id="RowSelect"></select>
+						<input type="button" id="SelectRow" value="Select Row"></input>
+						<input type="button" id="GetSelectedRows" value="Get Selected Rows"></input>
+						<input type="button" id="ClearSelection" value="Clear Selection"></input>
+						<div id="SelectionApi">
+						</div>
+						<table id="grid1">
+						</table>
+						<script type="text/javascript">
+							products[0] = { "ProductID": 1, "Name": "Adjustable Race", "ProductNumber": "AR-5381" };
+							products[1] = { "ProductID": 2, "Name": "Bearing Ball", "ProductNumber": "BA-8327" };
+							products[2] = { "ProductID": 3, "Name": "BB Ball Bearing", "ProductNumber": "BE-2349" };
+							products[3] = { "ProductID": 4, "Name": "Headset Ball Bearings", "ProductNumber": "BE-2908" };
+							products[4] = { "ProductID": 316, "Name": "Blade", "ProductNumber": "BL-2036" };
+							products[5] = { "ProductID": 317, "Name": "LL Crankarm", "ProductNumber": "CA-5965" };
+							products[6] = { "ProductID": 318, "Name": "ML Crankarm", "ProductNumber": "CA-6738" };
+							products[7] = { "ProductID": 319, "Name": "HL Crankarm", "ProductNumber": "CA-7457" };
+							products[8] = { "ProductID": 320, "Name": "Chainring Bolts", "ProductNumber": "CB-2903" };
+							products[9] = { "ProductID": 321, "Name": "Chainring Nut", "ProductNumber": "CN-6137" };
+						</script>
+					</div>
+				</section>
+			</div>	
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>
+

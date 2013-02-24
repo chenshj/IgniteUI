@@ -1,0 +1,155 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/db/adventureWorks.min.js" type="text/javascript"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>	
+	    	
+	<style type="text/css">
+        #eventList
+        {
+            border: 1px soild;
+            height: 200px;
+            overflow-y: auto;
+            padding-top: 5px;
+            color: #656565;
+        }
+        
+        .eventsWrapper
+        {
+            border: solid 1px #e3e3e3;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px 0px 5px 20px;
+        }
+        
+        .eventsLegend
+        {
+            padding-left: 3px;
+            padding-right: 3px;
+            color: #656565;
+        }
+    </style>
+	<script type="text/javascript">
+	var evntCounter = 0;
+	
+	$.ig.loader({
+		scriptPath: "../../js/",
+		cssPath: "../../css/",
+		resources: "igGrid.Sorting"
+	});
+	
+	$.ig.loader(function () {
+		$("#grid1").igGrid({
+			autoGenerateColumns: false,
+			columns: [
+				{ headerText: "Product ID", key: "ProductID", dataType: "number" },
+				{ headerText: "Product Name", key: "Name", dataType: "string" },
+				{ headerText: "Product Number", key: "ProductNumber", dataType: "string" },
+				{ headerText: "Color", key: "Color", dataType: "string" },
+				{ headerText: "Standard Cost", key: "StandardCost", dataType: "number" }
+			],
+            height: "400px",
+			dataSource: adventureWorks,
+            features: [
+			{
+				name: "Sorting",
+				firstSortDirection: "ascending",
+				type: "local",
+				columnSorting:function (ui, args) {  logEvent('columnSorting event fired. Column Key: ' + args.columnKey + ' direction: ' + args.direction );},
+				columnSorted: function (ui, args) {  logEvent('columnSorted event fired. Column Key: ' + args.columnKey + ' direction: ' + args.direction );}
+			}
+	]
+
+		});
+		
+		$("#sortBtn").igButton({ labelText: $("#sortBtn").val() });
+	});	
+		
+	function logEvent(message) {
+		var evntWrap = $('#eventList');
+		$(evntWrap).append('<div>' + (++evntCounter) + '. '  +  message + '.<div>'); 
+		$(evntWrap).prop('scrollTop', $(evntWrap).prop("scrollHeight"));
+	}
+	function Sort() {		
+		var direction = $("#sortDir option:selected").val();
+		var column = $("#sortColumn option:selected").val();
+		$('#grid1').igGridSorting('sortColumn', column, direction);
+	}
+	</script>
+	
+</head>
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Sorting API</h2>
+						<p>This sample demonstrates how the igGrid sorting API can be put to use and the sorting-specific events - processed by custom handlers. </p>
+					</hgroup>
+
+					<div class="sampleContainer">				
+						<label for="sortColumn">Choose Column:</label>
+						<select id="sortColumn">
+							<option value="ProductID">Product ID</option>
+							<option value="Name">Product Name</option>
+							<option value="ProductNumber">Product Number</option>
+							<option value="Color">Color</option>
+							<option value="StandardCost">Standard Cost</option>
+						</select>
+														
+						<label for="sortDir" style="margin-left:20px;">Set Sort Direction:</label>
+						<select id="sortDir">
+							<option value="ascending">Ascending</option>
+							<option value="descending">Descending</option>
+						</select>
+														
+						<input type="button" id="sortBtn" value="Sort" onClick="Sort(); return false;" style="margin-left:20px;" />
+								<fieldset class="eventsWrapper">
+                                    <legend class="eventsLegend">Event List</legend>
+                                    <div id="eventList" class="controlPanelEvent" data-scroll="true"></div>
+                                </fieldset>                                                                
+						<table id="grid1">
+						</table>							
+					</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>	
+</body>
+</html>
+

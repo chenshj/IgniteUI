@@ -1,0 +1,206 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+    <script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+
+    <script id="tooltipTemplate1" type="text/x-jquery-tmpl">
+        <div class="ui-widget-content ui-corner-all">
+            <span id="tooltipValue">Value: ${item.Value1}</span>
+        </div>
+    </script>
+    <script id="tooltipTemplate2" type="text/x-jquery-tmpl">
+        <div class="ui-widget-content ui-corner-all">
+            <span id="tooltipValue">Value: ${item.Value2}</span>
+        </div>
+    </script>
+    <script id="tooltipTemplate3" type="text/x-jquery-tmpl">
+        <div class="ui-widget-content ui-corner-all">
+            <span id="tooltipValue">Value: ${item.Value3}</span>
+        </div>
+    </script>
+
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igDataChart.Category,igShared"
+        });
+
+        $.ig.loader(function () {
+            var currData, currDataSource;
+
+            //  Create the first item to be displayed on the chart
+            currData = [];
+            currData[0] = createNewChartItem();
+            currDataSource = new $.ig.DataSource({ dataSource: currData });
+
+            //  Initialize the button to add items to the chart
+            $("#btnPlay").igButton({
+                labelText: $("#btnPlay").val(),
+                click: addNewItemToChart
+            });
+
+            //  Configure a regular chart with three column series
+            $("#chart").igDataChart({
+                width: "500px",
+                height: "500px",
+                dataSource: currDataSource,
+                legend: { element: "legend" },
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    label: "Label"
+                },
+                {
+                    name: "yAxis",
+                    type: "numericY",
+                    minimumValue: 0,
+                    maximumValue: 100
+                }],
+                series: [{
+                    name: "column",
+                    title: "BMW",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value1",
+                    //  Specify different transition duration for each data series
+                    transitionDuration: 400,
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate1"
+                }, {
+                    name: "series2",
+                    title: "Audi",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value2",
+                    //  Specify different transition duration for each data series
+                    transitionDuration: 700,
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate2"
+                }, {
+                    name: "series3",
+                    title: "Subaru",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value3",
+                    //  Specify different transition duration for each data series
+                    transitionDuration: 1000,
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate3"
+                }],
+                windowResponse: "immediate"
+            });
+        });
+
+        //  Creates and returns a new item with random values
+        function createNewChartItem(label) {
+            var val1 = Math.round(Math.random() * 100);
+            var val2 = Math.round(Math.random() * 100);
+            var val3 = Math.round(Math.random() * 100);
+
+            if(label == undefined)
+                label = 1;
+
+            return { Label: label, Value1: val1, Value2: val2, Value3: val3 };
+        }
+
+        //  Adds a new item to the chart and removes the first item if there are more than 5
+        function addNewItemToChart() {
+            //  Get the chart data source and the underlying array of items
+            var dataSource = $("#chart").igDataChart("option", "dataSource");
+            var data = dataSource.data();
+
+            //  Create a new item and add it at the end of the data array
+            data[data.length] = createNewChartItem(data[data.length - 1].Label + 1);
+            //  Notify the chart that a change in the data has occurred so that the change to be animated
+            $("#chart").igDataChart("notifyInsertItem", dataSource, data.length - 1, data[data.length - 1]);
+
+            //  Remove the first item if there are more than 5 items on the chart
+            if (data.length > 5) {
+                var item = data.shift();
+                $("#chart").igDataChart("notifyRemoveItem", dataSource, 0, item);
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        #chart
+        {
+            position: relative;
+            float: left;
+            margin-right: 10px;
+        }
+        #legend
+        {
+            position: relative;
+            float: left;
+        }
+		.options
+		{
+		    clear: left;
+		    position: relative;
+			top: 10px;
+			left: 3px;
+		}
+    </style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" alt="Infragistics" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Motion Framework with Column Chart</h2>
+						<p>This sample demonstrates how to use the Motion Framework™ with the jQuery chart to build attractive column chart with dynamically adding and visualizing data items.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+					    <div>
+						    <div id="chart"></div>
+						    <div id="legend"></div>
+					    </div>
+                        <div class="options">
+                            <input type="button" id="btnPlay" value="Add Item" />
+                        </div>
+					</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>

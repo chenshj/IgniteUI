@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../../js/infragistics.loader.js"></script>
+</head>
+<body>
+
+    <table id="grid"></table>
+
+    <script>
+        // The ig.loader is used to load required OctaneUI JavaScript 
+        // and CSS resources. It accepts a configuration object that specifies
+        // default paths and the components to load into the page.
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+
+            //string representing which component resources are required
+            resources: "igDataSource,igGrid"
+        });
+
+        //The ig.loader accepts a function that is called after 
+        //all resources are loaded and document.ready has fired.
+        $.ig.loader(function () {
+                        
+            //Sample XML Data
+            var xmlDoc = '<People>' +
+                '<Person Name="Gustavo Achong">' +
+                    '<Details Age="42" Email="gachong@adventureworks.com" />' +
+                '</Person>' +
+                '<Person Name="Catherine Abel">' +
+                    '<Details Age="27" Email="cabel@adventureworks.com" />' +
+                '</Person>' +
+                '<Person Name="Kim Abercrombie">' +
+                    '<Details Age="33" Email="kabercrombie@adventureworks.com" />' +
+                '</Person>' +
+            '</People>';
+
+            //Binding to XML requires a schema to define data fields
+            var xmlSchema = new $.ig.DataSchema("xml",
+                { 
+                    //searchField serves as the base node(s) for the XPaths
+                    searchField: "//Person", 
+                    fields: [
+                        { name: "Name", xpath: "./@Name" },
+                        { name: "Email", xpath: "Details/@Email" },
+                        { name: "Age", xpath: "Details/@Age" }
+                    ]
+                }
+            );
+
+            //This creates an Infragistics datasource from the XML 
+            //and the Schema which can be consumed by the grid.
+            var ds = new $.ig.DataSource({
+                type: "xml",
+                dataSource: xmlDoc,
+                schema: xmlSchema 
+            });
+
+            $("#grid").igGrid({
+                dataSource: ds //$.ig.DataSource defined above
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

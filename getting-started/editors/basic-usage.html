@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../../js/infragistics.loader.js"></script>
+</head>
+<body>
+
+    <!-- Editors can also be created from DIV elements -->
+    <input id="textEditor" value="John" />
+    <input id="dateEditor" value="7/27/2012" />
+    <input id="maskEditor" value="default length" />
+    <input id="currencyEditor" value="42" />
+    <input id="numericEditor" value="42" />
+    <input id="percentEditor" value="42"/>
+
+    <script>
+        // The ig.loader is used to load required OctaneUI JavaScript 
+        // and CSS resources. It accepts a configuration object that specifies
+        // default paths and the components to load into the page.
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+
+            //string representing which component resources are required
+            resources: "igEditors"
+        });
+
+        //The ig.loader accepts a function that is called after 
+        //all resources are loaded and document.ready has fired.
+        $.ig.loader(function () {
+
+            $("#textEditor").igTextEditor();
+
+            $("#dateEditor").igDateEditor();
+
+            $("#maskEditor").igMaskEditor();
+
+            $("#currencyEditor").igCurrencyEditor();
+
+            $("#numericEditor").igNumericEditor();
+
+            $("#percentEditor").igPercentEditor();
+
+        });
+    </script>
+
+</body>
+</html>

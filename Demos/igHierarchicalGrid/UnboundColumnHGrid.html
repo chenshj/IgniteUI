@@ -1,0 +1,239 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+    <script src="../scripts/db/northwind.js" type="text/javascript"></script>
+    <script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igHierarchicalGrid.*,igShared"
+        });
+
+        function CalculateFreightExpence(data, grid) {
+            return 2.95 * data["Freight"];
+        }
+
+        $("#grid1").live("iggriddatabound", function (event, ui) {
+            var i, grid = ui.owner,
+                 ds = grid.dataSource,
+                 data = ds.data(),
+                 dataLength = data.length;
+
+            for (i = 0; i < dataLength; i++) {
+                if (data[i]["Country"] === "USA") {
+                    data[i]["IsUSA"] = true;
+                }
+                else {
+                    data[i]["IsUSA"] = false;
+                }
+            }
+        });
+
+        $.ig.loader(function () {
+            $('#button1').igButton({
+                labelText: "SetUnboundValues",
+                click: function (e) {
+                    var i, freightVals = [], boolVals = [];
+                    for (i = 0; i < 20; i++) {
+                        freightVals.push(Math.floor(Math.random() * 100));
+                        boolVals.push(true);
+                    }
+
+                    $('#grid1').igGrid('setUnboundValues', boolVals, 'IsUSA');
+
+                    // get the child layout key
+                    var childLayoutKey = $("#grid1").igHierarchicalGrid("option", "columnLayouts")[0].key;
+                    // get the first child grid 
+                    var childGridId = "#grid1_1_" + childLayoutKey + "_child";
+                    $(childGridId).igGrid("setUnboundValues", freightVals, 'FreightExpence');
+
+                    // get all expanded child grids
+                    var childGrids = $("#grid1").igHierarchicalGrid("allChildren");
+                    $(childGrids).each(function (index, grid) {
+                        $(grid).igGrid("setUnboundValues", freightVals, 'FreightExpence');
+                    });
+                    return;
+                }
+            });
+
+            $("#grid1").igHierarchicalGrid({
+                features: [
+                    {
+                        name: "MultiColumnHeaders",
+                        inherit: true
+                    },
+					{
+					    name: 'Hiding'
+					},
+                	{
+                	    name: "GroupBy",
+                	    type: 'local',
+                	    inherit: true
+                	},
+					{
+					    name: 'Resizing',
+					    type: 'local',
+					    inherit: true
+					},
+                	{
+                	    name: "Paging",
+                	    type: 'local',
+                	    inherit: true
+                	},
+                	{
+                	    name: "Sorting",
+                	    type: 'local',
+                	    inherit: true
+                	},
+                	{
+                	    name: "Summaries",
+                	    type: 'local',
+                	    inherit: true
+                	},
+					{
+					    name: 'Filtering',
+					    mode: 'advanced',
+					    type: 'local',
+					    inherit: true
+					},
+                	{
+                	    name: "Selection",
+                	    inherit: true
+                	},                	
+					{
+					    name: 'Summaries',
+					    type: 'local',
+					    inherit: true
+					},
+                    {
+                        name: "Updating",
+                        enableAddRow: true,
+                        inherit: true,
+                        editMode: "row",
+                        enableDeleteRow: true,
+                        columnSettings:
+                            [
+                                {
+                                    columnKey: "EmployeeID",
+                                    readOnly: true
+                                },
+                                {
+                                    columnKey: "IsUSA",
+                                    readOnly: true
+                                }
+                            ]
+                    }
+                ],
+                width: "100%",
+                height: "500px",
+                initialDataBindDepth: -1,
+                loadOnDemand: false,         
+                dataSource: northwind,
+                dataSourceType: "json",
+                responseDataKey: "results",
+                autoGenerateColumns: false,
+                primaryKey: "EmployeeID",
+                columns: [
+                    { key: "EmployeeID", headerText: "Employee ID", dataType: "number", width: "50px" },
+                    { key: "LastName", headerText: "Last Name", dataType: "string", width: "100px" },
+                    { key: "FirstName", headerText: "First Name", dataType: "string", width: "100px" },
+                    { key: "Title", headerText: "Title", dataType: "string", width: "150px" },
+                    { key: "City", headerText: "City", dataType: "string", width: "100px" },
+                    { key: "IsUSA", headerText: "Is USA", unbound: true, dataType: "bool", width: "50px", format: "checkbox" },
+                    { key: "Country", headerText: "Country", dataType: "string", width: "100px" },
+                ],
+                childrenDataProperty: "Orders",
+                autoGenerateLayouts: false,
+                columnLayouts: [
+                    {
+                        key: "Orders",
+                        responseDataKey: "results",
+                        autoGenerateColumns: false,
+                        primaryKey: "OrderID",
+                        height: "400px",
+                        columns: [
+                            { key: "OrderID", headerText: "Order ID", dataType: "number", width: "100px" },                       
+                            { key: "Freight", headerText: "Freight", dataType: "string", width: "100px" },
+                            { key: "FreightExpence", headerText: "Freight Expense", unbound: true, dataType: "number", width: "100px", formula: "CalculateFreightExpence" },
+                            { key: "ShipName", headerText: "Ship Name", dataType: "string", width: "100px" },
+                            { key: "ShipAddress", headerText: "Ship Address", dataType: "string", width: "100px" },
+                            { key: "ShipCity", headerText: "Ship City", dataType: "string", width: "100px" },
+                        ],
+                        features: [
+                            {
+                                name: "Paging",
+                                type: 'local',
+                                pageSize: 10
+                            },
+                            {
+                                name: "Updating",
+                                enableAddRow: true,
+                                editMode: "row",
+                                enableDeleteRow: true,
+                                columnSettings:
+                                [
+                                    {
+                                        columnKey: "OrderID",
+                                        readOnly: true
+                                    },
+                                    {
+                                        columnKey: "FreightExpence",
+                                        readOnly: true
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" alt="Infragistics logo"/></a></h1>
+		</header>
+        <div id="main" role="main">
+            <section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="jQuery NetAdvantage logo" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">                    insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Unbound Columns in igHierarchicalGrid</h2>
+						<p>This sample demonstrates how to use unbound columns in igHierarchicalGrid</p>
+					</hgroup>
+					<div class="sampleContainer">
+						<input type="button" id="button1" />
+						<table id="grid1">
+						</table>
+					</div>
+				</section>
+            </div>
+        </div>
+        <footer>
+		</footer>
+    </div>
+</body>
+</html>

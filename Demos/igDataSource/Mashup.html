@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title> Infragistics jQuery Data Source - Mashup Example </title> 
+	
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/jquery.tmpl.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	<script id="tableTemplate" type="text/x-jquery-tmpl">
+		<tr> 
+			<td> ${ID} </td> 
+			<td> ${Name} </td> 
+			<td> ${Description} </td>
+			<td> ${Rating} </td>
+			<td> ${Price} </td>
+		</tr>
+	</script>
+	<script type="text/javascript">
+		$.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+            resources: 'igDataSource'
+        });
+
+        $.ig.loader(function () {
+			var jsArray = new Array(), xmlDoc, xmlSchema, mashupSources, dsMashup;
+
+			jsArray[0] = { "ID": 0, "Name": "Bread", "Description": "Whole grain bread" };
+			jsArray[1] = { "ID": 1, "Name": "Milk", "Description": "Low fat milk" };
+			jsArray[2] = { "ID": 2, "Name": "Vint soda", "Description": "Americana Variety - Mix of 6 flavors" };
+			jsArray[3] = { "ID": 3, "Name": "Havina Cola", "Description": "The Original Key Lime Cola"};
+			jsArray[4] = { "ID": 4, "Name": "Fruit Punch", "Description": "Mango flavor, 8.3 Ounce Cans (Pack of 24)"};
+			jsArray[5] = { "ID": 5, "Name": "Cranberry Juice", "Description": "16-Ounce Plastic Bottles (Pack of 12)"};
+			jsArray[6] = { "ID": 6, "Name": "Pink Lemonade", "Description": "36 Ounce Cans (Pack of 3)" };
+			jsArray[7] = { "ID": 7, "Name": "DVD Player", "Description": "1080P Upconversion DVD Player" };
+			jsArray[8] = { "ID": 8, "Name": "LCD HDTV", "Description": "42 inch 1080p LCD with Built-in Blu-ray Disc Player" };
+			
+			xmlDoc = loadXMLDoc("XML.Products.xml");			
+			xmlSchema = new $.ig.DataSchema("xml", { 
+				fields: [ 
+					{ name : "ID", xpath: "id" },
+					{ name : "Rating", xpath: "content/@rating" },
+					{ name : "Price", xpath : "content/@price" }
+				],
+				searchField: "//entry"
+			});
+			
+			mashupSources = [
+				{ dataSource: jsArray, primaryKey: "ID" },
+				{ dataSource: xmlDoc, type: "xml", primaryKey: "ID" ,schema: xmlSchema }
+			];
+			
+			dsMashup = new $.ig.MashupDataSource({ dataSource: mashupSources });
+			dsMashup.dataBind();
+			
+			$("#t1 tbody").empty();				
+			$("#tableTemplate").tmpl(dsMashup.dataView()).appendTo("#t1 tbody");	
+		});
+		
+		function loadXMLDoc(dname)
+		{
+			if (window.XMLHttpRequest) {
+				xhttp = new XMLHttpRequest();
+			} else {
+				xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xhttp.open("GET", dname, false);
+			xhttp.send();
+			return xhttp.responseText;
+		}
+	</script>
+	<style type="text/css">
+		.table-container { width: 700px; overflow-x: scroll; }
+		.span-data-type { font-style: italic; font-weight: normal; }
+	</style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Mashup</h2>
+						<p>When using the Mashup Data Source you can define and combine different sources into one source. This sample demonstrates how to combine data in JSON and XML formats into one Mashup data source.</p>
+                        <p><span style="font-weight:bold">Note: </span>In order to properly load the XML data file, this sample must be hosted from a web server along with the javascript, theming, and XML resources.</p>
+					</hgroup>
+					<div class="sampleContainer">
+						<div class='table-container'>
+							<table id="t1" class="standard-grid" width='600'>
+								<thead>
+									<tr>
+										<th>ID<br /><span class='span-data-type'>Primary Key</span></th> 
+										<th>Name<br /><span class='span-data-type'>From JSON</span></th> 
+										<th>Description<br /><span class='span-data-type'>From JSON</span></th>
+										<th>Rating<br /><span class='span-data-type'>From XML</span></th>
+										<th>Price<br /><span class='span-data-type'>From XML</span></th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

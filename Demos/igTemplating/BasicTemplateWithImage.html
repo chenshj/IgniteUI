@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	<script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    var url = "http://odata.netflix.com/Catalog/Titles?$format=json&$callback=?&$top=20", jsonp, headerTitles;
+    
+	$.ig.loader({
+		scriptPath: "../../js/",
+		cssPath: "../../css/",
+		resources: "igGrid.*,igEditors,igRating"
+	});
+    function initializeEditors() {
+        var i, newVal, newVal;
+        i = 0;
+        for (i; i < $(".rating").length; i++) {
+            newVal = parseFloat($($('.rating')[i]).attr('value'));
+            $($('.rating')[i]).igRating({
+                voteCount: 5,
+                precision: "exact",
+                valueAsPercent: false,
+                value: newVal,
+                focusable: false,
+                readOnly: true
+            });
+        }
+        i = 0;
+        for (i; i < $(".detailsTextArea").length; i++) {
+            currElement = $(".detailsTextArea")[i];
+            $(currElement).igTextEditor({
+                textMode: "multiline",
+                width: '330',
+                height: '85',
+                value: $(currElement).html(),
+                readOnly: true
+            });
+        }
+    };
+    $.ig.loader(function () {
+		jsonp = new $.ig.JSONPDataSource({ dataSource: url, responseDataKey: "d" });
+		headerTitles = ["Name", "Poster", "Details", "Rating"];
+		$("#resultGrid").igGrid({
+            autoGenerateColumns: true,
+			width: 700,
+			dataSource: jsonp, 
+			rowTemplate: "<tr><td> ${Name} </td> <td> <img width='55' height='85' src='${BoxArt.LargeUrl}'></img></td><td> <p class='detailsTextArea'> ${Synopsis} </p></td><td> <div class='rating' value='${AverageRating}'> </div></p> </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>",
+            columnsgenerated: function(evt, ui) {
+				ui.owner.options.columns[0].width = 150;
+				ui.owner.options.columns[1].width = 70;
+				ui.owner.options.columns[2].width = 350;
+				ui.owner.options.columns[3].width = 130;
+				for(var i= 0; i< 14; i++){
+					if(i <= 3) {
+						ui.owner.options.columns[i].headerText = headerTitles[i];	
+					} else {
+						ui.owner.options.columns[i].hidden = true;
+					}
+				}
+			},
+			rendered: function(evt, ui) {
+				initializeEditors();
+			},
+			features: [
+			{
+			    name: "Paging",
+			    type: "local",
+			    pageSize: 4,
+				pageSizeChanged: function (evt, ui) {
+					initializeEditors();
+				},
+				pageIndexChanged: function (evt, ui) {
+					initializeEditors();
+				}
+			}
+		]
+        });
+    });
+
+</script>
+</head>
+
+<body>
+    <div id="container">
+        <header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+        <div id="main" role="main">
+            <section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+            <div class="content clearfix">
+                <!-- side nav begins here -->
+                <script type="text/javascript">insertNav();</script>
+                <!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Row Template with Image</h2>
+						<p>This sample demonstrates how to build a row template with an image in the igGrid control using Infragistics Templating Engine. Once the grid is initialized the igTextArea and igRating controls are instantiated in the row template. </p>
+					</hgroup>
+					<div class="sampleContainer">
+	                    <table id="resultGrid">
+	                    </table>
+					</div>
+				</section>
+            </div>
+        </div>
+        <footer>
+
+		</footer>
+    </div>
+</body>

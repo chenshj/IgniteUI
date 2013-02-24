@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../../js/infragistics.loader.js"></script>
+</head>
+<body>
+
+    <!-- The igCombo can bind to the a SELECT element and use
+    the HTML OPTION elements as combo's dataSource. Furthermore,
+    The OPTION element's value attribute is used for the widget's
+    valueKey -->
+    <select id="combo">
+        <option value="1">John Smith</option>
+        <option value="2">Mary Johnson</option>
+        <option value="3">Bob Ferguson</option>
+    </select>
+
+    <script>
+        // The ig.loader is used to load required OctaneUI JavaScript 
+        // and CSS resources. It accepts a configuration object that specifies
+        // default paths and the components to load into the page.
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+
+            //string representing which component resources are required
+            resources: "igCombo"
+        });
+
+        //The ig.loader accepts a function that is called after 
+        //all resources are loaded and document.ready has fired.
+        $.ig.loader(function () {
+            
+            //The igCombo is bound to the SELECT and OPTION elements
+            //defined above
+            $("#combo").igCombo();
+        });
+    </script>
+
+</body>
+</html>

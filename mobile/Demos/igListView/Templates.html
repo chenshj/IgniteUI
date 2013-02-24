@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+    <style type="text/css">
+        .template-image
+        {
+            float: left;
+            left: 10px;
+            margin-right:10px;
+        }
+        .rating
+        {
+            margin-left:75px;
+        }
+    
+        .detail-rating
+        {
+            margin-top:15px;   
+        }
+    
+        .detail-container
+        {
+            margin-left: 10px;
+            margin-right:10px;
+            background-color:rgb(255, 255, 255);
+            padding: 15px; 
+            border-radius: 11px;  
+       
+	   		color : Black;
+		}
+    </style>
+
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igmList,igmRating",
+            theme: "ios"
+        });
+
+        $.ig.loader(function () {
+            var flatListId = $("#templateListView").igListView("rootWidget").element[0].id;
+
+            $("#" + flatListId).bind("iglistdatarendered", function (evt, ui) {
+                $(".rating").igRating();
+            });
+
+            $("#" + flatListId).bind("iglistsubpagecreated", function (evt, ui) {
+                $(".detail-rating").igRating();
+                ui.subPage.page().data().page.element[0].className = "ui-page ui-body-a";
+            });
+        });
+    </script>
+</head>
+<body>
+    <div data-role="page" id="listview-templates-sample" data-url="/iglistview/listview-templates-sample">
+        <script>
+            $("#template-page").bind("pagebeforecreate", function (e) {
+                $(this).page("option", "theme", "a");
+                $(this).page("option", "headerTheme", "b");
+            });
+        </script>        
+        <div data-role="header">
+            <a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+            <h1>Templates</h1>
+            <a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+        </div>
+        <div data-role="content">
+            <ul id="templateListView" 
+                data-role="iglistview" 
+                data-bindings-header-key="Name"
+                data-bindings-description-key="ReleaseYear"
+                data-bindings-text-key="ShortSynopsis" 
+                data-bindings-custom-bindings='[{"fieldName":"AverageRating","dataType":"string"},{"fieldName":"BoxArt","dataType":"object"}]'
+                data-item-theme="c"
+                data-sub-page-header-theme="b"
+                data-response-data-key="d.results"     
+                data-odata="true"
+                data-item-template="<div class='ui-li ui-btn-inner'><div class='ui-btn-text'><a class='ui-link-inherit ui-link'><img class='template-image' src='${BoxArt.SmallUrl}'></img><h2 class='ui-li-heading'>${Name}</h2><p class='ui-li-desc'>${ReleaseYear}</p><div class='rating' data-role='igrating' data-value='${AverageRating}' data-read-only='true'></div></a></div></div>"
+                data-item-details-template="<div class='detail-container'><h2>${Name}</h2><h3>${ReleaseYear}</h3><img src='${BoxArt.LargeUrl}'></img><div class='detail-rating' data-role='igrating' data-value='${AverageRating}' data-read-only='true'></div><p>${ShortSynopsis}</p></div>"
+                data-data-source-url="http://odata.netflix.com/v2/Catalog/Genres('Documentaries')/Titles?$inlinecount=allpages&$top=10&$filter=substringof('experience',Name)%20eq%20true&$format=json&$callback=?">
+            </ul>
+
+        </div>
+    </div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                Templates can be used to override the visual layout and appearance of the ListView. This sample shows the item template and details template configuration.
+ 
+Note: This samples uses an OData service as the data source and may not work running offline or when running from the file system.
+
+Note: There is a known issue with Android browsers and the OData service in this sample. Please run this sample in a non-Android based browser.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

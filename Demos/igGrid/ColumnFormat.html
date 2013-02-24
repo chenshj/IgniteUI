@@ -1,0 +1,121 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		// create some data for dataSource of igGrid
+	    var i = -1, 
+			gridData = [], 
+			strings = ["Red", "Orange", "Pink", "Yellow", "Green"];
+		
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igGrid"
+		});
+		
+		while (++i < 20) {
+			if (i === 2 || i === 11) {
+				gridData[i] = { "ID": i + 1 };
+				continue;
+			}
+			gridData[i] = {
+				"ID": i + 1,
+				"Number": Math.pow((6 - i % 5), 8) * 1.25 * ((i % 6 == 2) ? -1 : 1) + i * 3,
+				"Percent": (i + 3) * ((i % 5 == 3) ? -10.25 : 10.25),
+				"Currency": ((i + 2) * 1234 + i * 4.2) * ((i % 5 == 1) ? -1 : 1),
+				"Time": new Date(2011, 5, 5, (i + 3) * 3 % 24, 20 * i % 60, 12 * i % 60),
+				"Date": new Date(2010 + i % 4 % 2, (i + 3) % 12, 5 + i * 4 % 24),
+				"DateCustom": new Date(2011 + i % 7 % 2, (i + 7) % 12, 5 + i * 5 % 24, (i + 3) * 3 % 24, 20 * i % 60, 12 * i % 60),
+				"DateLong": new Date(2010 + (i + 1) % 5 % 2, (i + 2) % 12, 3 + i * 4 % 24),
+				"String": strings[i % 5]
+			};
+		}
+		//
+		$.ig.loader(function() {
+			// create igGrid
+			$("#grid1").igGrid({
+				virtualization: false,
+				autoGenerateColumns: false,
+				columns: [ {
+				        headerText: "ID", key: "ID", width: "30px"
+					}, {
+					    headerText: "Number", key: "Number", width: "90px", dataType: "number", format: "number"
+					}, {
+					    headerText: "Percent", key: "Percent", width: "80px", dataType: "number", format: "percent"
+					}, {
+					    headerText: "Currency", key: "Currency", width: "90px", format: "currency"
+					}, {
+					    headerText: "Time", key: "Time", width: "80px", format: "time"
+					}, {
+					    headerText: "Date", key: "Date", width: "90px", dataType: "date"
+					}, {
+					    headerText: "Date Custom", key: "DateCustom", width: "160px", dataType: "date", format: "ddd, MMM-d-yy HH:mm"
+					}, {
+					    headerText: "Date Long", key: "DateLong", width: "210px", dataType: "date", format: "dateLong"
+					}, {
+					    headerText: "String with {0}", key: "String", width: "100px", format: "Color: {0}"
+					}
+				],
+				dataSource: gridData,
+				height: "400px",
+				width: "710px"
+			});
+		});
+	</script>
+	
+</head>
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Column Format Options</h2>
+						<p>This sample demonstrates how to format values in cells of grid using the <strong>format</strong> option of a column.</p>
+					</hgroup>
+
+				<div class="sampleContainer">
+					 <table id="grid1"></table>
+				</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>
+

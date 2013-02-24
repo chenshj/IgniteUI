@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	<style type="text/css">
+        #eventList
+        {
+            border: 1px soild;
+            height: 200px;
+            overflow-y: auto;
+            padding-top: 5px;
+            color: #656565;
+        }
+		#rowSelect
+		{
+			position: relative;
+			top: 5px;
+		}
+    </style>
+	<script type="text/javascript">	
+		// create some dataSource of igGrid
+	    var i = -1, 
+			a = "A".charCodeAt(0), 
+			gridData = [], 
+			colors = ["Red", "Orange", "Pink", "Yellow", "Green"], 
+			names = ["Jet", "Train", "Car", "Boat"], 
+			evntCounter = 0;
+		
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igGrid.Selection,igGrid.Updating"
+		});
+		
+		while (++i < 30) {
+			gridData[i] = {
+				"ProductID": i,
+				"Name": names[i % 4],
+				"Code": String.fromCharCode(a + i % 20) + String.fromCharCode(a + 8 - i % 5) + String.fromCharCode(a + 10 - i % 10) + (i + 2) % 4,
+				"Color": colors[i % 5],
+				"OrderDate": new Date(2010 + i % 4 % 2, (i + 3) % 12, 5 + i * 4 % 24),
+				"ListPrice": Math.pow((6 - i % 4), 6) * 1.25 + i
+			};
+		}
+		//
+		$.ig.loader(function() {
+			// create igGrid
+			$("#grid1").igGrid({
+				virtualization: false,
+				autoGenerateColumns: false,
+				primaryKey: "ProductID",
+				columns: [ {
+						// note: if primaryKey is set and data in primary column contains numbers,
+						// then the dataType: "number" is required, otherwise, dataSource will fail to find row to delete
+				        headerText: "Product ID", key: "ProductID", width: "100px", dataType: "number"
+					}, {
+					    headerText: "Product Name", key: "Name", width: "130px"
+					}, {
+					    headerText: "Code", key: "Code", width: "100px"
+					}, {
+					    headerText: "Color", key: "Color", width: "80px"
+					}, {
+					    headerText: "Order Date", key: "OrderDate", width: "120px", dataType: "date"
+					}, {
+					    headerText: "List Price", key: "ListPrice", width: "150px", format: "currency"
+					}
+				],
+				dataSource: gridData,
+				height: "400px",
+				tabIndex: 1,
+				features: [ {
+					name: "Selection",
+					mode: "row",
+					multipleSelection: true,
+					mouseDragSelect: true
+				}, {
+					name: "Updating",
+					enableAddRow: false,
+					editMode: "none",
+					enableDeleteRow: true,
+					// event raised before row was deleted
+					rowDeleting: function (evt, ui) {
+						var val, row = ui.rowID, grid = $("#grid1").data("igGrid");
+						if ($("#cancelDeleteJet").is(":checked")) {
+							val = grid.getCellValue(row, "Name");
+							if (val === "Jet") {
+								return false;
+							}
+						}
+						if ($("#cancelDeleteOrange").is(":checked")) {
+							val = grid.getCellValue(row, "Color");
+							if (val === "Orange") {
+								return false;
+							}
+						}
+						logEvent("rowDeleting event fired. Row Index = " + ui.rowID);
+					},
+					// event raised after row was deleted
+					rowDeleted: function (evt, ui) {
+						logEvent("rowDeleted event fired. Row Index = " + ui.rowID);
+					}
+				} ]
+			});
+			//
+			$("#rowSelect").igNumericEditor({
+                dataMode: "sbyte",
+                button: "spin",
+                value: 0,
+                minValue: 0,
+                maxValue: 29,
+                width: 195
+            }); 
+			// process events of checkboxes
+			$("#enableDelete").bind({
+				change: function (e) {
+					$("#grid1").igGridUpdating("option", "enableDeleteRow", $(this).is(":checked"));
+				}
+			});
+			
+			$("#grid1").bind("iggridpagingpagesizechanged", function (e, args) {
+                $("#rowSelect").igNumericEditor("option", "maxValue", args.pageSize - 1);
+            });
+		});
+		
+        $("#deleteRow").live({
+            click: function (e) {
+                var rowIndex = $("#rowSelect").igNumericEditor("option", "value"), tr = $("#grid1").igGrid("rowAt", parseInt(rowIndex));
+                if (!tr) return;
+				
+                $("#grid1").igGridUpdating("deleteRow", rowIndex, tr);
+            }
+        });
+		
+		// show the raised event
+		function logEvent(message) {
+			var evntWrap = $("#eventList");
+			$(evntWrap).append("<div>" + (++evntCounter) + ". "  +  message + "<div>"); 
+			$(evntWrap).prop("scrollTop", $(evntWrap).prop("scrollHeight"));
+		}
+	</script>
+</head>
+
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>DeleteRows</h2>
+						<p>This sample demonstrates how to enable delete-row functionality of igGrid and process related events.
+							<br />
+							Default delete functionality is related to mouse-over of a row in igGrid. The Delete button on right side of the hovered row appears and clicking on that button deletes that row.
+							<br />
+							Selection on igGrid is enabled. If igGrid has any selected rows, then the Delete key will delete the selected rows.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+					           <div> Select Row Index  <span id="rowSelect"></span>
+							<input type="button" id="deleteRow" value="DeleteRow"/></div> <br>
+				
+						<div id="eventList" class="controlPanelEvent" data-scroll="true">
+						</div> 
+						<table id="grid1">
+						</table>
+						
+						<table class="standard-grid" style="margin:10px 0;">
+							<tr>
+								<td style="width:50%;vertical-align:top;">
+									<input type="checkbox" id="enableDelete" checked="checked" /><label for="enableDelete">enable Delete-row functionality</label>
+								</td>
+								<td>
+									<input type="checkbox" id="cancelDeleteJet" /><label for="cancelDeleteJet">cancel delete-row if "Product Name" is "Jet"</label>
+									<br />
+									<input type="checkbox" id="cancelDeleteOrange" /><label for="cancelDeleteOrange">cancel delete-row if "Color" is "Orange"</label>
+								</td>
+							</tr>
+						</table>
+						
+					</div>
+		
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+
+
+</body>
+</html>
+

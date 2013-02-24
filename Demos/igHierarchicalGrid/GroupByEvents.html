@@ -1,0 +1,346 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="../scripts/modernizr.min.js"></script>
+	<script type="text/javascript" src="../scripts/jquery.min.js"></script>
+	<script type="text/javascript" src="../scripts/jquery-ui.min.js"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+	
+    <script type="text/javascript" src="../../js/infragistics.loader.js"></script>
+    <script type="text/javascript" src="../scripts/db/adventureWorksProductsInventories.js"></script>
+	
+	<script type="text/javascript">
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igHierarchicalGrid.GroupBy,igHierarchicalGrid.Paging"
+		});
+
+		$.ig.loader(function () {
+		    $("#hgrid1").igHierarchicalGrid({
+		        initialDataBindDepth: 1,
+		        dataSource: productsInventories,
+		        dataSourceType: "json",
+		        responseDataKey: "Records",
+		        loadOnDemand: false,
+
+		        autoGenerateColumns: false,
+		        autoGenerateLayouts: false,
+		        columns: [
+					{ key: "ProductID", headerText: 'Product ID', width: "100px" },
+					{ key: "Name", headerText: 'Product Name', width: "250px" },
+					{ key: "ProductNumber", headerText: 'Product Number', dataType: "string", width: "150px" },
+					{ key: "Color", headerText: 'Color', dataType: "string", width: "100px" },
+				],
+		        columnLayouts: [
+					{
+					    //  Define looks and behavior for the second level in the hierarchy
+					    key: "ProductInventories",
+					    responseDataKey: "Records",
+					    autoGenerateColumns: false,
+					    generateCompactJSONResponse: false,
+					    primaryKey: "ProductID,LocationID",
+					    foreignKey: "ProductID",
+					    columns: [
+							{ key: "ProductID", headerText: 'Product ID', width: "130px" },
+							{ key: "LocationID", headerText: 'Address ID', width: "130px" },
+							{ key: "Shelf", headerText: 'Shelf', width: "100px" },
+							{ key: "Bin", headerText: 'Bin', width: "60px" },
+							{ key: "Quantity", headerText: 'Quantity', width: "80px" }
+						],
+					    features: [{
+					        //  Configure GroupBy with Summary for child level
+					        name: "GroupBy",
+					        type: "local"
+					    }]
+					}
+				],
+		        features: [
+					{
+					    name: "GroupBy",
+					    type: "local",
+					    modalDialogGroupByOnClick: true,
+					    groupByAreaVisibility: "top",
+					    inherit: true,
+					    groupByLabelWidth: "250px",
+
+					    groupedColumnsChanging: function (e, args) {
+					        var message =
+								"<div class='event-fired'>groupedColumnsChanging " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Key: " + args.key + "<br />" +
+									"First grouped column key: " + groupKey(args) + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    groupedColumnsChanged: function (e, args) {
+					        var message =
+								"<div class='event-fired'>groupedColumnsChanged " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Key: " + args.key + "<br />" +
+									"First grouped column key: " + groupKey(args) + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogMoving: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogMoving " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Original Position: " + args.originalPosition.top + " " + args.originalPosition.left + "<br />" +
+									"Position: " + args.position.top + " " + args.position.left + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogClosing: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogClosing " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogClosed: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogClosed " +
+									"event fired:" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogOpening: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogOpening " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogOpened: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogOpened " +
+									"event fired:" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogContentsRendering: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogContentsRendering " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogContentsRendered: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogContentsRendered " +
+									"event fired:" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogButtonApplyClick: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogButtonApplyClick " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Index: " + args.groupedColumns + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogButtonResetClick: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogButtonResetClick " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"First grouped column key: " + groupKey(args) + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogGroupingColumn: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogGroupingColumn " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Key: " + args.key + "<br />" +
+									"Grid Layout: " + (args.layout === null || args.layout === undefined ? "Root" : args.layout) + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogGroupColumn: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogGroupColumn " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Key: " + args.key + "<br />" +
+									"First grouped column key: " + groupKey(args) + "<br />" +
+									"Grid Layout: " + (args.layout === null || args.layout === undefined ? "Root" : args.layout) + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogUngroupingColumn: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogUngroupingColumn " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Key: " + args.key + "<br />" +
+									"Grid Layout: " + args.layout + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogUngroupColumn: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogUngroupColumn " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Key: " + args.key + "<br />" +
+									"First grouped column key: " + groupKey(args) + "<br />" +
+									"Grid Layout: " + args.layout + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    },
+					    modalDialogSortGroupedColumn: function (e, args) {
+					        var message =
+								"<div class='event-fired'>modalDialogSortGroupedColumn " +
+									"event fired:" +
+								"</div>" +
+								"<div class='event-args'>" +
+									"Row Key: " + args.key + "<br />" +
+									"Is Ascending: " + args.isAsc + "<br />" +
+									"<span class='groupby-italic'>This event is cancalable</span>" + "<br />" +
+								"</div>";
+					        showEvent(message);
+					    }
+					},
+					{
+					    name: "Paging",
+					    type: "Local",
+					    pageSize: 25
+					}
+                ]
+		    });
+
+		    $("#groupClick").click(function () {
+		        $("#hgrid1").igGridGroupBy("option", "modalDialogGroupByOnClick", $("#groupClick").is(":checked"));
+		    });
+		    $("#showModal").igButton({ labelText: $("#showModal").val() }).click(function () {
+		        $("#hgrid1").igGridGroupBy("openGroupByDialog");
+		    });
+		    function showEvent(message) {
+		        $("#eventsInfo").html($("#eventsInfo").html() + message).
+                            prop({ scrollTop: $("#eventsInfo").prop("scrollHeight") });
+		    }
+		    $("#btnClear").igButton({ labelText: $("#btnClear").val() }).click(function () {
+		        $("#eventsInfo").html("");
+		    });
+
+		    function groupKey(args) {
+		        if (args.groupedColumns) {
+		            return (args.groupedColumns.length > 0)
+					    ? args.groupedColumns[0].key
+					    : "";
+		        }
+		        return "";
+		    }
+		});
+	</script>
+	
+    <style type="text/css">
+        .eventsWrapper
+        {
+            border: solid 1px #e3e3e3;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px 0px 5px 20px;
+        }        
+        .eventsLegend
+        {
+            padding-left: 3px;
+            padding-right: 3px;
+            color: #656565;
+        }
+        .event-fired { font-weight: bold; margin: 5px 0 0; }
+		.groupby-italic { font-style: italic; }
+		.clear { clear: both; }
+		#btnClear, #showModal { float: right; }
+		#eventsInfo { border: 1px soild; height: 150px; overflow-y: auto; padding-top: 5px; color: #656565; }
+    </style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+				<section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Hierarchical Grid Group By Events</h2>
+						<p>This sample demonstrates all the igGrid control’s group-by specific events, with their parameter arguments. In this sample you see the modal dialog window that gives advanced information about the grouped columns, and the role of the ‘modalDialogGroupByOnClick’ property. If it’s set to true, by choosing a column from the modal window to group, the grid is immediately grouped by that column. When set to false (default value), you can first select a series of columns to group and press the Apply button to see the changes. Additionally, you can use the ‘Cancel’ or ‘Escape’ buttons to cancel the modal window.  One of the main advantages of the modal window is that it is optimized for touch platforms. Also, the igHierachicalGrid control’s modal window has a tree at the top that allows you to select columns and group by those columns, from any column layout.
+        </p>
+					</hgroup>
+					<div class="sampleContainer">
+						<div>
+							<input id="groupClick" type="checkbox" checked="checked"/>
+							<label>Group By On a Single Click</label>
+							<input id="btnClear" type="button" value="Clear List"/>
+							<input id="showModal" type="button" value="Show Modal Window"/>
+							<div class="clear"></div>
+						</div>
+						<fieldset class="eventsWrapper">
+							<legend class="eventsLegend">Events Info</legend>
+							<div id="eventsInfo" class="controlPanelEvent" data-scroll="true"></div>
+						</fieldset>
+						<table id="hgrid1"></table>
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

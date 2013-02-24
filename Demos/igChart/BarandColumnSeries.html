@@ -1,0 +1,231 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+    <script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+
+    <script id="tooltipTemplate1" type="text/x-jquery-tmpl">
+        <div class="ui-widget-content ui-corner-all">
+            <span id="tooltipValue">Value: ${item.Value1}</span>
+        </div>
+    </script>
+    <script id="tooltipTemplate2" type="text/x-jquery-tmpl">
+        <div class="ui-widget-content ui-corner-all">
+            <span id="tooltipValue">Value: ${item.Value2}</span>
+        </div>
+    </script>
+    <script id="tooltipTemplate3" type="text/x-jquery-tmpl">
+        <div class="shadow ui-widget-content ui-corner-all">
+            <span id="tooltipValue">Value: ${item.Value3}</span>
+        </div>
+    </script>
+    
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igDataChart.Category,igCombo"
+        });
+
+        $.ig.loader(function () {
+            var currData, currDataSource, doGeneration;
+
+            doGeneration = function () {
+                var num = 10, data = [];
+                for (var i = 0; i < num; i++) {
+                    var val1 = Math.round(Math.random() * 100);
+                    var val2 = Math.round(Math.random() * 100);
+                    var val3 = Math.round(Math.random() * 100);
+                    data[i] = { Label: i.toString(), Value1: val1, Value2: val2, Value3: val3 };
+                }
+                currData = data;
+                currDataSource = new $.ig.DataSource({ dataSource: currData });
+            }
+
+            doGeneration();
+
+            $("#chart1").igDataChart({
+                width: "500px",
+                height: "500px",
+                dataSource: currDataSource,
+                legend: { element: "legend1" },
+                axes: [{
+                    name: "xAxis",
+                    type: "categoryX",
+                    label: "Label"
+                }, {
+                    name: "yAxis",
+                    type: "numericY"
+                }],
+                series: [{
+                    name: "series1",
+                    title: "BMW",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value1",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate1"
+                }, {
+                    name: "series2",
+                    title: "Audi",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value2",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate2"
+                }, {
+                    name: "series3",
+                    title: "Mazda",
+                    type: "column",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value3",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate3"
+                }],
+                horizontalZoomable: true,
+                verticalZoomable: true,
+                windowResponse: "immediate"
+            });
+
+            $("#chart2").igDataChart({
+                width: "500px",
+                height: "500px",
+                dataSource: currDataSource,
+                legend: {element: "legend2"},
+                axes: [{
+                    name: "xAxis",
+                    type: "numericX"
+                }, {
+                    name: "yAxis",
+                    type: "categoryY",
+                    label: "Label"
+                }],
+                series: [{
+                    name: "series1",
+                    title: "BMW",
+                    type: "bar",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value1",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate1"
+                }, {
+                    name: "series2",
+                    title: "Audi",
+                    type: "bar",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value2",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate2"
+                }, {
+                    name: "series3",
+                    title: "Mazda",
+                    type: "bar",
+                    xAxis: "xAxis",
+                    yAxis: "yAxis",
+                    valueMemberPath: "Value3",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTemplate3"
+                }],
+                horizontalZoomable: true,
+                verticalZoomable: true,
+                windowResponse: "immediate"
+            });
+        });
+
+        $("#seriesType").live('change', function (e) {
+            $(".chartWrapper").hide();
+            $("." + $(this).val()).show();
+        });
+    </script>
+    <style type="text/css">
+        #chart1, #chart2
+        {
+            position: relative;
+            float: left;
+            margin-right: 10px;
+        }
+        #legend1, #legend2
+        {
+            position: relative;
+            float: left;
+        }
+		.options
+		{
+			margin-bottom: 15px;
+		}
+    </style>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Bar and Column Series</h2>
+						<p>This sample shows Bar and Column Series of the jQuery Chart control.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+						<div class="options">
+							Series Type
+							<select id="seriesType">
+								<option value="column" selected="selected">Column</option>
+								<option value="bar">Bar</option>
+							</select>
+						</div>
+						<div class="chartWrapper column">
+							<div id="chart1">
+							</div>
+							<div id="legend1">
+							</div>
+						</div>
+						<div class="chartWrapper bar" style="display: none">
+							<div id="chart2">
+							</div>
+							<div id="legend2">
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>

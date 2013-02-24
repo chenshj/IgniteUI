@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../js/modernizr.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+    <script src="../../js/infragistics.loader.js"></script>
+</head>
+<body>
+
+    <div id="chart"></div>
+
+    <script>
+        // The ig.loader is used to load required OctaneUI JavaScript 
+        // and CSS resources. It accepts a configuration object that specifies
+        // default paths and the components to load into the page.
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+
+            //string representing which component resources are required
+            resources: "igDataSource,igPieChart"
+        });
+
+        //The ig.loader accepts a function that is called after 
+        //all resources are loaded and document.ready has fired.
+        $.ig.loader(function () {
+                        
+            //Sample XML Data
+            var xmlDoc = '<Countries>' +
+                '<Country Name="China" Population="1333" />' +
+                '<Country Name="India" Population="1140" />' +
+                '<Country Name="United States" Population="304" />' +
+                '<Country Name="Indonesia" Population="228" />' +
+                '<Country Name="Brazil" Population="192" />' +
+            '</Countries>';
+
+            //Binding to XML requires a schema to define data fields
+            var xmlSchema = new $.ig.DataSchema("xml",
+                { 
+                    //searchField serves as the base node(s) for the XPaths
+                    searchField: "//Country", 
+                    fields: [
+                        { name: "Name", xpath: "./@Name" },
+                        { name: "Population", xpath: "./@Population", type: "number" },
+                    ]
+                }
+            );
+
+            //This creates an Infragistics datasource from the XML 
+            //and the Schema which can be consumed by the grid.
+            var ds = new $.ig.DataSource({
+                type: "xml",
+                dataSource: xmlDoc,
+                schema: xmlSchema 
+            });
+
+            $("#chart").igPieChart({
+                width: "450px",
+                height: "400px",
+                dataSource: ds, //$.ig.DataSource defined above
+                valueMemberPath: "Population",
+                labelMemberPath: "Name",
+                labelsPosition: "outsideEnd"
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

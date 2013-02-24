@@ -1,0 +1,280 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+   
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/jquery-ui-i18n.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+            resources: 'modules/i18n/regional/infragistics.ui.regional-i18n.js,igShared,igEditors,igValidator'
+        });
+
+        $.ig.loader(function () {
+			$.ui.igValidator.defaults.showAllErrorsOnSubmit = true;
+			$('#firstNametext').igEditor(
+			{
+				validatorOptions: getValidationOptions(),
+				required: true,
+				nullText: 'Enter First Name',
+				width: 190
+			});
+			$('#lastNametext').igEditor(
+			{
+				validatorOptions: getValidationOptions(),
+				required: true,
+				nullText: 'Enter Last Name',
+				width: 190
+			});
+			$('#creditCardMask').igMaskEditor(
+			{
+				validatorOptions: getValidationOptions(),
+				required: true,
+				width: 190,
+				// Note: Chrome does not support more than 19 charactres in submitted INPUT
+				//nullText: 'Enter CreditCard Number',
+				nullText: 'CreditCard Number',
+				inputMask: '0000 0000 0000'
+			});
+			$('#validityPeriodDatepicker').igDatePicker(
+			{
+				validatorOptions: getValidationOptions(),
+				required: true,
+				regional: 'en-US',
+				width: 190,
+				dateInputFormat: 'date',
+				nullText: 'Enter date'
+			});
+			$('#price').igCurrencyEditor(
+			{
+				validatorOptions: getValidationOptions(),
+				required: true,
+				width: 190,
+				minValue: 0,
+				valueChanged: function () {
+					calculateTotal();
+				}
+			});
+			$('#quantity').igNumericEditor(
+			{
+				validatorOptions: getValidationOptions(),
+				required: true,
+				dataMode: 'int',
+				maxValue: 100,
+				minValue: 0,
+				button: 'spin',
+				width: 190,
+				valueChanged: function () {
+					calculateTotal();
+				}
+			});
+			$('#discount').igPercentEditor(
+			{
+				validatorOptions: getValidationOptions(),
+				required: true,
+				minValue: 0,
+				maxValue: 100,
+				width: 190,
+				valueChanged: function () {
+					calculateTotal();
+				}
+			});
+			$('#total').igCurrencyEditor(
+			{
+				readOnly: true,
+				width: 190
+			});
+			$('#validityPeriodDatepicker').igDatePicker('option', 'regional', 'en-US');
+			$('#regional').change(function () {
+					var end, regional = $(this).val();
+					end = regional.indexOf(' ');
+					if (end > 1) {
+						regional = regional.substring(0, end);
+					}
+					$('#price').igCurrencyEditor('option', 'regional', regional);
+					$('#total').igCurrencyEditor('option', 'regional', regional);
+					$('#validityPeriodDatepicker').igDatePicker('option', 'regional', regional);
+				});
+
+			$('#formSubmit').click(function () {
+					var form = $("#validationForm")[0];
+					var message = "Submitting Form...";
+					$("#message").html(message).stop(true, true).fadeIn(500).delay(3000).fadeOut(500);
+					form.submit();
+				});
+			$("#formSubmit").igButton({ labelText: $("#formSubmit").val() });
+			});
+			function getValidationOptions() {
+				var validatorOptions = {};
+				validatorOptions.onblur = true;
+				validatorOptions.onchange = true;
+				validatorOptions.onsubmit = true;
+				validatorOptions.formSubmit = true;
+				return validatorOptions;
+			}
+			function calculateTotal() {
+				var price = $('#price').igCurrencyEditor('option', 'value');
+				var quantity = $('#quantity').igNumericEditor('option', 'value');
+				var discount = $('#discount').igPercentEditor('option', 'value');
+				var result = quantity * (price - price * discount);
+				$('#total').igCurrencyEditor('option', 'value', result);
+			}
+    </script>	
+	
+	<style type="text/css">
+	    #formSubmit { float:right; margin-right:10px;}
+		form label {display:block; line-height:1.8em;}
+	</style>
+	
+</head>
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Order Entry Form</h2>
+						<p>This sample demonstrates the basic usage of a series of igEditors using jQuery. Included in this form are igMaskEditor, igCurrencyEditor, igNumericEditor, igDatePicker, and igPercentEditor. Selecting a different country changes the culture used to format the Price and Total fields. Validation is enabled and all items on the left are required. The display of all error messages on submit is enabled.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+						
+						
+	<form id="validationForm" method="post" action="">
+						<table class="standard-grid" style="width:450px;">
+							<tr>
+									<td>
+									<strong>User Information:</strong>
+										<label>First Name</label>
+										<input id="firstNametext" type="text" />
+										<label>Last Name</label>
+										<input id="lastNametext" type="text" />
+										
+										
+									<label  title="CreditCard Number">Credit Card Number</label>
+									<input id="creditCardMask" type="text" title="CreditCard Number" />
+									<label>Validity Period</label>
+									<span id="validityPeriodDatepicker"></span>
+									
+										<label>Culture/country:</label>
+										<select id="regional" style="width:190px;">
+											<option selected="selected">en-US (English, United States)</option>
+											<option>af (South Africa)</option>
+											<option>ar (Arabic)</option>
+											<option>az (Azerbaijan, Latin)</option>
+											<option>bg (Bulgaria)</option>
+											<option>bs (Bosnia)</option>
+											<option>ca (Catalan)</option>
+											<option>cs (Czech)</option>
+											<option>da (Denmark)</option>
+											<option>de (Germany)</option>
+											<option>el (Greece)</option>
+											<option>en-GB (English, United Kingdom)</option>
+											<option>es (Spain)</option>
+											<option>et (Estonia)</option>
+											<option>fa (Farsi, Iran)</option>
+											<option>fi (Finland)</option>
+											<option>fo (Faroe)</option>
+											<option>fr-CH (French, Switzerland)</option>
+											<option>fr (France)</option>
+											<option>he (Hebrew, Israel)</option>
+											<option>hr (Croatia)</option>
+											<option>hu (Hungary)</option>
+											<option>hy (Armenia)</option>
+											<option>id (Indonesia)</option>
+											<option>is (Iceland)</option>
+											<option>it (Italy)</option>
+											<option >ja (Japan)</option>
+											<option>ko (Korea)</option>
+											<option>lt (Lithuania)</option>
+											<option>lv (Latvia)</option>
+											<option>ms (Malaysia)</option>
+											<option>nl (Dutch, Netherlands)</option>
+											<option>no (Norway)</option>
+											<option>pl (Poland)</option>
+											<option>pt-BR (Brazil)</option>
+											<option>ro (Romania)</option>
+											<option>ru (Russia)</option>
+											<option>sk (Slovakia)</option>
+											<option>sl (Slovenia)</option>
+											<option>sq (Albania)</option>
+											<option>sr (Cyrillic, Serbia)</option>
+											<option>sr-SR (Latin, Serbia)</option>
+											<option>sv (Sweden)</option>
+											<option>ta (Tamil, India)</option>
+											<option>th (Thailand)</option>
+											<option>tr (Turkey)</option>
+											<option>uk (Ukraine)</option>
+											<option>vi (Vietnam)</option>
+											<option>zh-CN (PRC, China)</option>
+											<option>zh-HK (Hong Kong SAR PRC, China)</option>
+											<option>zh-TW (Taiwan, China)</option>
+											<option>zh-CN (PRC, China)</option>
+										</select>
+								</td>
+								<td>
+									<strong>Price Information:</strong>
+									<br/>
+									<label for="price">Price</label>
+									<input id="price" type="text" value="0"/>
+									
+									<label for="quantity">Quantity</label>
+									<input id="quantity" value="0" />
+									
+									<label for="discount">Discount</label>
+									<input id="discount" value="0" />
+									
+									<label for="total">Total</label>
+									<input id="total" value="0" />
+									 <br/>
+									 <br/>
+									
+									<input type="button" id="formSubmit" value="Submit"  />
+					 
+								</td>
+							 </tr>
+
+						</table>
+						</form>
+						
+					</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>
+

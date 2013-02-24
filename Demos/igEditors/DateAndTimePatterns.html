@@ -1,0 +1,471 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+    <script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+    <script>
+        $.ig.loader({
+            scriptPath: '../../js/',
+            cssPath: '../../css/',
+            resources: 'igEditors'
+        });
+
+        $.ig.loader(function () {
+	        $('#minNumberOfDateFieldsEditor').igDateEditor({
+	            width: 100,
+	            minNumberOfDateFields: 3,
+	            dateInputFormat: "yyyy/MM/dd hh:mm"
+	        });
+	        $('#datePatternEditor').igDateEditor({
+	            width: 190,
+	            datePattern: 'MM/dd/yyyy',
+	            button: 'spin'
+	        });
+	        $('#dateLongPatternEditor').igDatePicker({
+	            width: 190,
+	            dateDisplayFormat: 'ddd, MMMM dd, yyyy'
+	        });
+	        $('#dateTimePatternEditor').igDateEditor({
+	            width: 190,
+	            dateInputFormat: 'dateTime',
+	            dateDisplayFormat: 'M/d/yyyy h:mm tt',
+	            button: 'spin'
+	        });
+	        $('#timePatternEditor').igDateEditor({
+	            width: 120,
+	            dateInputFormat: 'timeLong',
+	            dateDisplayFormat: 'hh:mm tt'
+	        });
+	        $('#timeLongPatternEditor').igDateEditor({
+	            width: 120,
+	            dateInputFormat: 'timeLong',
+	            dateDisplayFormat: 'hh:mm:ss tt'
+	        });
+	        $('#spin1Editor').igDateEditor({
+	            width: 190,
+	            dateInputFormat: 'dateLong',
+	            dateLongPattern: 'MMMM, dd, yyyy',
+	            button: 'spin'
+	        });
+	        $('#lastGoodDateEditor').igDateEditor({
+	            width: 120,
+	            dateInputFormat: 'date',
+	            datePattern: 'MM/dd/yyyy'
+	        });
+	        $('#reduceDayOfInvalidDateEditor').igDateEditor({
+	            width: 120,
+	            dateInputFormat: 'date',
+	            datePattern: 'MM/dd/yyyy'
+	        });
+	        $('#dateInputFormatEditor').igDateEditor({
+	            width: 190,
+	            dateInputFormat: 'MM-dd-yyyy',
+	            nullText: 'Enter date',
+	            button: 'spin'
+	        });
+	        $('#dateDisplayFormatEditor').igDatePicker({
+	            width: 190,
+	            dateDisplayFormat: 'MM-dd-yyyy',
+	            nullText: 'Enter date',
+	            regional: 'en-US'
+	        });
+	        $('#hideMaskOnFocusEditor').igDateEditor({
+	            width: 190,
+	            dateInputFormat: 'MM/dd/yyyy',
+	            nullText: 'Enter date'
+	        });
+	        $('#promptCharEditor').igDateEditor({
+	            width: 130,
+	            dateInputFormat: 'MM/dd/yyyy',
+	            nullText: 'Enter date'
+	        });
+	        $('#minDateEditorSelect').igDateEditor({
+	            width: 190,
+	            nullText: 'Enter date'
+	        });
+	        $('#maxDateEditorSelect').igDateEditor({
+	            width: 190,
+	            nullText: 'Enter date'
+	        });
+	        $('#minDateEditor').igDatePicker({
+	            width: 190,
+	            nullText: 'Enter date',
+	            regional: 'en-US'
+	        });
+	        $('#maxDateEditor').igDatePicker({
+	            width: 190,
+	            nullText: 'Enter date',
+	            regional: 'en-US'
+	        });
+	        $('#datePatternList').change(function () {
+	            var value = $(this).val();
+	            $('#datePatternEditor').igDateEditor('option', 'dateDisplayFormat', value);
+	        });
+	        $('#dateLongPatternList').change(function () {
+	            var value = $(this).val();
+	            $('#dateLongPatternEditor').igDatePicker('option', 'dateDisplayFormat', value);
+	        });
+	        $('#dateTimePatternList').change(function () {
+	            var value = $(this).val();
+	            $('#dateTimePatternEditor').igDateEditor('option', 'dateDisplayFormat', value);
+	        });
+	        $('#timePatternList').change(function () {
+	            var value = $(this).val();
+                var today = new Date();
+                today.setHours(7, 35, 00, 00);
+	            $('#timePatternEditor').igDateEditor('option', 'dateDisplayFormat', value);
+                $('#timePatternEditor').igDateEditor('option', 'value', today);
+	        });
+	        $('#timeLongPatternList').change(function () {
+	            var value = $(this).val();
+                var today = new Date();
+                today.setHours(7, 35, 00, 00);
+	            $('#timeLongPatternEditor').igDateEditor('option', 'dateDisplayFormat', value);
+                $('#timeLongPatternEditor').igDateEditor('option', 'value', today);
+	        });
+	        $('#spin1List').change(function () {
+	            var value = $(this).val();
+	            if (value === "true") {
+	                $('#spin1Editor').igDateEditor('option', 'spin1Field', true);
+	            } else {
+	                $('#spin1Editor').igDateEditor('option', 'spin1Field', false);
+	            }
+	        });
+	        $('#reduceDayOfInvalidDateList').change(function () {
+	            var value = $(this).val();
+	            if (value === "true") {
+	                $('#reduceDayOfInvalidDateEditor').igDateEditor('option', 'reduceDayOfInvalidDate', true);
+	            } else {
+	                $('#reduceDayOfInvalidDateEditor').igDateEditor('option', 'reduceDayOfInvalidDate', false);
+	            }
+	        });
+	        $('#lastGoodDateList').change(function () {
+	            var value = $(this).val();
+               $('#lastGoodDateEditor').igDateEditor('option', 'useLastGoodDate', value === "true");
+	        });
+	        $('#dateInputFormatList').change(function () {
+	            var value = $(this).val();
+	            $('#dateInputFormatEditor').igDateEditor('option', 'dateInputFormat', value);
+	        });
+	        $('#dateDisplayFormatList').change(function () {
+	            var value = $(this).val();
+	            $('#dateDisplayFormatEditor').igDatePicker('option', 'dateDisplayFormat', value);
+	        });
+	        $('#hideMaskOnFocusList').change(function () {
+	            var value = $(this).val();
+	            if (value === "true") {
+	                $('#hideMaskOnFocusEditor').igDateEditor('option', 'hideMaskOnFocus', true);
+	            } else {
+	                $('#hideMaskOnFocusEditor').igDateEditor('option', 'hideMaskOnFocus', false);
+	            }
+	        });
+	        $('#promptCharList').change(function () {
+	            var value = $(this).val();
+	            $('#promptCharEditor').igDateEditor('option', 'promptChar', value);
+	        });
+	        $('#minDateEditorSelect').igDateEditor('option', 'valueChanged', function (evt, ui) {
+	            $('#minDateEditor').igDatePicker('option', 'minValue', ui.value);
+	        }
+	        );
+	        $('#maxDateEditorSelect').igDateEditor('option', 'valueChanged', function (evt, ui) {
+	            $('#maxDateEditor').igDatePicker('option', 'maxValue', ui.value);
+	        }
+	        );
+	        $('#minNumberOfDateFieldsEditorSettings').change(function () {
+	            var value = $(this).val();
+	            $('#minNumberOfDateFieldsEditor').igDateEditor('option', 'minNumberOfDateFields', value);
+	        });
+	    });
+
+	</script>
+	
+	
+	<style type="text/css">
+	.standard-grid { margin-bottom:20px}
+	.altRow {background:#DCDCDC; }
+	.textAlignR { text-align: right}
+	</style>
+	
+</head>
+<body>
+
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Date and Time Patterns</h2>
+						<p>This sample demonstrates different Date and Time Patterns of the igDateEditor and igDatePicker.</p>
+					</hgroup>
+
+					<div class="sampleContainer">
+					
+								<table class="standard-grid">
+									<thead>
+										<tr>
+											<th style="width:33%">Date Pattern</th>
+											<th style="width:33%">Date Long Pattern</th>
+											<th style="width:34%">DateTime Pattern</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<input id="datePatternEditor" type="text" value="05/22/2011"/>
+												<select id="datePatternList" style="width:190px; margin-top: 5px">
+													<option selected="selected">MM/dd/yyyy</option>
+													<option>MMM/dd/yyyy</option>
+													<option>MMM/ddd/yyyy</option>
+													<option>MMM/ddd/yy</option>
+													<option>MM/dd/yy</option>
+												</select>
+											</td>
+											<td>
+												<input id="dateLongPatternEditor" type="text" value="05/22/2011"/>
+												<select id="dateLongPatternList" style="width:190px; margin-top: 5px">
+														<option>dddd, MMMM dd, yyyy</option>
+														<option selected="selected">ddd, MMMM dd, yyyy</option>
+														<option>d MMM, yyyy dddd</option>
+														<option>ddd MMM, yyyy dddd</option>
+														<option>ddd, MMM dd, yyyy</option>
+														<option>ddd, MMM dd, yy</option>
+												</select>
+											</td>
+											<td>
+												<input id="dateTimePatternEditor" type="text" value="05/22/2011 7:35:00"/>
+												<select id="dateTimePatternList" style="width:190px; margin-top: 5px">
+														<option selected="selected">M/d/yyyy h:mm tt</option>
+														<option>M/d/yyyy h:mm t</option>
+														<option>M/ddd/yyyy h:mm tt</option>
+														<option>yyyy, dd MMM, HH:mm tt</option>
+														<option>yyyy-MM-dd-HH-mm-ss-fff</option>
+														<option>\Mon\t\h: MMMM, \d\a\y: d, \ye\ar: yy</option>
+														<option>dddd, d MMMM, \Hour\s: HH</option>
+														<option>dd-MM hh:mm tt</option>
+														<option>dd HH:mm:ss, fff</option>
+														<option>hh-mm-ss tt</option>
+														<option>H m s t</option>
+												</select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="standard-grid">
+									<thead>
+										<tr>
+											<th style="width:33%">Time Pattern</th>
+											<th style="width:33%">Time Long Pattern</th>
+											<th style="width:34%">Prompt Char</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<span>hh:mm tt</span>
+												<br />
+												<input id="timePatternEditor" type="text" value="7:35:00, 000"/>
+												<select id="timePatternList" style="margin-top: 5px; width:120px">
+														<option selected="selected">hh:mm tt</option>
+														<option>hh:mm t</option>
+														<option>HH:mm:ss, fff</option>
+														<option>hh-mm-ss tt</option>
+														<option>hh-mm-ss t</option>
+														<option>H m s t</option>
+												</select>
+											</td>
+											<td>
+												<span>hh:mm:ss tt </span> 
+												<br />
+												<input id="timeLongPatternEditor" type="text" value="7:35:00:000, 000"/>
+												<select id="timeLongPatternList" style="margin-top: 5px; width:120px">
+														<option selected="selected">hh:mm:ss tt</option>
+														<option>hh:mm t</option>
+														<option>HH:mm:ss, fff</option>
+														<option>hh-mm-ss tt</option>
+														<option>hh-mm-ss t</option>
+														<option>H m s t</option>
+												</select>
+											</td>
+											<td>
+												<input id="promptCharEditor" type="text" />
+												<br />
+												Select Prompt Char
+												<br />
+												<select id="promptCharList" style="width:70px; margin-top: 5px">
+													<option>_</option>
+													<option>*</option>
+													<option>X</option>
+													<option>x</option>
+													<option>.</option>
+													<option>,</option>
+												</select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="standard-grid">
+									<thead>
+										<tr>
+											<th style="width:33%">Spin1 Field</th>
+											<th style="width:33%">Use Last Good Date</th>
+											<th style="width:34%">Reduce Day Of Invalid Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<input id="spin1Editor" type="text" value="12/12/2010" />
+												<br />
+												<select id="spin1List" style="width:70px; margin-top: 5px">
+													<option>true</option>
+													<option selected="selected">false</option>
+												</select>
+											</td>
+											<td>
+												<input id="lastGoodDateEditor" type="text" value="05/05/2011" />
+												<br />
+												<select id="lastGoodDateList" style="width:70px; margin-top: 5px">
+													<option>true</option>
+													<option selected="selected">false</option>
+												</select>
+											</td>
+											<td>
+												<input id="reduceDayOfInvalidDateEditor" type="text" value="05/05/2011" />
+												<br />
+												<select id="reduceDayOfInvalidDateList" style="width:70px; margin-top: 5px" >
+													<option selected="selected">true</option>
+													<option>false</option>
+												</select>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="standard-grid">
+									<thead>
+										<tr>
+											<th style="width:33%">Date Input Format</th>
+											<th style="width:33%">Date Display Format</th>
+											<th style="width:34%">Hide Mask On Focus</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<input id="dateInputFormatEditor" type="text" value="2/1/2010 7:30" />
+												<br />
+												<select id="dateInputFormatList" style="margin-top: 5px; width:190px">	
+													<option selected="selected">MM-dd-yyyy</option>
+													<option>date</option>
+													<option>dateLong</option>
+													<option>time</option>
+													<option>timeLong</option>
+													<option>dateTime</option>
+												</select>
+											</td>
+											<td>
+												<input id="dateDisplayFormatEditor" type="text" value="2/1/2010 7:30"/>
+												<br />
+												<select id="dateDisplayFormatList" style="margin-top: 5px;width:190px">
+													<option selected="selected">MM-dd-yyyy</option>
+													<option>date</option>
+													<option>dateLong</option>
+													<option>time</option>
+													<option>timeLong</option>
+													<option>dateTime</option>
+												</select>
+											</td>
+											<td>
+												<input id="hideMaskOnFocusEditor" type="text" />
+												<select id="hideMaskOnFocusList" style="margin-top: 5px">
+												<option>true</option>
+												<option selected="selected">false</option>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="standard-grid">
+									<thead>
+										<tr>
+											<th style="width:33%">Min Date</th>
+											<th style="width:33%">Max Date</th>
+											<th style="width:34%">Min Number of Data Fields</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												Select Min Date
+													<br />
+													<input id="minDateEditorSelect" />
+												<br />
+												<br />
+												Try select date before selected
+												<input id="minDateEditor" type="text" />
+												
+											</td>
+											<td>
+												Select Max Date
+													<br />
+												<input id="maxDateEditorSelect" />
+												<br />
+												<br />
+												Try select date after selected
+												<input id="maxDateEditor" type="text" />
+											</td>
+											<td>
+												Select Min Number of DataFields of igDateEditor. The dateInputPattern is: "yyyy/MM/dd hh:mm"
+													<br />
+													<br />
+													
+													<select id="minNumberOfDateFieldsEditorSettings" style="width:100px;">
+															<option>1</option>
+															<option>2</option>
+															<option selected="selected">3</option>
+															<option>4</option>
+														</select>	
+														<input id="minNumberOfDateFieldsEditor" type="text"/>
+													</td>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+						
+					</div>
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
+</html>
+

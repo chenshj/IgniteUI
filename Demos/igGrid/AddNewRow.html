@@ -1,0 +1,393 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title> 	
+    
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+	<script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	
+	<style type="text/css">
+        #eventList
+        {
+            border: 1px soild;
+            height: 200px;
+            overflow-y: auto;
+            padding-top: 5px;
+            color: #656565;
+        }
+    </style>
+
+	<script type="text/javascript">
+	    var i = -1,
+			a = "A".charCodeAt(0), 
+			gridData = [], 
+			colors = ["Red", "Orange", "Pink", "Yellow", "Green"], 
+			names = ["Jet", "Train", "Car", "Boat"], 
+			evntCounter = 0;
+		
+		$.ig.loader({
+			scriptPath: "../../js/",
+			cssPath: "../../css/",
+			resources: "igGrid.Updating,igValidator"
+		});
+		
+		while (i++ < 7) {
+			gridData[i] = {
+				"ProductID": i,
+				"Name": names[i % 4],
+				"Code": String.fromCharCode(a + i % 4) + String.fromCharCode(a + 8 - i % 5) + String.fromCharCode(a + 10 - i % 10) + (1 + i % 7),
+				"Color": colors[i % 5],
+				"OrderDate": new Date(2009 + i % 4 % 2, (i + 3) % 12, 5 + i * 4 % 24),
+				"ListPrice": Math.pow((6 - i % 4), 7) * 1.25 + i
+			};
+		}
+		$.ig.loader(function() {
+			$("#grid1").igGrid({
+				virtualization: false,
+				autoGenerateColumns: false,
+				primaryKey: "ProductID",
+				columns: [ {
+						// note: if primaryKey is set and data in primary column contains numbers,
+						// then the dataType: "number" is required, otherwise, dataSource may misbehave
+				        headerText: "Product ID", key: "ProductID", width: "100px", dataType: "number"
+					}, {
+					    headerText: "Product Name", key: "Name", width: "130px"
+					}, {
+					    headerText: "Code", key: "Code", width: "100px"
+					}, {
+					    headerText: "Color", key: "Color", width: "80px"
+					}, {
+					    headerText: "Order Date", key: "OrderDate", width: "120px", dataType: "date"
+					}, {
+					    headerText: "List Price", key: "ListPrice", width: "150px", dataType: "number", format: "currency"
+					}
+				],
+				dataSource: gridData,
+				height: "300px",
+				tabIndex: 1,
+				features: [ {
+					name: "Updating",
+					enableAddRow: true,
+					editMode: "none",
+					enableDeleteRow: false,
+					// event raised after cell editing started
+					editCellStarted: function (evt, ui) {
+						// fill editor in 1st/primaryKey column with number of rows in grid
+						if (ui.column === 0) {
+							ui.editor.igEditor("value", numberOfRows());
+						}
+						// to check if that event is raised while new-row-adding:
+						// var rowAdding = ui.rowAdding;
+						logEvent("editCellStarted event fired. Column Key = " + ui.columnKey);
+					},
+					// event raised after end editing but before row was added to grid
+					rowAdding: function (evt, ui) {
+						// do not add new row to grid
+						if ($("#cancelAddRow").is(":checked")) {
+							return false;
+						}
+						// validate and fill-up missing values
+						if ($("#autoFill").is(":checked")) {
+							var code = ui.values["Code"], price = ui.values["ListPrice"];
+							if (price === null) {
+								ui.values["ListPrice"] = 123;
+							}
+							if (!code) {
+								ui.values["Code"] = "ABC1";
+							}
+						}
+							var values = "";
+							$.each(ui.values, function(i, val) { 
+								values += i + "=" + val + "; ";  
+							});
+
+							logEvent("rowAdding event fired.: " + values);
+					},
+					rowAdded: function (evt, ui){
+					    logEvent("rowAdded event fired. ProductID = " + ui.values["ProductID"]);
+					},
+					// event raised after new-row editing started
+					editRowStarted: function (evt, ui) {
+					    logEvent("editRowStarted event fired. Row Index = " + ui.rowID);
+						buttonsState(true);
+					},
+					// event raised after new-row editing ended
+					editRowEnded: function (evt, ui) {
+					    logEvent("editRowEnded event fired. Update Row = " + ui.update);
+						buttonsState(false);
+						showNumberOfRows();
+					},
+					generatePrimaryKeyValue: function (evt, ui) {
+						ui.value = numberOfRows();
+					},
+					columnSettings: [ {
+						columnKey: "ProductID",
+						editorOptions: { type: "numeric", disabled: true }
+					}, {
+						columnKey: "Name",
+						defaultValue: names[1],
+						editorOptions: {
+							button: "dropdown",
+							listItems: names,
+							readOnly: true,
+							dropDownOnReadOnly: true
+						}
+					}, {
+						columnKey: "Code",
+						editorOptions: {
+							type: "mask",
+							inputMask: ">???9",
+							dataMode: "rawtext"
+						}
+					}, {
+						columnKey: "Color",
+						defaultValue: colors[1],
+						editorOptions: {
+							button: "dropdown",
+							listItems: colors
+						}
+					}, {
+						columnKey: "OrderDate",
+						editorType: "datepicker",
+						validation: true,
+						editorOptions: { minValue: new Date(1955, 1, 19), maxValue: new Date(), required: true }
+					}, {
+						columnKey: "ListPrice",
+						editorType: "currency",
+						editorOptions: { button: "spin", minValue: 0, maxValue: 100000, validatorOptions: {} }
+					} ]
+				} ]
+			});
+			
+			
+			$("#listPrice").igCurrencyEditor({
+	            width: 100,
+				minValue: 0,
+				maxValue: 100000,
+	            button: "spin",
+				dataType: "number", 
+				format: "currency"
+	        });
+			
+			$("#orderDate").igDatePicker({
+	            width: 120,
+				minValue: new Date(2009, 6, 26),
+				value: new Date(1955, 1, 19),
+				maxValue: new Date(),
+	            required: true,
+	        });
+			
+		    $("#color").igEditor({
+				width: 80,
+				button: "dropdown",
+				listItems: colors,
+				value: colors[1]
+	        });
+			
+			 $("#productName").igEditor({
+				width: 130,
+				button: "dropdown",
+				listItems: names,
+				value: names[1]
+	        });
+			
+			$("#code").igEditor({
+				width: 100,
+				type: "mask", 
+				inputMask: ">???9", 
+				dataMode: "rawtext" 
+	        });
+			
+			$("#productId").igEditor({
+				width: 100,
+				type: "numeric", 
+				value: numberOfRows(),
+				disabled: true 
+			});
+			
+			$("#addRow").bind({
+				click: function(e){
+					var rowObj = {
+						"ProductID": $("#productId").val(),
+						"Name": $("#productName").val(),
+						"Code": $("#code").val(),
+						"Color": $("#color").val(),
+						"OrderDate": $("#orderDate").val(),
+						"ListPrice": $("#listPrice").val()
+					};
+					$("#grid1").igGridUpdating("addRow", rowObj);
+					showNumberOfRows();
+					updateValues();
+				}
+			});
+			
+			showNumberOfRows();
+			// process events of checkboxes and buttons
+			$("#startAdd").bind({
+				click: function (e) {
+					$("#grid1").igGridUpdating("startAddRowEdit", e);
+					buttonsState(true);
+				}
+			});
+			$("#endEdit").bind({
+				click: function (e) {
+					// note: if action is called from codes, then in order to raise events of igGridUpdating
+					// the browser event should be used (e: 2nd param param in endEdit() method
+					if ($("#grid1").igGridUpdating("endEdit", true, e)) {
+						buttonsState(false);
+						// if 2nd param "e" was not used, then application may raise notification explicitly
+						//showNumberOfRows();
+					}
+				}
+			});
+			$("#cancelEdit").bind({
+				click: function (e) {
+					$("#grid1").igGridUpdating("endEdit", false);
+					buttonsState(false);
+				}
+			});
+			$("#enableAddRow").bind({
+				change: function (e) {
+					var enable = $(this).is(":checked");
+					$("#grid1").igGridUpdating("option", "enableAddRow", enable);
+					buttonsState(false);
+					$("#startAdd").prop("disabled", !enable);
+				}
+			});			
+		});
+		
+		function updateValues()
+			{
+				$("#productId").igEditor("option", "value", numberOfRows());
+				$("#code").igEditor("option", "value", "");
+				$("#listPrice").igCurrencyEditor("option", "value", "");
+			}
+		
+		// show current number of rows in igGrid
+		function showNumberOfRows () {
+		    $("#numberOfRows").prop("innerHTML", "Number of rows: " + numberOfRows());
+		}
+		// get number of rows in grid
+		function numberOfRows () {
+			return $("#grid1").data("igGrid").element.find("tr").length;
+		}
+		// adjust action buttons
+		function buttonsState (editing) {
+			$("#endEdit").prop("disabled", !editing);
+			$("#cancelEdit").prop("disabled", !editing);
+			$("#startAdd").prop("disabled", editing);
+		}
+
+		// show the raised event 
+		function logEvent(message) {
+			var evntWrap = $("#eventList");
+			$(evntWrap).append("<div>" + (++evntCounter) + ". "  +  message + "<div>"); 
+			$(evntWrap).prop("scrollTop", $(evntWrap).prop("scrollHeight"));
+		}		
+	</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Add New Row</h2>
+						<p>This sample demonstrates how to configure editors for data types and interact with events related to adding new rows and editing.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+					 <table class="standard-grid" style="margin:10px 0;">
+						<tr>
+							<td>
+								Product ID
+								<br />
+								<input id="productId" type="text" readonly="readonly" />
+							</td>
+							<td>
+								Product Name
+								<br />
+								<input id="productName" type="text" />
+							</td>
+							<td>
+								Code
+								<br />
+								<input id="code" type="text"/>
+							</td>
+							<td>
+								Color
+								<br />
+								<input id="color" type="text"/>
+							</td>
+							<td>
+								Order Date
+								<br />
+								<input id="orderDate" type="text"/>
+							</td>
+							<td>
+								List Price
+								<br />
+								<input id="listPrice" type="text"/>
+							</td>
+						</tr>
+					</table>
+							<div><input id="addRow" type="button" value="Add Row" /></div>
+							<br>
+						<span id="numberOfRows" style="margin-bottom:5px; display:inline-block; padding: 4px; background:#f8f8c0; border: 1px solid #c0c0c0; width:auto;"></span>
+							<div id="eventList" class="controlPanelEvent" data-scroll="true"></div> 
+						<table id="grid1">
+						</table>
+						
+						<table class="standard-grid" style="margin:10px 0;">							
+							<tr>
+								<td colspan="3">
+									<input type="checkbox" id="enableAddRow" checked="checked" /><label for="enableAddRow">enable add-new row</label>
+									<br />
+									<input type="checkbox" id="cancelAddRow" /><label for="cancelAddRow">cancel add-row to data source of grid</label>
+									<br />
+									<input type="checkbox" id="autoFill" checked="checked" /><label for="autoFill">automatically fill <b>Code</b> ("ABC1") and <b>List Price</b> ($123.00) if value is missing</label>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									Trigger actions from code:
+									<br />
+									<input id="startAdd" type="button" value="Start add-new-row" style="margin-top:5px;" />
+									<input id="endEdit" type="button" disabled="disabled" value="Stop edit and add-row" />
+									<input id="cancelEdit" type="button" disabled="disabled" value="Stop edit and cancel add-row" />
+								</td>
+							</tr>
+						</table>	
+					</div>
+				</section>
+			</div>
+		</div>
+		<footer>
+		</footer>
+	</div>
+</body>
+</html>

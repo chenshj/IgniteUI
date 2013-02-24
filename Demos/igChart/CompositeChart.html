@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>IgniteUI Samples</title>
+
+    <link href="../content/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="../scripts/modernizr.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery.min.js" type="text/javascript"></script>
+	<script src="../scripts/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="../scripts/demos.js" type="text/javascript"></script>
+
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+
+    <script id="tooltipCoal" type="text/x-jquery-tmpl">
+        <span id="tooltipValue" class="tooltip">Coal: ${item.Coal}</span>
+    </script>
+    <script id="tooltipOil" type="text/x-jquery-tmpl">
+        <span id="tooltipValue" class="tooltip">Oil: ${item.Oil}</span>
+    </script>
+    <script id="tooltipNuclear" type="text/x-jquery-tmpl">
+        <span id="tooltipValue" class="tooltip">Nuclear: ${item.Nuclear}</span>
+    </script>
+    <script id="tooltipTotal" type="text/x-jquery-tmpl">
+        <span id="tooltipValue" class="tooltip">Total Energy: ${item.Total}</span>
+    </script>
+
+    <script type="text/javascript">
+        var data = [
+                { "Year": "2000", "Coal": 450, "Oil": 100, "Nuclear": 175 },
+                { "Year": "2010", "Coal": 480, "Oil": 120, "Nuclear": 225 },
+                { "Year": "2020", "Coal": 550, "Oil": 180, "Nuclear": 275 }
+            ];
+
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: 'igDataChart.Category'
+        });
+
+        $.ig.loader(function () {
+            for (i = 0; i < data.length; i++) {
+                data[i].Total = data[i]["Coal"] + data[i]["Oil"] + data[i]["Nuclear"];
+            }
+
+            $("#chart").igDataChart({
+                dataSource: data,
+                axes: [{
+                    type: "categoryX",
+                    name: "xAxis",
+                    label: "Year",
+                    strokeThickness: 5
+                }, {
+                    type: "numericY",
+                    name: "prodPower",
+                    minimumValue: 0,
+                    maximumValue: 800,
+                    strokeThickness: 5
+                }, {
+                    type: "numericY",
+                    name: "totalPower",
+                    minimumValue: 600,
+                    maximumValue: 1400
+                }],
+                series: [{
+                    type: "column",
+                    name: "Coal",
+                    title: "Coal",
+                    xAxis: "xAxis",
+                    yAxis: "prodPower",
+                    valueMemberPath: "Coal",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipCoal",
+                    legend: { element: "legend" }
+                }, {
+                    type: "column",
+                    name: "Oil",
+                    title: "Oil",
+                    xAxis: "xAxis",
+                    yAxis: "prodPower",
+                    valueMemberPath: "Oil",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipOil",
+                    legend: { element: "legend" }
+                }, {
+                    type: "column",
+                    name: "Nuclear",
+                    title: "Nuclear",
+                    xAxis: "xAxis",
+                    yAxis: "prodPower",
+                    valueMemberPath: "Nuclear",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipNuclear",
+                    legend: { element: "legend" }
+                }, {
+                    type: "line",
+                    name: "Total",
+                    title: "Total Energy",
+                    xAxis: "xAxis",
+                    yAxis: "totalPower",
+                    valueMemberPath: "Total",
+                    showTooltip: true,
+                    tooltipTemplate: "tooltipTotal",
+                    legend: { element: "legend2" }
+                }]
+            });
+        });
+    </script>
+
+    <style>
+        .tooltip { margin: 0px 5px 0px 5px; }
+        #legend, #legend2 { margin: 0px 5px 5px 5px; }
+        #legends, #chart { float: left; }
+        #chartTitle { width: 500px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html">
+                <img src="../Content/images/infragistics.png" alt="Infragistics" />
+            </a></h1>
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" alt="NetAdvantage for jQuery" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Composite Chart</h2>
+						<p>This sample demonstrates how to create a composite chart containing column and line category series and two Y-axes.</p>
+					</hgroup>
+					
+					<div class="sampleContainer">
+                        <div class="chartComponent">
+                            <div id="chart"></div>
+                        </div>
+
+                        <div id="legends">
+                            <div id="legend"></div>
+                            <div id="legend2"></div>
+                        </div>
+
+                        <h3 id="chartTitle">Energy Production by Year</h3>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

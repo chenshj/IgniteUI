@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Samples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+    <link rel="stylesheet" href="../content/jqm/jquery.mobile.structure.min.css" />
+	<link rel="stylesheet" href="../content/css/overrides.css" />
+      
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+    <script>
+        $(document).bind("mobileinit", function () {
+            //turn off AJAX for file-system navigation
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>    <script type="text/javascript" src="../scripts/jquery.mobile.min.js"></script>
+    <script type="text/javascript" src="../../js/infragistics.mobile.loader.js"></script>
+    <script type="text/javascript">
+        $.ig.loader({
+            scriptPath: "../../js/",
+            cssPath: "../../css/",
+            resources: "igmList.Filtering",
+            theme: "ios"
+        });
+    </script>
+
+    <!--Sample JSON Data-->
+    <script type="text/javascript" src="../scripts/db/nw-products.js"></script>
+</head>
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <a href="../index.html" rel="external" data-iconpos="notext" data-icon="back" data-direction="reverse"></a>
+            <h1>Search Filtering</h1>
+            <a href="#descriptionDialog" data-rel="dialog" data-iconpos="notext" data-icon="info"></a>
+        </div>
+        <div data-role="content">
+
+            <div id="basicFilteringListView"
+                data-role="iglistview"
+                data-image-mode="icon"
+                data-bindings-header-key="ProductName"
+                data-bindings-description-key="CategoryName"
+                data-bindings-count-key="InStock"
+                data-bindings-image-url-key="ImageUrl"
+                data-data-source="northwindProducts" 
+                data-filtering="true"
+                data-filtering-search-bar-field-name="ProductName,CategoryName">
+            </div>
+
+        </div>
+    </div>
+    <div data-role="page" id="descriptionDialog">
+        <div data-role="header">
+            <h1>Description</h1>
+        </div>
+        <div data-role="content">
+            <div class="description">
+                By enabling the filtering feature of the ListView, users can search on all fields using the search box. In addition to the search box, this sample also shows the ListView with numbering enabled.
+				<a data-role="button" data-icon="arrow-l" data-rel="back">Back To Sample</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

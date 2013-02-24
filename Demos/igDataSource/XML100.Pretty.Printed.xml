@@ -1,0 +1,691 @@
+﻿<personContacts>
+  <person>
+    <generalInfo contactID="1" firstName="Gustavo"
+    lastName="Achong" emailPromotion="true">
+    gustavo0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="0.31831">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="2" firstName="Catherine"
+    middleName="R." lastName="Abel" emailPromotion="true">
+    catherine0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="0.63662">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="3" firstName="Kim"
+    lastName="Abercrombie" emailPromotion="false">
+    kim2@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="0.95493">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="4" firstName="Humberto"
+    lastName="Acevedo" emailPromotion="true">
+    humberto0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="1.27324">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="5" firstName="Pilar"
+    lastName="Ackerman" emailPromotion="false">
+    pilar1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="1.59155">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="6" firstName="Frances" middleName="B."
+    lastName="Adams" emailPromotion="true">
+    frances0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="1.90986">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="7" firstName="Margaret" middleName="J."
+    lastName="Smith" emailPromotion="false">
+    margaret0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="2.22817">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="8" firstName="Carla" middleName="J."
+    lastName="Adams" emailPromotion="false">
+    carla0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="2.54648">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="9" firstName="Jay" lastName="Adams"
+    emailPromotion="true">jay1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="2.86479">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="10" firstName="Ronald" middleName="L."
+    lastName="Adina" emailPromotion="false">
+    ronald0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="3.1831">May 16 2005
+    4:33</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="11" firstName="Samuel" middleName="N."
+    lastName="Agcaoili" emailPromotion="false">
+    samuel0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="3.50141">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="12" firstName="James" middleName="T."
+    lastName="Aguilar" emailPromotion="true">
+    james2@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="3.81972">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="13" firstName="Robert" middleName="E."
+    lastName="Ahlering" emailPromotion="false">
+    robert1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="4.13803">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="14" firstName="Fran&#231;ois"
+    lastName="Ferrier" emailPromotion="true">
+    fran&#231;ois1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="4.45634">Jul 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="15" firstName="Kim" lastName="Akers"
+    emailPromotion="true">kim3@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="4.77465">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="16" firstName="Lili" middleName="J."
+    lastName="Alameda" emailPromotion="true">
+    lili0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="5.09296">Sep 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="17" firstName="Amy" middleName="E."
+    lastName="Alberts" emailPromotion="true">
+    amy1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="5.41127">Sep 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="18" firstName="Anna" middleName="A."
+    lastName="Albright" emailPromotion="true">
+    anna0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="5.72958">Jul 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="19" firstName="Milton" middleName="J."
+    lastName="Albury" emailPromotion="false">
+    milton0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="6.04789">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="20" firstName="Paul" middleName="L."
+    lastName="Alcorn" emailPromotion="true">
+    paul2@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="6.3662">Jul 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="21" firstName="Gregory" middleName="F."
+    lastName="Alderson" emailPromotion="false">
+    gregory0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="6.68451">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="22" firstName="J. Phillip"
+    middleName="L." lastName="Alexander" emailPromotion="true">
+    jphillip0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="7.00282">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="23" firstName="Michelle"
+    lastName="Alexander" emailPromotion="true">
+    michelle0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="7.32113">May 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="24" firstName="Sean" middleName="P."
+    lastName="Jacobson" emailPromotion="true">
+    sean2@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="7.63944">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="25" firstName="Phyllis" middleName="A."
+    lastName="Allen" emailPromotion="true">
+    phyllis0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="7.95775">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="26" firstName="Marvin" middleName="N."
+    lastName="Allen" emailPromotion="false">
+    marvin0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="8.27606">Dec 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="27" firstName="Michael"
+    lastName="Allen" emailPromotion="true">
+    michael10@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="8.59437">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="28" firstName="Cecil" middleName="J."
+    lastName="Allison" emailPromotion="false">
+    cecil0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="8.91268">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="29" firstName="Oscar" middleName="L."
+    lastName="Alpuerto" emailPromotion="true">
+    oscar0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="9.23099">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="30" firstName="Sandra" middleName="J."
+    lastName="Altamirano" emailPromotion="false">
+    sandra1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="9.5493">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="31" firstName="Selena" middleName="R."
+    lastName="Alvarado" emailPromotion="false">
+    selena0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="9.86761">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="32" firstName="Emilio" middleName="R."
+    lastName="Alvaro" emailPromotion="true">
+    emilio0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="10.1859">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="33" firstName="Maxwell" middleName="J."
+    lastName="Amland" emailPromotion="false">
+    maxwell0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="10.5042">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="34" firstName="Mae" middleName="N."
+    lastName="Anderson" emailPromotion="false">
+    mae0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="10.8225">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="35" firstName="Ramona" middleName="J."
+    lastName="Antrim" emailPromotion="false">
+    ramona0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="11.1408">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="36" firstName="Sabria" middleName="B."
+    lastName="Appelbaum" emailPromotion="false">
+    sabria0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="11.4592">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="37" firstName="Hannah" middleName="R."
+    lastName="Arakawa" emailPromotion="false">
+    hannah0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="11.7775">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="38" firstName="Kyley" middleName="J."
+    lastName="Arbelaez" emailPromotion="true">
+    kyley0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="12.0958">Jul 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="39" firstName="Tom" middleName="H"
+    lastName="Johnston" emailPromotion="true">
+    tom1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="12.4141">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="40" firstName="Thomas" middleName="B."
+    lastName="Armstrong" emailPromotion="false">
+    thomas1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="12.7324">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="41" firstName="John" lastName="Arthur"
+    emailPromotion="false">john6@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="13.0507">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="42" firstName="Chris" lastName="Ashton"
+    emailPromotion="true">chris3@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="13.369">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="43" firstName="Teresa"
+    lastName="Atkinson" emailPromotion="false">
+    teresa0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="13.6873">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="44" firstName="John" middleName="P."
+    lastName="Ault" emailPromotion="false">
+    john7@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="14.0056">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="45" firstName="Robert" middleName="A."
+    lastName="Avalos" emailPromotion="false">
+    robert2@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="14.3239">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="46" firstName="Stephen" middleName="M."
+    lastName="Ayers" emailPromotion="false">
+    stephen1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="14.6423">Sep 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="47" firstName="Phillip" middleName="M."
+    lastName="Bacalzo" emailPromotion="false">
+    phillip0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="14.9606">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="48" firstName="Daniel"
+    lastName="Blanco" emailPromotion="false">
+    daniel0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="15.2789">Sep 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="49" firstName="Cory" middleName="K."
+    lastName="Booth" emailPromotion="true">
+    cory0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="15.5972">Dec 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="50" firstName="James" middleName="B."
+    lastName="Bailey" emailPromotion="false">
+    james3@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="15.9155">Oct 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="51" firstName="Douglas" middleName="A."
+    lastName="Baldwin" emailPromotion="false">
+    douglas1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="16.2338">Jul 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="52" firstName="Jennifer"
+    middleName="B." lastName="Bales" emailPromotion="true">
+    jennifer0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="16.5521">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="53" firstName="Alberto" middleName="F."
+    lastName="Baltazar" emailPromotion="false">
+    alberto0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="16.8704">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="54" firstName="Wayne" middleName="N."
+    lastName="Banack" emailPromotion="true">
+    wayne0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="17.1887">Sep 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="55" firstName="Darrell" middleName="M."
+    lastName="Banks" emailPromotion="true">
+    darrell0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="17.507">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="56" firstName="Angela"
+    lastName="Barbariol" emailPromotion="false">
+    angela1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="17.8254">Jul 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="57" firstName="David" lastName="Barber"
+    emailPromotion="true">david9@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="18.1437">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="58" firstName="Robert" middleName="L."
+    lastName="Barker" emailPromotion="false">
+    robert3@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="18.462">Dec 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="59" firstName="Rebecca" middleName="R."
+    lastName="Barley" emailPromotion="true">
+    rebecca1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="18.7803">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="60" firstName="Brenda" middleName="L."
+    lastName="Barlow" emailPromotion="true">
+    brenda1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="19.0986">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="61" firstName="Josh"
+    lastName="Barnhill" emailPromotion="false">
+    josh0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="19.4169">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="62" firstName="Adam" lastName="Barr"
+    emailPromotion="true">adam0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="19.7352">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="63" firstName="Norma" middleName="N."
+    lastName="Barrera" emailPromotion="true">
+    norma0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="20.0535">Jul 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="64" firstName="Gytis" middleName="M"
+    lastName="Barzdukas" emailPromotion="false">
+    gytis0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="20.3718">Nov 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="65" firstName="David" middleName="M."
+    lastName="Bartness" emailPromotion="false">
+    david10@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="20.6901">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="66" firstName="Karel" middleName="E."
+    lastName="Bates" emailPromotion="true">
+    karel0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="21.0085">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="67" firstName="Ciro" middleName="J."
+    lastName="Bauer" emailPromotion="false">
+    ciro0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="21.3268">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="68" firstName="Glenna" middleName="L."
+    lastName="Beanston" emailPromotion="false">
+    glenna0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="21.6451">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="69" firstName="Shaun"
+    lastName="Beasley" emailPromotion="true">
+    shaun0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="21.9634">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="70" firstName="John" middleName="A."
+    lastName="Beaver" emailPromotion="false">
+    john8@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="22.2817">Apr 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="71" firstName="Christopher"
+    middleName="R." lastName="Beck" emailPromotion="false">
+    christopher1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="22.6">Sep 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="72" firstName="Bradley" lastName="Beck"
+    emailPromotion="true">
+    bradley0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="22.9183">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="73" firstName="Benjamin"
+    middleName="J." lastName="Becker" emailPromotion="false">
+    benjamin1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="23.2366">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="74" firstName="Ann" lastName="Beebe"
+    emailPromotion="false">ann0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="23.5549">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="75" firstName="Shane" middleName="J."
+    lastName="Belli" emailPromotion="true">
+    shane1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="23.8732">Jul 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="76" firstName="Stanley" middleName="A."
+    lastName="Alan" emailPromotion="false">
+    stanley0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="24.1916">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="77" firstName="Mason"
+    lastName="Bendixen" emailPromotion="false">
+    mason0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="24.5099">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="78" firstName="John" middleName="M."
+    lastName="Bennetts" emailPromotion="false">
+    john9@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="24.8282">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="79" firstName="Ido"
+    lastName="Ben-Sachar" emailPromotion="false">
+    ido0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="25.1465">Jul 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="80" firstName="Edna" middleName="J."
+    lastName="Benson" emailPromotion="false">
+    edna0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="25.4648">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="81" firstName="Payton" middleName="P."
+    lastName="Benson" emailPromotion="false">
+    payton0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="25.7831">Nov 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="82" firstName="Max" lastName="Benson"
+    emailPromotion="false">max0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="26.1014">Nov 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="83" firstName="Scot" middleName="A."
+    lastName="Bent" emailPromotion="false">
+    scot0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="26.4197">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="84" firstName="Richard" middleName="M."
+    lastName="Bentley" emailPromotion="false">
+    richard0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="26.738">May 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="85" firstName="Marian" middleName="M."
+    lastName="Berch" emailPromotion="false">
+    marian0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="27.0563">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="86" firstName="Karen" lastName="Berge"
+    emailPromotion="true">karen2@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="27.3747">Jul 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="87" firstName="Alexander"
+    middleName="J." lastName="Berger" emailPromotion="true">
+    alexander0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="27.693">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="88" firstName="John" middleName="M."
+    lastName="Berger" emailPromotion="false">
+    john10@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="28.0113">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="89" firstName="Kris" middleName="R."
+    lastName="Bergin" emailPromotion="false">
+    kris0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="28.3296">Jul 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="90" firstName="Andreas"
+    lastName="Berglund" emailPromotion="false">
+    andreas1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="28.6479">Aug 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="91" firstName="Robert" middleName="M."
+    lastName="Bernacchi" emailPromotion="true">
+    robert4@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="28.9662">Sep 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="92" firstName="Matthias"
+    lastName="Berndt" emailPromotion="true">
+    matthias1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="29.2845">Aug 1 2002
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="93" firstName="John" lastName="Berry"
+    emailPromotion="false">john11@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="29.6028">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="94" firstName="Steven" middleName="B."
+    lastName="Brown" emailPromotion="false">
+    steven1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="29.9211">Sep 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="95" firstName="Chris" middleName="N."
+    lastName="Bidelman" emailPromotion="false">
+    chris4@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="30.2394">Sep 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="96" firstName="Mary" middleName="B."
+    lastName="Billstrom" emailPromotion="true">
+    mary3@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="30.5577">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="97" firstName="Jimmy"
+    lastName="Bischoff" emailPromotion="true">
+    jimmy1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="30.8761">Jul 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="98" firstName="Mary" lastName="Bishop"
+    emailPromotion="false">mary4@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="31.1944">Jul 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="99" firstName="Mae" middleName="M."
+    lastName="Black" emailPromotion="true">
+    mae1@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="31.5127">Jul 1 2001
+    12:00</modifiedDate>
+  </person>
+  <person>
+    <generalInfo contactID="100" firstName="Jackie" middleName="E."
+    lastName="Blackwell" emailPromotion="true">
+    jackie0@adventure-works.com</generalInfo>
+    <modifiedDate FictionalFloat="31.831">Aug 1 2003
+    12:00</modifiedDate>
+  </person>
+</personContacts>

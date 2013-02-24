@@ -1,0 +1,110 @@
+﻿<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>IgniteUI Samples</title>
+	
+	<link href="../content/style.css" rel="stylesheet" type="text/css" />
+	
+	<script src="../scripts/modernizr.min.js"></script>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../scripts/jquery-ui.min.js"></script>
+    <script src="../scripts/demos.js" type="text/javascript"></script>
+	<script src="../../js/infragistics.loader.js" type="text/javascript"></script>
+	<script src="../scripts/db/northwindCustomers.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$.ig.loader({
+		scriptPath: "../../js/",
+		cssPath: "../../css/",
+		resources: "igGrid.*,igTree"
+	});
+    $.ig.loader(function () {
+        var headerTitles = ["Contact Name", "Company Information", "Personal Information"];
+        $("#dataGrid").igGrid({
+            autoGenerateColumns: true,
+            width: 700,
+            dataSourceType: "json",
+			enableHoverStyles: false, 
+            dataSource: northwindCustomers,
+            responseDataKey: "results",
+            rowTemplate: "<tr><td> ${ContactName} </td> <td><div class='tree'> <ul><li>Company Details <ul><li>Name: ${CompanyName}</li> <li> Location: ${Country} </li> <li> City: ${City} </li> <li> <a>Postal Code: ${PostalCode}</a> </li> </ul></li> </ul> </div>   </td><td>	<div class='tree'> <ul> <li> Personal Details <ul> <li> Address: ${Address} </li> <li> Phone: ${Phone} </li> <li> Fax: ${Fax} </li></ul>	</li> </ul> </div> </td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>",
+            jQueryTemplating: true,
+            columnsgenerated: function (evt, ui) {
+                for (var i = 0; i <= 9; i++) {
+                    if (i <= 2) {
+                        ui.owner.options.columns[i].headerText = headerTitles[i];
+                        if (i === 0) {
+                            ui.owner.options.columns[0].width = 100;
+                        } else {
+                            ui.owner.options.columns[i].width = 290;
+                        }
+                    } else {
+                        ui.owner.options.columns[i].hidden = true;
+                    }
+                }
+            },
+            rendered: function () {
+                initializeTree();
+            },
+            features: [
+			{
+			    name: "Paging",
+			    type: "local",
+			    pageSize: 5,
+			    pageSizeChanged: function (evt, ui) {
+			        initializeTree();
+			    },
+			    pageIndexChanged: function (evt, ui) {
+			        initializeTree();
+			    }
+			}
+		]
+        });
+		function initializeTree() {
+			$(".tree").igTree({ hotTracking: false });
+		}
+    });
+</script>
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1 class="logo"><a href="../index.html"><img src="../Content/images/infragistics.png" /></a></h1>		
+		</header>
+
+		<div id="main" role="main">
+			<section class="product">
+				<img src="../Content/images/jquery-netadvantage.png" />
+				<p>Create the best Web experiences in browsers and devices with our user interface controls designed expressly for jQuery, ASP.NET MVC, HTML 5 and CSS 3. You'll be building on a solid and proven foundation without any plug-ins or extensions, just real world best practices and the most forward-thinking, robust Web technology.</p>
+			</section>
+		
+			<div class="content clearfix">
+				<!-- side nav begins here -->
+				<script type="text/javascript">insertNav();</script>
+				<!-- side nav ends here -->
+                <section class="main-box">
+					<hgroup>
+						<h1>IgniteUI </h1>
+						<h2>Basic Template</h2>
+						<p>This sample demonstrates basic usage of the Infragistics Templating Engine to create a row template in the igGrid control. In this sample the igTree control is used to transform an unordered list into an interactive tree. </p>
+					</hgroup>
+
+						<div class="sampleContainer">		
+							<table id="dataGrid"></table>
+						</div>	
+				</section>
+			</div>
+		
+		</div>
+
+		<footer>
+
+		</footer>
+	</div>
+</body>
